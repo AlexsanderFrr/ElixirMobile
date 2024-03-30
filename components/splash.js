@@ -1,59 +1,38 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, ImageBackground, View } from 'react-native';
-
-export default function Splash({ navigation }) {
+import React, { useEffect } from "react";
+import { View, Text, Image } from "react-native";
+const Splash = ({ navigation }) => {
   useEffect(() => {
+    // Simule um tempo de carregamento
     const timer = setTimeout(() => {
-      navigation.replace('Home'); // Navega para a próxima tela após o tempo determinado
-    }, 3000); // Tempo em milissegundos (3 segundos neste caso)
-
+      navigation.replace("Home");
+    }, 5000);
     return () => clearTimeout(timer);
-  }, []);
-
+  }, [navigation]);
   return (
-    <ImageBackground
-      source={require('./assets/splash.jpg')} // Substitua pelo caminho da sua imagem de fundo
-      style={styles.background}
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "black",
+      }}
     >
-      {/* Adicione várias imagens de copos de suco aqui */}
-      <View style={styles.cup1}></View>
-      <View style={styles.cup2}></View>
-      <View style={styles.cup3}></View>
-      {/* Adicione quantas imagens de copos de suco desejar */}
-    </ImageBackground>
+      <Image
+        source={require("../assets/logo.png")}
+        style={{ width: 110, height: 100, marginBottom: 20 }}
+        resizeMode="contain"
+      />
+      <Text
+        style={{
+          color: "white",
+          fontSize: 40,
+          fontFamily: "Brush Script MT",
+          fontWeight: "bold",
+          fontStyle: "italic",
+        }}
+      >
+      </Text>
+    </View>
   );
-}
-
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cup1: {
-    position: 'absolute',
-    top: 50,
-    left: 50,
-    width: 50,
-    height: 50,
-    backgroundColor: 'red', // Cor temporária, substitua pela imagem do copo de suco
-  },
-  cup2: {
-    position: 'absolute',
-    top: 150,
-    left: 150,
-    width: 50,
-    height: 50,
-    backgroundColor: 'green', // Cor temporária, substitua pela imagem do copo de suco
-  },
-  cup3: {
-    position: 'absolute',
-    top: 250,
-    left: 250,
-    width: 50,
-    height: 50,
-    backgroundColor: 'blue', 
-  },
- 
-});
+};
+export default Splash;

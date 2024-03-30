@@ -8,11 +8,19 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" headerMode="none">
-        <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="Home" component={Home} />
+      <Stack.Navigator initialRouteName="Splash">
+        <Stack.Screen
+          name="Splash"
+          component={Splash}
+          options={{ headerShown: false }} // Aqui está a atualização
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          // Se você quiser ocultar o cabeçalho em outras telas também, você pode adicionar a opção aqui
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
-
 }
