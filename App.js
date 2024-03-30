@@ -1,26 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { ImageBackground } from 'react-native';
-
-
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./components/Home";
+import Splash from "./components/Splash";
+const Stack = createStackNavigator();
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Elixir Natural</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Splash" headerMode="none">
+        <Stack.Screen name="Splash" component={Splash} />
+        <Stack.Screen name="Home" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F4DEAA',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 30, // Tamanho da fonte
-    color: '#BB5104', // Cor do texto (exemplo: preto)
-  },
-});
