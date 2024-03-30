@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 30, // Tamanho da fonte
+    fontFamily: 'Lora', // Substituindo fonte
     color: '#BB5104', // Cor do texto (exemplo: preto)
+    fontWeight: 'bold', // texto em negrito
   },
 });
