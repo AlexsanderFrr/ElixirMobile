@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, ImageBackground, View } from 'react-native';
 
-export default function SplashScreen({ navigation }) {
+export default function Splash({ navigation }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace('Home'); // Navega para a próxima tela após o tempo determinado
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     left: 250,
     width: 50,
     height: 50,
-    backgroundColor: 'blue', // Cor temporária, substitua pela imagem do copo de suco
+    backgroundColor: 'blue', 
   },
-  // Adicione estilos para mais copos de suco, se necessário
+ 
 });
