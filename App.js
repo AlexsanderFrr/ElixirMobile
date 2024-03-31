@@ -12,12 +12,12 @@ export default function App() {
         <Stack.Screen
           name="Splash"
           component={Splash}
-          options={{ headerShown: false }} // Aqui está a atualização
+          options={{ headerShown: false }} 
         />
         <Stack.Screen
           name="Home"
           component={Home}
-          // Se você quiser ocultar o cabeçalho em outras telas também, você pode adicionar a opção aqui
+          
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

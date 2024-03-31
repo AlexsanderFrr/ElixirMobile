@@ -14,7 +14,7 @@ const Splash = ({ navigation }) => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "black",
+        backgroundColor: "#F4DEAA",
       }}
     >
       <Image
