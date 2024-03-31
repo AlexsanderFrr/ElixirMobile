@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
-  darkbg: {
-    backgroundColor: "black",
+  whitebg: {
+    backgroundColor: "white",
   },
   login__logomarca: {
     marginBottom: 10,
