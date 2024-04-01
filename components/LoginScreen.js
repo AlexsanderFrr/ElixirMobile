@@ -9,18 +9,20 @@ const LoginScreen = () => {
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
       <View >
+        <Text style={{ fontSize: 24, fontWeight: 'bold', }}>Bem vindo a</Text>
         <Image
           source={require('../assets/logo.png')}
-          style={{ width: 110, height: 100 }}
+          style={{ width: 256, height: 41 }}
           resizeMode="contain"
         />
       </View>
       <View>
+        <Text style={{ fontSize: 20, fontWeight:'600' }}>Faça login na sua conta</Text>
         <Text style={css.login__msg(display)}>Usuário ou senha
           inválidos!</Text>
       </View>
       <View style={css.login__form}>
-        <TextInput style={css.login__input} placeholder='Usuário:' />
+        <TextInput style={css.login__input} placeholder='Email:' />
         <TextInput style={css.login__input} placeholder='Senha:'
           secureTextEntry={true} />
         <TouchableOpacity style={css.login__button} onPress={() =>
