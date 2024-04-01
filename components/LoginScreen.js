@@ -8,8 +8,8 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
-      <View >
-        <Text style={{ fontSize: 24, fontWeight: 'bold', }}>Bem vindo a</Text>
+      <View style={[css.logo_login]}>
+        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 15 }}>Bem vindo a</Text>
         <Image
           source={require('../assets/logo.png')}
           style={{ width: 256, height: 41 }}
@@ -17,7 +17,7 @@ const LoginScreen = () => {
         />
       </View>
       <View>
-        <Text style={{ fontSize: 20, fontWeight:'600' }}>Faça login na sua conta</Text>
+        <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 15 }}>Faça login na sua conta</Text>
         <Text style={css.login__msg(display)}>Usuário ou senha
           inválidos!</Text>
       </View>

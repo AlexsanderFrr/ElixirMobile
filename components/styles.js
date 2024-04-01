@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 30,
   },
+  logo_login: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginTop: 70,
+  },
   whitebg: {
     backgroundColor: "white",
   },
