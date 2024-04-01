@@ -13,7 +13,7 @@ const SplashScreen = ({ navigation }) => {
     return (
         <View style={{ 
             flex:1,
-            flexDirection: 'column'
+            flexDirection: 'column',
             }}>
             <ImageBackground
                 source={require('../assets/backgroundsuco.png')}
