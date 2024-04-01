@@ -28,21 +28,24 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   login__input: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FFB100",
+    height: 50,
     fontSize: 19,
     padding: 7,
     marginBottom: 15,
+    borderRadius: 10,
   },
   login__button: {
+    width: 300,
     padding: 12,
-    backgroundColor: "#F58634",
+    backgroundColor: "#BB5104",
     alignSelf: "center",
-    borderRadius: 5,
+    borderRadius: 10,
   },
   login__buttonText: {
-    fontWeight: "bold",
+    fontWeight: "600",
     fontSize: 22,
-    color: "#333",
+    color: "#F5F5F5",
   },
 });
 export default styles;

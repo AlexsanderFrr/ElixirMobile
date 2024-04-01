@@ -16,12 +16,12 @@ const LoginScreen = () => {
           resizeMode="contain"
         />
       </View>
-      <View>
+      <View style={css.login__form}>
+        <View>
         <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 15 }}>Faça login na sua conta</Text>
         <Text style={css.login__msg(display)}>Usuário ou senha
           inválidos!</Text>
       </View>
-      <View style={css.login__form}>
         <TextInput style={css.login__input} placeholder='Email:' />
         <TextInput style={css.login__input} placeholder='Senha:'
           secureTextEntry={true} />
