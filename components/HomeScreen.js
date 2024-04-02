@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Image, TextInput, StyleSheet } from "react-native";
+import { View, Image, TextInput, StyleSheet, ScrollView, FlatList, Text } from "react-native";
 
 const HomeScreen = () => {
+  // Dados de exemplo para as listas
+  const juices = Array.from({ length: 10 }, (_, index) => ({
+    id: index + 1,
+    name: `Suco ${index + 1}`,
+    image: require("../assets/garrafa-suco.png"),
+  }));
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -18,6 +25,33 @@ const HomeScreen = () => {
           />
         </View>
       </View>
+
+      {/* ScrollView horizontal para as indicações de sucos */}
+      <ScrollView horizontal style={styles.scrollView}>
+        {juices.map((juice) => (
+          <View key={juice.id} style={styles.item}>
+            <Image source={juice.image} style={styles.juiceImage} resizeMode="contain" />
+            <Text style={styles.juiceName}>{juice.name}</Text>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Linha separadora */}
+      <View style={styles.separator} />
+
+      {/* FlatList para todos os sucos */}
+      <FlatList
+        data={juices}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <Image source={item.image} style={styles.juiceImage} resizeMode="contain" />
+            <Text style={styles.juiceName}>{item.name}</Text>
+          </View>
+        )}
+        contentContainerStyle={styles.flatListContainer}
+        numColumns={2}
+      />
     </View>
   );
 };
@@ -51,6 +85,36 @@ const styles = StyleSheet.create({
   searchInput: {
     height: 40,
     color: "#838181",
+  },
+  scrollView: {
+    marginTop: 10,
+    marginBottom: 10,
+    height: 400,
+  },
+  item: {
+    margin: 5,
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 150,
+    height: 150, // Aumentei a altura para melhor exibir as imagens
+  },
+  juiceImage: {
+    width: 100,
+    height: 100,
+  },
+  juiceName: {
+    marginTop: 5,
+    fontSize: 16,
+  },
+  flatListContainer: {
+    flexGrow: 1,
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#CCCCCC",
   },
 });
 
