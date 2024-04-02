@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   align_Down: {
     alignItems: "center",
-    marginTop: 90,
+    marginTop: 60,
   },
   social_Container: {
     //justifyContent: "space-between",
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   register_button: {
-    marginTop: 20,
+    marginTop: 30,
   },
   register_buttonText: {
     fontSize: 16,
