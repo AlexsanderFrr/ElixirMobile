@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   img_logocad: {
     width: 256, 
     height: 41,
-    marginBottom: 30,
+    marginBottom: 40,
   },
   login__msg: (text = "none") => ({
     fontWeight: "bold",
@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
     display: text,
   }),
   login__form: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    paddingTop: 100,
+  },
+  cad_form: {
     flex: 1,
     width: "100%",
     justifyContent: "center",
@@ -88,6 +94,11 @@ const styles = StyleSheet.create({
     //justifyContent: "space-between",
     flexDirection: "row",
     marginTop: 15,
+  },
+  social_ContainerCad: {
+    //justifyContent: "space-between",
+    flexDirection: "row",
+    marginBottom: 15,
   },
   register_button: {
     marginTop: 30,
