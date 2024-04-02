@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     justifyContent: "center",
+    paddingTop: 50,
   },
   login__input: {
     backgroundColor: "#FFFFFF",
@@ -54,5 +55,11 @@ const styles = StyleSheet.create({
     color: "#F5F5F5",
     fontFamily: "Lora",
   },
+  register_button: {
+
+  },
+  social_Container: {
+    flexDirection: "row"
+  }
 });
 export default styles;

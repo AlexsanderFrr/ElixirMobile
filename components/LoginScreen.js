@@ -43,6 +43,29 @@ const handleLogin = () => {
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
+        <View style={css.align_Down}>
+          <Text>Entre com rede social</Text>
+
+          <View style={css.social_Container}>
+            <Image
+              source={require('../assets/faceAcess.png')}
+              style={{ width: 256, height: 41 }}
+              resizeMode="contain"
+            />
+            <Image
+              source={require('../assets/googleAcess.png')}
+              style={{ width: 256, height: 41 }}
+              resizeMode="contain"
+            />
+            <Image
+              source={require('../assets/emailAcess.png')}
+              style={{ width: 256, height: 41 }}
+              resizeMode="contain"
+            />
+          </View>
+
+        </View>
+
         <TouchableOpacity style={css.register_button}>
           <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
         </TouchableOpacity>
