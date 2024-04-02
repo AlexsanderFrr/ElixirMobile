@@ -49,17 +49,17 @@ const handleLogin = () => {
           <View style={css.social_Container}>
             <Image
               source={require('../assets/faceAcess.png')}
-              style={{ width: 25, height: 41 }}
+              //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
             <Image
               source={require('../assets/googleAcess.png')}
-              style={{ width: 45, height: 41 }}
+              //style={{ width: 45, height: 41 }}
               resizeMode="contain"
             />
             <Image
               source={require('../assets/emailAcess.png')}
-              style={{ width: 25, height: 41 }}
+              //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
           </View>
