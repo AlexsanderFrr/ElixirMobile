@@ -25,10 +25,12 @@ const styles = StyleSheet.create({
     display: text,
   }),
   login__form: {
+    flex: 1,
     width: "80%",
   },
   login__input: {
     backgroundColor: "#FFB100",
+    width: "100%",
     height: 50,
     fontSize: 19,
     padding: 7,
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   login__button: {
-    width: 300,
+    width: "100%",
     padding: 12,
     backgroundColor: "#BB5104",
     alignSelf: "center",
