@@ -2,7 +2,7 @@
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
-const CadastroScreen = () => {
+const CadastroScreen = ({ navigation }) => {
 
     return (
         <KeyboardAvoidingView style={[css.container, css.whitebg]}>
@@ -37,14 +37,18 @@ const CadastroScreen = () => {
             </View>
 
             <View style={css.cad_form}>
-                <TextInput style={css.login__input} placeholder='Nome:' placeholderTextColor='#B1B1B1' />
-                <TextInput style={css.login__input} placeholder='Email:' placeholderTextColor='#B1B1B1' />
-                <TextInput style={css.login__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} />
+                <TextInput style={css.cad__input} placeholder='Nome:' placeholderTextColor='#B1B1B1' />
+                <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' />
+                <TextInput style={css.cad__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} />
 
-                <TouchableOpacity style={css.login__button}>
-                    <Text style={css.login__buttonText}>Entrar</Text>
+                <TouchableOpacity style={css.cad__button}>
+                    <Text style={css.login__buttonText}>Inscrever-se</Text>
                 </TouchableOpacity>
             </View>
+
+            <TouchableOpacity style={css.register_button} onPress={() => { navigation.navigate('Login') }}>
+                <Text style={css.register_buttonText}>Já possui uma conta? Acesse</Text>
+            </TouchableOpacity>
 
         </KeyboardAvoidingView>
     );
