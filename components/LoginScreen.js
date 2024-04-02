@@ -64,7 +64,7 @@ const handleLogin = () => {
             />
           </View>
 
-          <TouchableOpacity style={css.register_button}>
+          <TouchableOpacity style={css.register_button} onPress={() => {navigation.navigate('Cadastro')}}>
             <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
           </TouchableOpacity>
 
