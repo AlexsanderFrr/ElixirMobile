@@ -5,7 +5,7 @@ const SplashScreen = ({ navigation }) => {
     useEffect(() => {
         // Simule um tempo de carregamento
         const timer = setTimeout(() => {
-            navigation.replace('Login');
+            navigation.replace('Home');
         }, 5000);
         return () => clearTimeout(timer);
     }, [navigation]);
