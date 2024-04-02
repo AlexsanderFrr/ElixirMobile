@@ -2,9 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
 
   const [display, setDisplay] = useState('none');
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+const handleLogin = () => {
+  if (email === 'carlos@gmail.com' && password === 'suco123') {
+    navigation.navigate('Home');
+  } else {
+    setDisplay('');
+  }
+}
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
@@ -24,13 +35,11 @@ const LoginScreen = () => {
           inválidos!</Text>
         </View>
 
-        <TextInput style={css.login__input} placeholder='Email:' placeholderTextColor='#B1B1B1' />
+        <TextInput style={css.login__input} placeholder='Email:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setEmail(text)} />
 
-        <TextInput style={css.login__input} placeholder='Senha:' placeholderTextColor='#B1B1B1'
-          secureTextEntry={true} />
+        <TextInput style={css.login__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
 
-        <TouchableOpacity style={css.login__button} onPress={() =>
-          setDisplay('flex')}>
+        <TouchableOpacity style={css.login__button} onPress={handleLogin}>
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
