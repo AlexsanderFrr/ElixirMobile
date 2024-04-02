@@ -1,13 +1,15 @@
 //import React, {useState} from "react";
-import { View, Text } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
 const CadastroScreen = () => {
 
     return (
-        <View>
-            <Text>Criar uma conta</Text>
-        </View>
+        <KeyboardAvoidingView style={[css.container, css.whitebg]}>
+            <View style={css.logo_cadastro}>
+                <Text>Criar uma conta</Text>
+            </View>
+        </KeyboardAvoidingView>
     );
 
 };

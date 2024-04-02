@@ -20,7 +20,7 @@ const handleLogin = () => {
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
       <View style={[css.logo_login]}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 15 }}>Bem vindo a</Text>
+        <Text style={css.text_welcome}>Bem vindo a</Text>
         <Image
           source={require('../assets/logo.png')}
           style={{ width: 256, height: 41 }}

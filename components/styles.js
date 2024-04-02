@@ -12,11 +12,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
+  logo_cadastro: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   whitebg: {
     backgroundColor: "white",
   },
-  login__logomarca: {
-    marginBottom: 10,
+  text_welcome: {
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    marginBottom: 15,
   },
   login__msg: (text = "none") => ({
     fontWeight: "bold",
