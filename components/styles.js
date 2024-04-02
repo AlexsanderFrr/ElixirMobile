@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#BB5104",
     alignItems: "center",
     borderRadius: 10,
+    //marginTop: 40,
   },
   login__buttonText: {
     fontWeight: "500",
@@ -55,11 +56,20 @@ const styles = StyleSheet.create({
     color: "#F5F5F5",
     fontFamily: "Lora",
   },
-  register_button: {
-
+  align_Down: {
+    alignItems: "center",
+    marginTop: 110,
   },
   social_Container: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: 15,
+  },
+  register_button: {
+    marginTop: 50,
+  },
+  register_buttonText: {
+    fontSize: 16,
+    color: "#838181"
   }
 });
 export default styles;

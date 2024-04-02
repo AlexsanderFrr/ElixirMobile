@@ -27,8 +27,8 @@ const handleLogin = () => {
           resizeMode="contain"
         />
       </View>
-      <View style={css.login__form}>
 
+      <View style={css.login__form}>
         <View>
           <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 30 }}>Faça login na sua conta</Text>
           <Text style={css.login__msg(display)}>Usuário ou senha
@@ -44,31 +44,31 @@ const handleLogin = () => {
         </TouchableOpacity>
 
         <View style={css.align_Down}>
-          <Text>Entre com rede social</Text>
+          <Text style={{color:"#838181", fontSize: 17}}>Entre com rede social</Text>
 
           <View style={css.social_Container}>
             <Image
               source={require('../assets/faceAcess.png')}
-              style={{ width: 256, height: 41 }}
+              style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
             <Image
               source={require('../assets/googleAcess.png')}
-              style={{ width: 256, height: 41 }}
+              style={{ width: 45, height: 41 }}
               resizeMode="contain"
             />
             <Image
               source={require('../assets/emailAcess.png')}
-              style={{ width: 256, height: 41 }}
+              style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
           </View>
 
-        </View>
+          <TouchableOpacity style={css.register_button}>
+            <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={css.register_button}>
-          <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
-        </TouchableOpacity>
+        </View>
 
       </View>
     </KeyboardAvoidingView>
