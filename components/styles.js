@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     justifyContent: "center",
-    paddingTop: 50,
+    paddingTop: 100,
   },
   login__input: {
     backgroundColor: "#FFFFFF",
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   register_button: {
-    marginTop: 50,
+    marginTop: 40,
   },
   register_buttonText: {
     fontSize: 16,
