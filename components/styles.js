@@ -5,12 +5,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 30,
+    paddingVertical: 50,
   },
   logo_login: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: 70,
+    //marginTop: 70,
   },
   whitebg: {
     backgroundColor: "white",
@@ -26,28 +27,31 @@ const styles = StyleSheet.create({
   }),
   login__form: {
     flex: 1,
-    width: "80%",
+    width: "100%",
+    justifyContent: "center",
   },
   login__input: {
-    backgroundColor: "#FFB100",
+    backgroundColor: "#FFFFFF",
     width: "100%",
     height: 50,
     fontSize: 19,
-    padding: 7,
-    marginBottom: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 13,
+    marginBottom: 30,
     borderRadius: 10,
   },
   login__button: {
     width: "100%",
     padding: 12,
     backgroundColor: "#BB5104",
-    alignSelf: "center",
+    alignItems: "center",
     borderRadius: 10,
   },
   login__buttonText: {
-    fontWeight: "600",
-    fontSize: 22,
+    fontWeight: "500",
+    fontSize: 25,
     color: "#F5F5F5",
+    fontFamily: "Lora",
   },
 });
 export default styles;

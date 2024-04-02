@@ -18,12 +18,12 @@ const LoginScreen = () => {
       </View>
       <View style={css.login__form}>
         <View>
-        <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 15 }}>Faça login na sua conta</Text>
+        <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 30 }}>Faça login na sua conta</Text>
         <Text style={css.login__msg(display)}>Usuário ou senha
           inválidos!</Text>
-      </View>
-        <TextInput style={css.login__input} placeholder='Email:' />
-        <TextInput style={css.login__input} placeholder='Senha:'
+        </View>
+        <TextInput style={css.login__input} placeholder='Email:' placeholderTextColor='#B1B1B1' />
+        <TextInput style={css.login__input} placeholder='Senha:' placeholderTextColor='#B1B1B1'
           secureTextEntry={true} />
         <TouchableOpacity style={css.login__button} onPress={() =>
           setDisplay('flex')}>
