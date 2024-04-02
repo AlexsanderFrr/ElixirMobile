@@ -5,13 +5,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 30,
-    paddingVertical: 50,
+    paddingVertical: 70,
   },
   logo_login: {
-    flex: 1,
+    //flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    //marginTop: 70,
   },
   whitebg: {
     backgroundColor: "white",
@@ -38,6 +37,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 13,
     marginBottom: 30,
+    borderWidth: 1.5,
+    borderColor: "#FFB100",
     borderRadius: 10,
   },
   login__button: {

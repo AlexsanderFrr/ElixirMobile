@@ -17,18 +17,27 @@ const LoginScreen = () => {
         />
       </View>
       <View style={css.login__form}>
+
         <View>
-        <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 30 }}>Faça login na sua conta</Text>
-        <Text style={css.login__msg(display)}>Usuário ou senha
+          <Text style={{ fontSize: 20, fontWeight:'600', marginBottom: 30 }}>Faça login na sua conta</Text>
+          <Text style={css.login__msg(display)}>Usuário ou senha
           inválidos!</Text>
         </View>
+
         <TextInput style={css.login__input} placeholder='Email:' placeholderTextColor='#B1B1B1' />
+
         <TextInput style={css.login__input} placeholder='Senha:' placeholderTextColor='#B1B1B1'
           secureTextEntry={true} />
+
         <TouchableOpacity style={css.login__button} onPress={() =>
           setDisplay('flex')}>
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={css.register_button}>
+          <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
+        </TouchableOpacity>
+
       </View>
     </KeyboardAvoidingView>
   );
