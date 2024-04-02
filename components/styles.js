@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     width: "100%",
     height: 50,
-    fontSize: 19,
+    fontSize: 17,
     paddingHorizontal: 15,
     paddingVertical: 13,
     marginBottom: 30,
