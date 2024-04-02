@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   align_Down: {
     alignItems: "center",
-    marginTop: 90,
+    marginTop: 60,
   },
   social_Container: {
     flexDirection: "row",
