@@ -23,7 +23,7 @@ const handleLogin = () => {
         <Text style={css.text_welcome}>Bem vindo a</Text>
         <Image
           source={require('../assets/logo.png')}
-          style={{ width: 256, height: 41 }}
+          style={css.img_logo}
           resizeMode="contain"
         />
       </View>

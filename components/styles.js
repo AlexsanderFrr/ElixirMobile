@@ -24,6 +24,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     marginBottom: 15,
   },
+  text_newac: {
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    marginBottom: 15,
+  },
+  img_logo: {
+    width: 256, 
+    height: 41
+  },
+  img_logocad: {
+    width: 256, 
+    height: 41,
+    marginBottom: 30,
+  },
   login__msg: (text = "none") => ({
     fontWeight: "bold",
     fontSize: 22,
@@ -65,6 +79,10 @@ const styles = StyleSheet.create({
   align_Down: {
     alignItems: "center",
     marginTop: 60,
+  },
+  align_Top: {
+    alignItems: "center",
+    //marginBottom: 60,
   },
   social_Container: {
     //justifyContent: "space-between",
