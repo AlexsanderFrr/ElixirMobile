@@ -11,14 +11,6 @@ import CadastroScreen from "./components/CadastroScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-    </Tab.Navigator>
-  )
-}
-
 export default function App() {
   return (
     <NavigationContainer>
