@@ -32,7 +32,7 @@ export default function TabRoutes() {
                 name="Perfil"
                 component={PerfilScreen}
                 options={{
-                    tabBarIcon: ({ color, size }) => <Feather name="circle" color={color} size={size} />,
+                    tabBarIcon: ({ color, size }) => <Feather name="user" color={color} size={size} />,
                     tabBarLabel: ""
                 }}
             />
