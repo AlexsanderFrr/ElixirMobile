@@ -100,7 +100,9 @@ const styles = StyleSheet.create({
   scrollView: {
     marginTop: 10,
     marginBottom: 40,
+    height: 250,
   },
+
   juiceItemHorizontal: {
     alignItems: "center",
     marginRight: 30,
