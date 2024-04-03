@@ -13,6 +13,7 @@ export default function TabRoutes() {
             headerShown: false, 
             tabBarShowLabel: false,
             tabBarStyle: {
+                position: "absolute",
                 backgroundColor: '#BB5104',
                 borderTopWidth: 0,
                 borderTopLeftRadius: 20,
