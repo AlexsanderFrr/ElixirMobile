@@ -1,8 +1,21 @@
-//import React, {useState} from "react";
+import React, { useState } from "react";
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
 const CadastroScreen = ({ navigation }) => {
+
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleSignIn = () => {
+        if(username === '' || email === '' || password === ''){
+            alert("Preencha os Campos")
+            return;
+        } else {
+            navigation.navigate('Home')
+        }
+    }
 
     return (
         <KeyboardAvoidingView style={[css.container, css.whitebg]}>
@@ -37,12 +50,12 @@ const CadastroScreen = ({ navigation }) => {
             </View>
 
             <View style={css.cad_form}>
-                <TextInput style={css.cad__input} placeholder='Nome:' placeholderTextColor='#B1B1B1' />
-                <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' />
-                <TextInput style={css.cad__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} />
+                <TextInput style={css.cad__input} placeholder='Nome:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setUsername(text)} />
+                <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setEmail(text)}/>
+                <TextInput style={css.cad__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
 
-                <TouchableOpacity style={css.cad__button}>
-                    <Text style={css.login__buttonText}>Inscrever-se</Text>
+                <TouchableOpacity style={css.cad__button} onPress={handleSignIn}>
+                    <Text style={css.login__buttonText} >Inscrever-se</Text>
                 </TouchableOpacity>
             </View>
 
@@ -52,7 +65,6 @@ const CadastroScreen = ({ navigation }) => {
 
         </KeyboardAvoidingView>
     );
-
 };
 
 export default CadastroScreen;
