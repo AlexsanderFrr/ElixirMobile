@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 25,
     color: "#F5F5F5",
-    fontFamily: "Lora",
+    fontFamily: "sans-serif",
   },
   cad__input: {
     backgroundColor: "#FFFFFF",
