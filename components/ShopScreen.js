@@ -1,6 +1,5 @@
-import React from 'react'
-import { View, Text, KeyboardAvoidingView, StyleSheet } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import React from 'react';
+import { View, Text, KeyboardAvoidingView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const ShopScreen = () => {
 
@@ -11,8 +10,17 @@ const ShopScreen = () => {
         <Text style={styles.textPiece}>Um total de 3 produtos</Text>
       </View>
       <View style={styles.list_item}>
-        <View>
-          
+        <View style={styles.itemCard}>
+          <Image
+            source={require("../assets/garrafa-suco2.png")}
+            style={styles.img_card}
+            resizeMode="contain"
+          />
+          <View style={styles.infoAlign}>
+            <Text style={styles.nameItem}>Suco de Laranja</Text>
+            <Text style={styles.functionItem}>Aumenta a imunidade</Text>
+            <Text style={styles.functionItem}>R$5,00</Text>
+          </View>
         </View>
       </View>
       <View style={styles.findBuy}>
@@ -60,7 +68,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 20,
   },
-  textTotal:{
+  textTotal: {
     fontSize: 24,
     fontWeight: "500",
     marginBottom: 15,
@@ -70,6 +78,25 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 24,
     fontWeight: "600",
+  },
+  list_item: {
+    flex: 1,
+  },
+  itemCard: {
+    flexDirection: 'row'
+  },
+  img_card: {
+    width: 120,
+    height: 140
+  },
+  nameItem: {
+    fontSize: 20,
+    fontWeight: "500"
+  },
+  functionItem: {
+    fontSize: 16,
+    color: "#838181",
+    marginTop: 5,
   }
 })
 
