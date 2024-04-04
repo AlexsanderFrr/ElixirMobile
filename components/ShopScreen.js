@@ -19,7 +19,32 @@ const ShopScreen = () => {
           <View style={styles.infoAlign}>
             <Text style={styles.nameItem}>Suco de Laranja</Text>
             <Text style={styles.functionItem}>Aumenta a imunidade</Text>
-            <Text style={styles.functionItem}>R$5,00</Text>
+            <Text style={styles.priceItem}>R$5,00</Text>
+          </View>
+        </View>
+
+        <View style={styles.itemCard}>
+          <Image
+            source={require("../assets/garrafa-suco4.png")}
+            style={styles.img_card}
+            resizeMode="contain"
+          />
+          <View style={styles.infoAlign}>
+            <Text style={styles.nameItem}>Suco de Laranja</Text>
+            <Text style={styles.functionItem}>Aumenta a imunidade</Text>
+            <Text style={styles.priceItem}>R$5,00</Text>
+          </View>
+        </View>
+        <View style={styles.itemCard}>
+          <Image
+            source={require("../assets/garrafa-suco5.png")}
+            style={styles.img_card}
+            resizeMode="contain"
+          />
+          <View style={styles.infoAlign}>
+            <Text style={styles.nameItem}>Suco de Laranja</Text>
+            <Text style={styles.functionItem}>Aumenta a imunidade</Text>
+            <Text style={styles.priceItem}>R$5,00</Text>
           </View>
         </View>
       </View>
@@ -97,6 +122,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#838181",
     marginTop: 5,
+  },
+  priceItem: {
+    fontSize: 20,
+    fontWeight: "500",
+    color: "#BB5104",
+    marginTop: 40
   }
 })
 
