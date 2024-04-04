@@ -331,9 +331,8 @@ const HomeScreen = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.juiceItemVertical}
-            onPress={
-              () => navigation.navigate("Exibicao", { juice: item }) // Navegação para a tela de detalhes do suco com os dados do suco
-            }
+            onPress={() => navigation.navigate("Exibicao", { name: item.name, function: item.function, image: item.image })}
+
           >
             <View style={styles.juiceItemVertical}>
               <Image
