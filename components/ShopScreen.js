@@ -10,6 +10,11 @@ const ShopScreen = () => {
         <Text style={styles.textJuice}>Sacola de Suco</Text>
         <Text style={styles.textPiece}>Um total de 3 produtos</Text>
       </View>
+      <View style={styles.list_item}>
+        <View>
+          
+        </View>
+      </View>
       <View style={styles.findBuy}>
         <Text style={styles.textTotal}>Total:</Text>
         <TouchableOpacity style={styles.shop_button}>
