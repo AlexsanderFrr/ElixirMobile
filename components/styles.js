@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     display: text,
   }),
   login__form: {
-    flex: 1,
+    //flex: 1,
     width: "100%",
     justifyContent: "center",
     paddingTop: 100,
