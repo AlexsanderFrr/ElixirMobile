@@ -54,8 +54,8 @@ const CadastroScreen = ({ navigation }) => {
                 <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setEmail(text)}/>
                 <TextInput style={css.cad__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
 
-                <TouchableOpacity style={css.cad__button}>
-                    <Text style={css.login__buttonText} onPress={handleSignIn} >Inscrever-se</Text>
+                <TouchableOpacity style={css.cad__button} onPress={handleSignIn}>
+                    <Text style={css.login__buttonText} >Inscrever-se</Text>
                 </TouchableOpacity>
             </View>
 
