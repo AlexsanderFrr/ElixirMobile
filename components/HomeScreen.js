@@ -3,9 +3,21 @@ import { View, Image, TextInput, StyleSheet, ScrollView, FlatList, Text, Touchab
 
 const HomeScreen = () => {
     const [selectedCategory, setSelectedCategory] = useState("Recomendado");
+    const [searchText, setSearchText] = useState("");
+    const [filteredJuices, setFilteredJuices] = useState([]);
 
     const handleCategoryPress = (category) => {
-      setSelectedCategory(category);
+        setSelectedCategory(category);
+        setSearchText(""); // Limpa o texto da pesquisa quando uma categoria é selecionada
+    };
+
+    const handleSearch = (text) => {
+        setSearchText(text);
+        // Filtra os sucos com base no texto de pesquisa
+        const filtered = juices.filter((juice) =>
+            juice.name.toLowerCase().includes(text.toLowerCase())
+        );
+        setFilteredJuices(filtered);
     };
 
     // Dados de exemplo para os sucos
@@ -20,9 +32,29 @@ const HomeScreen = () => {
         { id: 8, name: "Suco de Acerola", function: "Fortalece o sistema imunológico", price: "R$ 7,00", image: require("../assets/garrafa-suco5.png") },
         { id: 9, name: "Suco de Cenoura", function: "Melhora a saúde da pele", price: "R$ 5,00", image: require("../assets/garrafa-suco.png") },
         { id: 10, name: "Suco de Mamão", function: "Auxilia na digestão", price: "R$ 5,00", image: require("../assets/garrafa-suco4.png") },
+        { id: 11, name: "Suco de Aloe Vera", function: "Promove a saúde digestiva", price: "R$ 6,00", image: require("../assets/garrafa-suco.png") },
+        { id: 12, name: "Suco de Gengibre", function: "Alivia náuseas e dores de cabeça", price: "R$ 7,00", image: require("../assets/garrafa-suco2.png") },
+        { id: 13, name: "Suco de Espinafre", function: "Fonte de ferro e antioxidantes", price: "R$ 6,00", image: require("../assets/garrafa-suco4.png") },
+        { id: 14, name: "Suco de Cenoura e Beterraba", function: "Detox e fortalecimento imunológico", price: "R$ 8,00", image: require("../assets/garrafa-suco5.png") },
+        { id: 15, name: "Suco de Maçã Verde", function: "Ajuda na desintoxicação do fígado", price: "R$ 5,00", image: require("../assets/garrafa-suco.png") },
+        { id: 16, name: "Suco de Couve", function: "Rico em nutrientes e antioxidantes", price: "R$ 6,00", image: require("../assets/garrafa-suco2.png") },
+        { id: 17, name: "Suco de Cranberry", function: "Previne infecções do trato urinário", price: "R$ 7,00", image: require("../assets/garrafa-suco4.png") },
+        { id: 18, name: "Suco de Chá Verde", function: "Estimula o metabolismo", price: "R$ 6,00", image: require("../assets/garrafa-suco5.png") },
+        { id: 19, name: "Suco de Pepino", function: "Hidratação e redução da pressão arterial", price: "R$ 5,00", image: require("../assets/garrafa-suco.png") },
+        { id: 20, name: "Suco de Limão Siciliano", function: "Alcaliniza o corpo e aumenta a imunidade", price: "R$ 7,00", image: require("../assets/garrafa-suco2.png") },
+        { id: 21, name: "Suco de Morango com Hortelã", function: "Refrescante e rico em vitamina C", price: "R$ 8,00", image: require("../assets/garrafa-suco4.png") },
+        { id: 22, name: "Suco de Pera com Canela", function: "Digestivo e anti-inflamatório", price: "R$ 7,00", image: require("../assets/garrafa-suco5.png") },
+        { id: 23, name: "Suco de Manga", function: "Rico em vitamina A e antioxidantes", price: "R$ 6,00", image: require("../assets/garrafa-suco.png") },
+        { id: 24, name: "Suco de Caju", function: "Fortalece o sistema imunológico", price: "R$ 5,00", image: require("../assets/garrafa-suco2.png") },
+        { id: 25, name: "Suco de Maracujá", function: "Calma e relaxa o corpo", price: "R$ 5,00", image: require("../assets/garrafa-suco4.png") },
+        { id: 26, name: "Suco de Melão", function: "Hidratação e regulação da pressão arterial", price: "R$ 6,00", image: require("../assets/garrafa-suco5.png") },
+        { id: 27, name: "Suco de Framboesa", function: "Fonte de fibras e antioxidantes", price: "R$ 7,00", image: require("../assets/garrafa-suco.png") },
+        { id: 28, name: "Suco de Kiwi", function: "Fortalece o sistema imunológico", price: "R$ 6,00", image: require("../assets/garrafa-suco2.png") },
+        { id: 29, name: "Suco de Pêssego", function: "Promove a saúde da pele", price: "R$ 5,00", image: require("../assets/garrafa-suco4.png") },
+        { id: 30, name: "Suco de Beterraba", function: "Aumenta a resistência física e combate a anemia", price: "R$ 6,00", image: require("../assets/garrafa-suco5.png") },
       ];
 
-      return (
+    return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image
@@ -35,6 +67,8 @@ const HomeScreen = () => {
                         style={styles.searchInput}
                         placeholder="🔍 Pesquisar..."
                         placeholderTextColor="#838181"
+                        value={searchText}
+                        onChangeText={handleSearch}
                     />
                 </View>
             </View>
@@ -52,23 +86,25 @@ const HomeScreen = () => {
                 ))}
             </View>
 
-            {/* ScrollView horizontal para as indicações de sucos */}
-            <ScrollView horizontal style={styles.scrollView}>
-                {juices.map((juice) => (
-                    <View key={juice.id} style={styles.juiceItemHorizontal}>
-                        <Image source={juice.image} style={styles.juiceImageHorizontal} resizeMode="contain" />
-                        <Text style={styles.juiceNameHorizontal}>{juice.name}</Text>
-                    </View>
-                ))}
-            </ScrollView>
+            {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
+            {searchText === "" && (
+                <ScrollView horizontal style={styles.scrollView}>
+                    {juices.map((juice) => (
+                        <View key={juice.id} style={styles.juiceItemHorizontal}>
+                            <Image source={juice.image} style={styles.juiceImageHorizontal} resizeMode="contain" />
+                            <Text style={styles.juiceNameHorizontal}>{juice.name}</Text>
+                        </View>
+                    ))}
+                </ScrollView>
+            )}
 
             {/* Linha separadora */}
             <View style={styles.separator} />
             <Text style={styles.catalogText}>Catálogo</Text>
 
-            {/* FlatList para todos os sucos */}
+            {/* FlatList para todos os sucos ou sucos filtrados */}
             <FlatList
-                data={juices}
+                data={searchText === "" ? juices : filteredJuices}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.juiceItemVertical}>
