@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     display: text,
   }),
   login__form: {
-    flex: 1,
+    //flex: 1,
     width: "100%",
     justifyContent: "center",
     paddingTop: 100,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 25,
     color: "#F5F5F5",
-    fontFamily: "Lora",
+    fontFamily: "sans-serif",
   },
   cad__input: {
     backgroundColor: "#FFFFFF",
