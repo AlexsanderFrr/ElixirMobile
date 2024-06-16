@@ -4,16 +4,41 @@ import css from './styles';
 
 const CadastroScreen = ({ navigation }) => {
 
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handleSignIn = () => {
+    const handleSignIn = async () => {
         if(username === '' || email === '' || password === ''){
-            alert("Preencha os Campos")
+            alert("Preencha os Campos");
             return;
-        } else {
-            navigation.navigate('Home')
+        } 
+        
+        try {
+            const response = await fetch('https://elixir-backend-60fb.onrender.com/usuario/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: username,
+                    email: email,
+                    senha: password
+                })
+            });
+
+            const data = await response.json();
+
+            if(response.status === 200){
+                alert(data.message);
+                navigation.navigate('Home');
+            } else {
+                alert(data.error);
+            }
+
+        } catch (error) {
+            alert("Ocorreu um erro ao cadastrar. Tente novamente.");
+            console.error(error);
         }
     }
 
