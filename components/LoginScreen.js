@@ -18,7 +18,9 @@ const LoginScreen = ({ navigation }) => {
   })
 
   const handleLogin = (data) => {
-    console.log(data);
+    if(email == 'carlos@gmail.com' && password == '123456'){
+      
+    }
   }
 
   return (
@@ -61,8 +63,8 @@ const LoginScreen = ({ navigation }) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={[css.login__input, {
-                borderWidth: errors.email && 1,
-                borderColor: errors.email && '#ff375b'
+                borderWidth: errors.password && 1,
+                borderColor: errors.password && '#ff375b'
               }]}
               placeholder='Senha:' 
               placeholderTextColor='#B1B1B1'
