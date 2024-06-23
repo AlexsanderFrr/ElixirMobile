@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.email && 1,
-                borderColor: errors.email && '#ff375b'
+                borderColor: errors.email && '#eb0909'
               }]}
               placeholder='Email:' placeholderTextColor='#B1B1B1'
               onChangeText={(text) => onChange(text)}
@@ -63,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.password && 1,
-                borderColor: errors.password && '#ff375b'
+                borderColor: errors.password && '#eb0909'
               }]}
               placeholder='Senha:'
               placeholderTextColor='#B1B1B1'

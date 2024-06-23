@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   labelError: {
     alignSelf: 'flex-start',
-    color: '#ff375b',
+    color: '#eb0909',
     fontWeight: '700',
     marginBottom: 11
   },
