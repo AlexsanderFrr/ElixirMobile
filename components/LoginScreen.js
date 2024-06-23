@@ -18,9 +18,10 @@ const LoginScreen = ({ navigation }) => {
   })
 
   const handleLogin = () => {
-    if (email == 'carlos@gmail.com' && password == '123456') {
+    if (email === 'carlos@gmail.com' && password === '123456') {
       navigation.navigate('Home');
     }
+    setDisplay('Erro')
   }
 
   return (
