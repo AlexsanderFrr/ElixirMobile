@@ -12,11 +12,31 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
+  logo_cadastro: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   whitebg: {
     backgroundColor: "white",
   },
-  login__logomarca: {
-    marginBottom: 10,
+  text_welcome: {
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    marginBottom: 15,
+  },
+  text_newac: {
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    marginBottom: 15,
+  },
+  img_logo: {
+    width: 256, 
+    height: 41
+  },
+  img_logocad: {
+    width: 256, 
+    height: 41,
+    marginBottom: 40,
   },
   labelError: {
     alignSelf: 'flex-start',
@@ -29,6 +49,12 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     paddingTop: 100,
+  },
+  cad_form: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    paddingBottom: 40,
   },
   login__input: {
     backgroundColor: "#FFFFFF",
@@ -54,18 +80,48 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 25,
     color: "#F5F5F5",
-    fontFamily: "Lora",
+    fontFamily: "sans-serif",
+  },
+  cad__input: {
+    backgroundColor: "#FFFFFF",
+    width: "100%",
+    height: 50,
+    fontSize: 17,
+    paddingHorizontal: 15,
+    paddingVertical: 13,
+    marginBottom: 30,
+    borderWidth: 1.5,
+    borderColor: "#FFB100",
+    borderRadius: 10,
+  },
+  cad__button: {
+    width: "100%",
+    padding: 12,
+    backgroundColor: "#BB5104",
+    alignItems: "center",
+    borderRadius: 10,
+    //marginTop: 40,
   },
   align_Down: {
     alignItems: "center",
     marginTop: 60,
   },
+  align_Top: {
+    alignItems: "center",
+    //marginBottom: 60,
+  },
   social_Container: {
+    //justifyContent: "space-between",
     flexDirection: "row",
     marginTop: 15,
   },
+  social_ContainerCad: {
+    //justifyContent: "space-between",
+    flexDirection: "row",
+    marginBottom: 15,
+  },
   register_button: {
-    marginTop: 20,
+    marginTop: 30,
   },
   register_buttonText: {
     fontSize: 16,

@@ -25,10 +25,10 @@ const LoginScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
       <View style={[css.logo_login]}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 15 }}>Bem vindo a</Text>
+        <Text style={css.text_welcome}>Bem vindo a</Text>
         <Image
           source={require('../assets/logo.png')}
-          style={{ width: 256, height: 41 }}
+          style={css.img_logo}
           resizeMode="contain"
         />
       </View>
@@ -91,7 +91,7 @@ const LoginScreen = ({ navigation }) => {
             />
             <Image
               source={require('../assets/googleAcess.png')}
-              //style={{ width: 45, height: 41 }}
+              //style={{ maxWidth: 40, height: 41 }}
               resizeMode="contain"
             />
             <Image
@@ -101,7 +101,7 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity style={css.register_button}>
+          <TouchableOpacity style={css.register_button} onPress={() => {navigation.navigate('Cadastro')}}>
             <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
           </TouchableOpacity>
 
