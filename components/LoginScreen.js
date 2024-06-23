@@ -17,11 +17,9 @@ const LoginScreen = ({ navigation }) => {
     resolver: yupResolver(schema)
   })
 
-  const handleLogin = () => {
-    if (email === 'carlos@gmail.com' && password === '123456') {
-      navigation.navigate('Home');
-    }
-    setDisplay('Erro')
+  const handleLogin = (data) => {
+    console.log(data);
+    navigation.navigate('Home');
   }
 
   return (
