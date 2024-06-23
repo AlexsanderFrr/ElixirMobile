@@ -59,7 +59,11 @@ const LoginScreen = ({ navigation }) => {
           control={control}
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput style={css.login__input} 
+            <TextInput
+              style={[css.login__input, {
+                borderWidth: errors.email && 1,
+                borderColor: errors.email && '#ff375b'
+              }]}
               placeholder='Senha:' 
               placeholderTextColor='#B1B1B1'
               secureTextEntry={true}

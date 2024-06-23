@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: '#ff375b',
     fontWeight: '700',
-    marginBottom: 8
+    marginBottom: 11
   },
   login__form: {
     //flex: 1,
