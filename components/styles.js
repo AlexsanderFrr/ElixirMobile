@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
   login__logomarca: {
     marginBottom: 10,
   },
-  login__msg: (text = "none") => ({
-    fontWeight: "bold",
-    fontSize: 22,
-    color: "red",
-    display: text,
-  }),
+  labelError: {
+    alignSelf: 'flex-start',
+    color: '#ff375b',
+    fontWeight: '700',
+    marginBottom: 8
+  },
   login__form: {
     //flex: 1,
     width: "100%",
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingHorizontal: 15,
     paddingVertical: 13,
-    marginBottom: 30,
+    marginBottom: 20,
     borderWidth: 1.5,
     borderColor: "#FFB100",
     borderRadius: 10,
