@@ -8,7 +8,7 @@ import * as yup from 'yup'
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
-  password: yup.string().min(6, "A senha deve ter pelo menos 8 digitos").required("Informe sua senha")
+  password: yup.string().min(6, "A senha deve ter pelo menos 6 digitos").required("Informe sua senha")
 })
 
 const LoginScreen = ({ navigation }) => {
@@ -17,9 +17,9 @@ const LoginScreen = ({ navigation }) => {
     resolver: yupResolver(schema)
   })
 
-  const handleLogin = (data) => {
-    if(email == 'carlos@gmail.com' && password == '123456'){
-      
+  const handleLogin = () => {
+    if (email == 'carlos@gmail.com' && password == '123456') {
+      navigation.navigate('Home');
     }
   }
 
@@ -66,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
                 borderWidth: errors.password && 1,
                 borderColor: errors.password && '#ff375b'
               }]}
-              placeholder='Senha:' 
+              placeholder='Senha:'
               placeholderTextColor='#B1B1B1'
               secureTextEntry={true}
               onChangeText={(text) => onChange(text)}
