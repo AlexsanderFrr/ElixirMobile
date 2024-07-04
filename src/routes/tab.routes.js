@@ -40,9 +40,9 @@ export default function TabRoutes() {
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {
                         if(focused){
-                            return <Ionicons name="bag-handle-outline" color={"#F5F5F5"} size={size} />
+                            return <Ionicons name="add-circle-outline" color={"#F5F5F5"} size={size} />
                         }
-                        return <Ionicons name="bag-handle" color={color} size={size} />
+                        return <Ionicons name="add-circle" color={color} size={size} />
                     }
                 }}
             />
