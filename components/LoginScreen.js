@@ -38,6 +38,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 30 }}>Faça login na sua conta</Text>
         </View>
 
+        {errors.email && <Text style={css.labelError}>{errors.email?.message}</Text>}
         <Controller
           control={control}
           name="email"
@@ -54,8 +55,8 @@ const LoginScreen = ({ navigation }) => {
             />
           )}
         />
-        {errors.email && <Text style={css.labelError}>{errors.email?.message}</Text>}
-
+        
+        {errors.password && <Text style={css.labelError}>{errors.password?.message}</Text>}
         <Controller
           control={control}
           name="password"
@@ -74,7 +75,6 @@ const LoginScreen = ({ navigation }) => {
             />
           )}
         />
-        {errors.password && <Text style={css.labelError}>{errors.password?.message}</Text>}
 
         <TouchableOpacity style={css.login__button} onPress={handleSubmit(handleLogin)}>
           <Text style={css.login__buttonText}>Entrar</Text>
