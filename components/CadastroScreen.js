@@ -15,7 +15,7 @@ const CadastroScreen = ({ navigation }) => {
         } 
         
         try {
-            const response = await fetch('http://localhost:8082/usuario/add', {
+            const response = await fetch('https://elixir-backend-60fb.onrender.com/usuario/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
