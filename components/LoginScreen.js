@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
@@ -6,21 +6,19 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 
+import { AuthContext } from '../src/context/authContext';
+
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
   password: yup.string().min(6, "A senha deve ter pelo menos 6 digitos").required("Informe sua senha")
 })
 
 const LoginScreen = ({ navigation }) => {
+  const {login} = useContext(AuthContext);
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
-
-  const handleLogin = (data) => {
-    console.log(data);
-    navigation.navigate('Home');
-  }
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
@@ -55,7 +53,7 @@ const LoginScreen = ({ navigation }) => {
             />
           )}
         />
-        
+
         {errors.password && <Text style={css.labelError}>{errors.password?.message}</Text>}
         <Controller
           control={control}
@@ -76,7 +74,7 @@ const LoginScreen = ({ navigation }) => {
           )}
         />
 
-        <TouchableOpacity style={css.login__button} onPress={handleSubmit(handleLogin)}>
+        <TouchableOpacity style={css.login__button} onPress={handleSubmit(login)}>
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
@@ -101,7 +99,7 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity style={css.register_button} onPress={() => {navigation.navigate('Cadastro')}}>
+          <TouchableOpacity style={css.register_button} onPress={() => { navigation.navigate('Cadastro') }}>
             <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
           </TouchableOpacity>
 
