@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 100,
     borderWidth: 2,
-    borderColor: "#BB5104",
+    borderColor: "#000000",
     overflow: "hidden"
   },
   dm: {
