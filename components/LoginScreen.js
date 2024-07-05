@@ -16,9 +16,9 @@ const schema = yup.object({
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const {login} = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
 
@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="email"
-          render={({ field: { onChange, onBlur } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.email && 1,
@@ -60,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="password"
-          render={({ field: { onChange, onBlur } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.password && 1,
@@ -76,7 +76,9 @@ const LoginScreen = ({ navigation }) => {
           )}
         />
 
-        <TouchableOpacity style={css.login__button} onPress={handleSubmit(login)}>
+        <TouchableOpacity style={css.login__button} onPress={() => {
+          login(email, password)
+        }}>
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
