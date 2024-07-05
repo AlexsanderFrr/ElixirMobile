@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useEffect, useState } from "react";
+import { BASE_URL } from "../config";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -9,8 +11,19 @@ export const AuthProvider = ({ children }) => {
 
     const login = () => {
         setIsLoading(true);
-        setUserToken('dkdkdkdkdk');
-        AsyncStorage.setItem('userToken', 'dkdkdkdkdk');
+        axios.post(`${BASE_URL}/usuario/login`, {
+            email,
+            password
+        })
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(e => {
+            console.log(`Login error ${e}`);
+        });
+
+        // setUserToken('dkdkdkdkdk');
+        // AsyncStorage.setItem('userToken', 'dkdkdkdkdk');
         setIsLoading(false);
     }
 
