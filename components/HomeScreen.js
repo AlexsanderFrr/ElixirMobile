@@ -277,7 +277,7 @@ const HomeScreen = () => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="🔍 Pesquisar..."
+            placeholder="🔍   Pesquisar..."
             placeholderTextColor="#838181"
             value={searchText}
             onChangeText={handleSearch}
@@ -369,33 +369,34 @@ const styles = StyleSheet.create({
     height: "20%",
     backgroundColor: "#BB5104",
     //paddingVertical: 30,
-    //paddingHorizontal: 40,
-    alignItems: "center",
-    justifyContent: "center",
+    paddingHorizontal: 30,
+    //alignItems: "center",
+    //justifyContent: "center",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
   logo: {
     width: 200,
     height: 30,
-    marginLeft: 30,
   },
   firstGroup: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //marginTop: 30,
+    marginTop: 40,
     //marginHorizontal: 30
   },
   searchContainer: {
     width: "100%",
-    marginTop: 20,
+    marginTop: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
-    paddingHorizontal: 15,
+    
   },
   searchInput: {
+    width: "100%",
     height: 40,
     color: "#838181",
+    paddingHorizontal: 15,
   },
   navigationBar: {
     flexDirection: "row",
