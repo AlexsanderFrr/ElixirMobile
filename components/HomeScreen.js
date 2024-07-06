@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons'
 import {
   View,
   Image,
@@ -263,13 +264,16 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-        <StatusBar backgroundColor="#BB5104" />
+      <StatusBar backgroundColor="#BB5104" />
       <View style={styles.header}>
-        <Image
-          source={require("../assets/logo-branco.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
+        <View style={styles.firstGroup}>
+          <Image
+            source={require("../assets/logo-branco.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Ionicons name="chatbox" size={30} color={"#fff"}></Ionicons>
+        </View>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -362,18 +366,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4DEAA",
   },
   header: {
+    height: "20%",
     backgroundColor: "#BB5104",
-    paddingVertical: 25,
-    paddingHorizontal: 30,
+    //paddingVertical: 30,
+    //paddingHorizontal: 40,
     alignItems: "center",
     justifyContent: "center",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
   logo: {
-    width: 180,
+    width: 200,
     height: 30,
-    marginLeft: -150,
+    marginLeft: 30,
+  },
+  firstGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    //marginTop: 30,
+    //marginHorizontal: 30
   },
   searchContainer: {
     width: "100%",
