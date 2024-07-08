@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons'
 import {
   View,
   Image,
@@ -263,17 +264,20 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-        <StatusBar backgroundColor="#BB5104" />
+      <StatusBar backgroundColor="#BB5104" />
       <View style={styles.header}>
-        <Image
-          source={require("../assets/logo-branco.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
+        <View style={styles.firstGroup}>
+          <Image
+            source={require("../assets/logo-branco.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Ionicons name="chatbubble-ellipses-outline" size={30} color={"#fff"}></Ionicons>
+        </View>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="🔍 Pesquisar..."
+            placeholder="🔍   Pesquisar..."
             placeholderTextColor="#838181"
             value={searchText}
             onChangeText={handleSearch}
@@ -281,6 +285,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
+      <View>
       {/* Barra de navegação */}
       <View style={styles.navigationBar}>
         {["Recomendado", "Detox", "Medicinal"].map((category) => (
@@ -319,7 +324,8 @@ const HomeScreen = () => {
           ))}
         </ScrollView>
       )}
-
+      </View>
+      
       {/* Linha separadora */}
       <View style={styles.separator} />
       <Text style={styles.catalogText}>Catálogo</Text>
@@ -362,29 +368,37 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4DEAA",
   },
   header: {
+    height: "20%",
     backgroundColor: "#BB5104",
-    paddingVertical: 25,
+    //paddingVertical: 30,
     paddingHorizontal: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    //alignItems: "center",
+    //justifyContent: "center",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
   logo: {
-    width: 180,
+    width: 200,
     height: 30,
-    marginLeft: -150,
+  },
+  firstGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 40,
+    //marginHorizontal: 30
   },
   searchContainer: {
     width: "100%",
-    marginTop: 20,
+    marginTop: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
-    paddingHorizontal: 15,
+    
   },
   searchInput: {
+    width: "100%",
     height: 40,
     color: "#838181",
+    paddingHorizontal: 15,
   },
   navigationBar: {
     flexDirection: "row",
@@ -408,35 +422,36 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginTop: 10, // Ajuste conforme necessário para evitar a sobreposição com a barra de navegação
-    marginBottom: 40,
-    height: 250,
+    height: "100%",
+    marginLeft: 30
   },
   juiceItemHorizontal: {
     alignItems: "center",
-    marginRight: 25,
-    marginBottom: 20,
-    height: 150,
+    marginRight: 30,
+    marginBottom: 30,
   },
   juiceImageHorizontal: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 100,
   },
   juiceNameHorizontal: {
+    fontWeight: 500,
     fontSize: 16,
     marginTop: 5,
     textAlign: "center",
   },
   separator: {
-    height: 1,
+    height: 0.5,
     width: "100%",
     backgroundColor: "#838181",
   },
   catalogText: {
-    fontSize: 23,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "700",
     alignSelf: "flex-start",
-    marginLeft: 50,
-    marginTop: 10,
+    marginLeft: 30,
+    marginTop: 30,
+    marginBottom: 20
   },
   juiceItemVertical: {
     flexDirection: "row",
