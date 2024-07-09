@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons'
 
 const ExibicaoScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -9,64 +10,51 @@ const ExibicaoScreen = ({ route }) => {
   const { name, function: juiceFunction, image } = route.params;
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* Barra de notificações com a mesma cor do cabeçalho */}
+    <View style={styles.container}>
       <StatusBar backgroundColor="#BB5104" />
 
-      {/* Cabeçalho */}
       <View style={styles.header}>
-        {/* Botão de voltar */}
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backButton}>◀</Text>
+          <Ionicons name='arrow-back' size={40} color={"#fff"}></Ionicons>
         </TouchableOpacity>
-
-        {/* Título da tela */}
-        <Text style={styles.title}>Detalhes do Suco</Text>
-
-        {/* Espaço vazio para alinhar o título */}
-        <View style={{ flex: 1 }} />
+        <TouchableOpacity>
+          <Ionicons name='notifications-outline' size={40} color={"#fff"}></Ionicons>
+        </TouchableOpacity>
       </View>
 
-      {/* Conteúdo da tela */}
-      <View style={styles.container}>
-        {/* Container para os textos */}
+      <View style={styles.main}>
         <View style={styles.textContainer}>
-          {/* Nome do suco */}
           <Text style={styles.name}>{name}</Text>
-
-          {/* Função do suco */}
-          <Text style={styles.function}>{juiceFunction}</Text>
         </View>
-
-        {/* Imagem do suco */}
         <Image source={image} style={styles.image} />
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F4DEAA",
+  },
   header: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    padding: 10,
+    paddingTop: 30,
+    paddingHorizontal: 30,
     backgroundColor: "#BB5104",
-  },
-  backButton: {
-    color: "#F4DEAA",
-    fontSize: 35,
+    height: "25%"
   },
   title: {
     color: "#F4DEAA",
     fontSize: 18,
   },
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 50,
-    backgroundColor: "#F4DEAA",
+  main: {
+    backgroundColor: "#8572FF",
+    height: "75%",
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40
   },
   textContainer: {
     flex: 1,
