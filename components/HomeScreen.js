@@ -336,7 +336,7 @@ const HomeScreen = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.juiceItemVertical}
+            style={styles.juiceButtonItemVertical}
             onPress={() => navigation.navigate("Exibicao", { name: item.name, function: item.function, image: item.image })}
 
           >
@@ -348,9 +348,7 @@ const HomeScreen = () => {
               />
               <View style={styles.juiceInfoVertical}>
                 <Text style={styles.juiceNameVertical}>{item.name}</Text>
-                <Text style={styles.juiceFunctionVertical}>
-                  {item.function}
-                </Text>
+                <Text style={styles.juiceFunctionVertical}>{item.function}</Text>
                 <Text style={styles.juicePriceVertical}>{item.price}</Text>
               </View>
             </View>
@@ -455,19 +453,18 @@ const styles = StyleSheet.create({
   },
   juiceItemVertical: {
     flexDirection: "row",
+    //justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 5,
+    marginVertical: 20,
+    marginHorizontal: 20,
     borderRadius: 10,
-    backgroundColor: "#F4DEAA",
   },
   juiceImageVertical: {
     width: 120,
     height: 120,
-    marginRight: 5,
   },
   juiceInfoVertical: {
-    flex: 1,
-    marginRight: 10,
+    marginLeft: 15,
   },
   juiceNameVertical: {
     fontSize: 18,
@@ -476,6 +473,7 @@ const styles = StyleSheet.create({
   },
   juiceFunctionVertical: {
     fontSize: 14,
+    marginBottom: 5,
   },
   juicePriceVertical: {
     fontSize: 15,
