@@ -89,46 +89,46 @@ const HomeScreen = () => {
       </View>
 
       <View>
-      {/* Barra de navegação */}
-      <View style={styles.navigationBar}>
-        {["Recomendado", "Detox", "Medicinal"].map((category) => (
-          <TouchableOpacity
-            key={category}
-            style={[
-              styles.categoryItem,
-              selectedCategory === category && styles.selectedCategoryItem,
-            ]}
-            onPress={() => handleCategoryPress(category)}
-          >
-            <Text
+        {/* Barra de navegação */}
+        <View style={styles.navigationBar}>
+          {["Recomendado", "Detox", "Medicinal"].map((category) => (
+            <TouchableOpacity
+              key={category}
               style={[
-                styles.categoryText,
-                selectedCategory === category && styles.selectedCategoryText,
+                styles.categoryItem,
+                selectedCategory === category && styles.selectedCategoryItem,
               ]}
+              onPress={() => handleCategoryPress(category)}
             >
-              {category}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text
+                style={[
+                  styles.categoryText,
+                  selectedCategory === category && styles.selectedCategoryText,
+                ]}
+              >
+                {category}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
+        {!searchText && (
+          <ScrollView horizontal style={styles.scrollView}>
+            {filteredCategoryJuices().map((juice) => (
+              <View key={juice.id} style={styles.juiceItemHorizontal}>
+                <Image
+                  source={juice.image}
+                  style={styles.juiceImageHorizontal}
+                  resizeMode="contain"
+                />
+                <Text style={styles.juiceNameHorizontal}>{juice.nome}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        )}
       </View>
 
-      {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
-      {!searchText && (
-        <ScrollView horizontal style={styles.scrollView}>
-          {filteredCategoryJuices().map((juice) => (
-            <View key={juice.id} style={styles.juiceItemHorizontal}>
-              <Image
-                source={juice.image}
-                style={styles.juiceImageHorizontal}
-                resizeMode="contain"
-              />
-              <Text style={styles.juiceNameHorizontal}>{juice.name}</Text>
-            </View>
-          ))}
-        </ScrollView>
-      )}
-      </View>
-      
       {/* Linha separadora */}
       <View style={styles.separator} />
       <Text style={styles.catalogText}>Catálogo</Text>
@@ -150,9 +150,9 @@ const HomeScreen = () => {
                 resizeMode="contain"
               />
               <View style={styles.juiceInfoVertical}>
-                <Text style={styles.juiceNameVertical}>{item.name}</Text>
-                <Text style={styles.juiceFunctionVertical}>{item.function}</Text>
-                <Text style={styles.juicePriceVertical}>{item.price}</Text>
+                <Text style={styles.juiceNameVertical}>{item.nome}</Text>
+                <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>
+                <Text style={styles.juicePriceVertical}>{item.img1}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
-    
+
   },
   searchInput: {
     width: "100%",
