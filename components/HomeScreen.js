@@ -51,6 +51,36 @@ const HomeScreen = () => {
     setFilteredJuices(filtered);
   };
 
+  const juices = [
+    {
+      image: require("../assets/garrafa-suco2.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco4.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco5.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco4.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco2.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco5.png"),
+    },
+    {
+      image: require("../assets/garrafa-suco.png"),
+    }
+  ];
+
   // Filtra os sucos com base na categoria selecionada
   const filteredCategoryJuices = () => {
     switch (selectedCategory) {
