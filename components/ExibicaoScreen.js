@@ -27,14 +27,14 @@ const ExibicaoScreen = ({ route }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.temp}>
-        <Text style={styles.textTemp}>Pronto em 3 - 5 min</Text>
-      </View>
-
       <View style={styles.main}>
 
+        <View style={styles.temp}>
+          <Text style={styles.textTemp}>Pronto em 3 - 5 min</Text>
+        </View>
+
         <View>
-          <Text style={styles.nameJuice}>Suco de Limão</Text>
+          <Text style={styles.nameJuice}>Suco de chá verde</Text>
           <View style={styles.propertyJuice}>
             <Text style={styles.textProperty}>Imunidade</Text>
             <Text style={styles.textProperty}>detox</Text>
@@ -43,15 +43,41 @@ const ExibicaoScreen = ({ route }) => {
         </View>
 
         <View style={styles.itensContainer}>
-          <Text>Ingredientes:</Text>
+          <Text style={styles.titleIngredient}>Ingredientes:</Text>
+          <View style={styles.ingredient}>
+            <View>
+              <Image source={require("../assets/cenoura.png")} style={{ marginRight: 30 }} />
+              <Text>Cenoura</Text>
+            </View>
+
+            <View>
+              <Image source={require("../assets/agua.png")} style={{ marginRight: 30 }} />
+              <Text>Aguá</Text>
+            </View>
+
+            <View>
+              <Image source={require("../assets/limao.png")} style={{ marginRight: 30 }} />
+              <Text>Limão</Text>
+            </View>
+
+            <View>
+              <Image source={require("../assets/gengibre.png")} style={{ marginRight: 30 }} />
+              <Text>Gengibre</Text>
+            </View>
+
+            <View>
+              <Image source={require("../assets/mel.png")} style={{ marginRight: 30 }} />
+              <Text>Mel</Text>
+            </View>
+          </View>
         </View>
 
         <View style={styles.benefContainer}>
-          <Text>Benefícios:</Text>
+          <Text style={styles.titleBenefits}>Benefícios:</Text>
+          <Text style={styles.benefitsInfo}>Hidratação e Nutrição da Pele, Desintoxicação Natural, Melhora a Digestão, Regulação do Açúcar no Sangue, Melhora da Performance Mental.</Text>
         </View>
 
       </View>
-
     </View>
   );
 };
@@ -59,7 +85,6 @@ const ExibicaoScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4DEAA",
   },
   imageHeader: {
     height: "25%",
@@ -74,19 +99,17 @@ const styles = StyleSheet.create({
     height: "25%",
     width: "100%"
   },
-  title: {
-    color: "#F4DEAA",
-    fontSize: 18,
-  },
   temp: {
     justifyContent: "center",
     alignItems: "center",
-    //position: "absolute"
+    //position: "absolute",
   },
   textTemp: {
     backgroundColor: "#fff",
     fontWeight: "600",
     fontSize: 15,
+    position: "absolute",
+    bottom: 15,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 10
@@ -117,6 +140,32 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 5,
     marginRight: 15,
+  },
+  itensContainer: {
+    marginTop: 30
+  },
+  titleIngredient: {
+    marginBottom: 30,
+    fontSize: 24,
+    fontWeight: "600",
+    textTransform: "uppercase"
+  },
+  ingredient: {
+    flexDirection: "row",
+  },
+  benefContainer: {
+    marginTop: 30
+  },
+  titleBenefits: {
+    fontSize: 24,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    marginBottom: 15
+  },
+  benefitsInfo: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "600",
   },
   function: {
     fontSize: 16,
