@@ -32,11 +32,14 @@ const ExibicaoScreen = ({ route }) => {
       </View>
 
       <View style={styles.main}>
-        <View style={styles.textTopMainContainer}>
-          <Text style={styles.name}>Chá Verde</Text>
-          <Text>Imunidade</Text>
-          <Text>detox</Text>
-          <Text>frutas & verduras</Text>
+
+        <View>
+          <Text style={styles.nameJuice}>Suco de Limão</Text>
+          <View style={styles.propertyJuice}>
+            <Text style={styles.textProperty}>Imunidade</Text>
+            <Text style={styles.textProperty}>detox</Text>
+            <Text style={styles.textProperty}>frutas & verduras</Text>
+          </View>
         </View>
 
         <View style={styles.itensContainer}>
@@ -82,27 +85,38 @@ const styles = StyleSheet.create({
   },
   textTemp: {
     backgroundColor: "#fff",
-    fontWeight: "700",
+    fontWeight: "600",
     fontSize: 15,
-    paddingHorizontal: 6,
+    paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 10
   },
   main: {
-    backgroundColor: "#8572FF",
+    backgroundColor: "#BB5104",
     height: "75%",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
     paddingVertical: 25,
     paddingHorizontal: 30,
   },
-  textTopMainContainer: {
-
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: "bold",
+  nameJuice: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "600",
     marginBottom: 10,
+  },
+  propertyJuice: {
+    flexDirection: "row",
+  },
+  textProperty: {
+    color: "#DC9B00",
+    backgroundColor: "#F4DEAA",
+    fontSize: 16,
+    fontWeight: "600",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginRight: 15,
   },
   function: {
     fontSize: 16,
