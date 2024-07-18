@@ -46,7 +46,7 @@ const HomeScreen = () => {
     setSearchText(text);
     // Filtra os sucos com base no texto de pesquisa
     const filtered = juices.filter((juice) =>
-      juice.name.toLowerCase().includes(text.toLowerCase())
+      juice.nome.toLowerCase().includes(text.toLowerCase())
     );
     setFilteredJuices(filtered);
   };
@@ -63,6 +63,15 @@ const HomeScreen = () => {
       default:
         return [];
     }
+  };
+
+  // Mapear suco para imagens locais
+  const juiceImages = {
+    "garrafa-suco": require('../assets/garrafa-suco.png')
+  };
+
+  const getImageSource = (juiceName) => {
+    return juiceImages[juiceName] || require('../assets/imgExibicaoProv.png');
   };
 
   return (
@@ -118,7 +127,7 @@ const HomeScreen = () => {
             {filteredCategoryJuices().map((juice) => (
               <View key={juice.id} style={styles.juiceItemHorizontal}>
                 <Image
-                  source={juice.image}
+                  source={getImageSource(juice.name)}
                   style={styles.juiceImageHorizontal}
                   resizeMode="contain"
                 />
@@ -145,14 +154,14 @@ const HomeScreen = () => {
           >
             <View style={styles.juiceItemVertical}>
               <Image
-                source={item.image}
+                source={getImageSource(item.name)}
                 style={styles.juiceImageVertical}
                 resizeMode="contain"
               />
               <View style={styles.juiceInfoVertical}>
                 <Text style={styles.juiceNameVertical}>{item.nome}</Text>
                 <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>
-                <Text style={styles.juicePriceVertical}>{item.img1}</Text>
+                {/* {<Text style={styles.juicePriceVertical}>{item.ingredientes}</Text>} */}
               </View>
             </View>
           </TouchableOpacity>
