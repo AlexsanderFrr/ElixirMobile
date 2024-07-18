@@ -7,7 +7,7 @@ const ExibicaoScreen = ({ route }) => {
   const navigation = useNavigation();
 
   // Extrair as informações do suco da rota
-  const { name, function: juiceFunction, image } = route.params;
+  const { nome, function: juiceFunction, image } = route.params;
 
   return (
     <View style={styles.container}>
@@ -22,11 +22,24 @@ const ExibicaoScreen = ({ route }) => {
         </TouchableOpacity>
       </View>
 
+      <Text>Pronto em 3 - 5 min</Text>
+
       <View style={styles.main}>
-        <View style={styles.textContainer}>
-          <Text style={styles.name}>{name}</Text>
+        <View style={styles.textTopMainContainer}>
+          <Text style={styles.name}>Chá Verde</Text>
+          <Text>Imunidade</Text>
+          <Text>detox</Text>
+          <Text>frutas & verduras</Text>
         </View>
-        <Image source={image} style={styles.image} />
+
+        <View style={styles.itensContainer}>
+          <Text>Ingredientes:</Text>
+        </View>
+
+        <View style={styles.benefContainer}>
+          <Text>Benefícios:</Text>
+        </View>
+
       </View>
 
     </View>
@@ -56,9 +69,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40
   },
-  textContainer: {
-    flex: 1,
-    marginRight: 20,
+  textTopMainContainer: {
+    
   },
   name: {
     fontSize: 20,
