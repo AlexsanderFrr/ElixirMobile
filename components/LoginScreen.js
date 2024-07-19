@@ -81,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={css.align_Down}>
-          <Text style={{ color: "#838181", fontSize: 17 }}>Entre com rede social</Text>
+          <Text style={{ color: "#838181", fontSize: 19, fontWeight: "500" }}>Entre com rede social</Text>
 
           <View style={css.social_Container}>
             <Image

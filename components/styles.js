@@ -70,9 +70,11 @@ const styles = StyleSheet.create({
   },
   login__button: {
     width: "100%",
+    height: 60,
     padding: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     //marginTop: 40,
   },
@@ -101,6 +103,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     //marginTop: 40,
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#838181",
   },
   align_Down: {
     alignItems: "center",
