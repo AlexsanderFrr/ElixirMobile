@@ -123,9 +123,19 @@ const styles = StyleSheet.create({
   register_button: {
     marginTop: 30,
   },
-  register_buttonText: {
+  textRegisterAlign: {
+    flexDirection: "row"
+  },
+  register_firstText: {
     fontSize: 16,
-    color: "#838181"
+    fontWeight: "500",
+    color: "#838181",
+    marginRight: 5
+  },
+  register_secondText: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#BB5104"
   }
 });
 export default styles;

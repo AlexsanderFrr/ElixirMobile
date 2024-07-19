@@ -55,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
             />
           )}
         />
-        
+
         {errors.password && <Text style={css.labelError}>{errors.password?.message}</Text>}
         <Controller
           control={control}
@@ -101,8 +101,11 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity style={css.register_button} onPress={() => {navigation.navigate('Cadastro')}}>
-            <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
+          <TouchableOpacity style={css.register_button} onPress={() => { navigation.navigate('Cadastro') }}>
+            <View style={css.textRegisterAlign}>
+              <Text style={css.register_firstText}>Não possui uma conta?</Text>
+              <Text style={css.register_secondText}>Cadastre-se</Text>
+            </View>
           </TouchableOpacity>
 
         </View>
