@@ -55,11 +55,11 @@ const HomeScreen = () => {
   const filteredCategoryJuices = () => {
     switch (selectedCategory) {
       case "Recomendado":
-        return juices.slice(0, 10);
+        return juices.slice(0, 4);
       case "Detox":
-        return juices.slice(10, 20);
+        return juices.slice(4, 8);
       case "Medicinal":
-        return juices.slice(20, 30);
+        return juices.slice(8, 10);
       default:
         return [];
     }

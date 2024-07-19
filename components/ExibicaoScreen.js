@@ -45,30 +45,19 @@ const ExibicaoScreen = ({ route }) => {
         <View style={styles.itensContainer}>
           <Text style={styles.titleIngredient}>Ingredientes:</Text>
           <View style={styles.ingredient}>
-            <View>
-              <Image source={require("../assets/cenoura.png")} style={{ marginRight: 30 }} />
-              <Text>Cenoura</Text>
-            </View>
+            <Image source={require("../assets/agua.png")} style={{ marginRight: 30 }} />
+            <Image source={require("../assets/cenoura.png")} style={{ marginRight: 30 }} />
+            <Image source={require("../assets/limao.png")} style={{ marginRight: 30 }} />
+            <Image source={require("../assets/gengibre.png")} style={{ marginRight: 30 }} />
+            <Image source={require("../assets/mel.png")} style={{ marginRight: 30 }} />
+          </View>
 
-            <View>
-              <Image source={require("../assets/agua.png")} style={{ marginRight: 30 }} />
-              <Text>Aguá</Text>
-            </View>
-
-            <View>
-              <Image source={require("../assets/limao.png")} style={{ marginRight: 30 }} />
-              <Text>Limão</Text>
-            </View>
-
-            <View>
-              <Image source={require("../assets/gengibre.png")} style={{ marginRight: 30 }} />
-              <Text>Gengibre</Text>
-            </View>
-
-            <View>
-              <Image source={require("../assets/mel.png")} style={{ marginRight: 30 }} />
-              <Text>Mel</Text>
-            </View>
+          <View style={styles.ingredientName}>
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "500", marginRight: 24 }}>Água</Text>
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "500", marginRight: 28 }}>Cenoura</Text>
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "500", marginRight: 17 }}>Limão</Text>
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "500", marginRight: 24 }}>Gengibre</Text>
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "500" }}>Mel</Text>
           </View>
         </View>
 
@@ -151,6 +140,10 @@ const styles = StyleSheet.create({
     textTransform: "uppercase"
   },
   ingredient: {
+    flexDirection: "row",
+    marginBottom: 5
+  },
+  ingredientName: {
     flexDirection: "row",
   },
   benefContainer: {
