@@ -22,10 +22,13 @@ const HomeScreen = () => {
   const [filteredJuices, setFilteredJuices] = useState([]);
 
   useEffect(() => {
-
-    const fetchJuices = async () => {
+    // Função para buscar todos os sucos ou fazer pesquisa se searchText estiver definido
+    const fetchJuices = async (search = "") => {
       try {
-        const response = await fetch('http://localhost:8081/suco/all');
+        const url = search
+          ? `http://localhost:8081/suco/search/${search}`
+          : 'http://localhost:8081/suco/all';
+        const response = await fetch(url);
         const data = await response.json();
         console.log("Data fetched: ", data);
         setJuices(data);
@@ -34,44 +37,52 @@ const HomeScreen = () => {
       }
     };
 
-    fetchJuices();
-  }, []);
+    fetchJuices(searchText);
+  }, [searchText]);
+
+  useEffect(() => {
+    // Filtra os sucos com base na categoria selecionada
+    const filterByCategory = () => {
+      let filtered = juices;
+      switch (selectedCategory) {
+        case "Recomendado":
+          filtered = juices.slice(0, 10);
+          break;
+        case "Detox":
+          filtered = juices.slice(10, 20);
+          break;
+        case "Medicinal":
+          filtered = juices.slice(20, 30);
+          break;
+        default:
+          filtered = [];
+          break;
+      }
+      setFilteredJuices(filtered);
+    };
+
+    filterByCategory();
+  }, [selectedCategory, juices]);
 
   const handleCategoryPress = (category) => {
     setSelectedCategory(category);
-    setSearchText(""); // Limpa o texto da pesquisa quando uma categoria é selecionada
+    setSearchText(""); // Limpa o texto de pesquisa ao mudar de categoria
   };
 
   const handleSearch = (text) => {
     setSearchText(text);
-    // Filtra os sucos com base no texto de pesquisa
-    const filtered = juices.filter((juice) =>
-      juice.nome.toLowerCase().includes(text.toLowerCase())
+  };
+
+  // Filtra os sucos com base no texto de pesquisa
+  const filteredBySearch = () => {
+    return filteredJuices.filter((juice) =>
+      juice.nome.toLowerCase().includes(searchText.toLowerCase())
     );
-    setFilteredJuices(filtered);
   };
 
-  // Filtra os sucos com base na categoria selecionada
-  const filteredCategoryJuices = () => {
-    switch (selectedCategory) {
-      case "Recomendado":
-        return juices.slice(0, 10);
-      case "Detox":
-        return juices.slice(10, 20);
-      case "Medicinal":
-        return juices.slice(20, 30);
-      default:
-        return [];
-    }
-  };
-
-  // Mapear suco para imagens locais
-  const juiceImages = {
-    "garrafa-suco": require('../assets/garrafa-suco.png')
-  };
-
-  const getImageSource = (juiceName) => {
-    return juiceImages[juiceName] || require('../assets/imgExibicaoProv.png');
+  // Função para obter a URL da imagem
+  const getImageUrl = (imgPath) => {
+    return `http://localhost:8081${imgPath}`;
   };
 
   return (
@@ -124,10 +135,10 @@ const HomeScreen = () => {
         {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
         {!searchText && (
           <ScrollView horizontal style={styles.scrollView}>
-            {filteredCategoryJuices().map((juice) => (
+            {filteredJuices.map((juice) => (
               <View key={juice.id} style={styles.juiceItemHorizontal}>
                 <Image
-                  source={getImageSource(juice.name)}
+                  source={{ uri: getImageUrl(juice.img1) }}
                   style={styles.juiceImageHorizontal}
                   resizeMode="contain"
                 />
@@ -144,24 +155,22 @@ const HomeScreen = () => {
 
       {/* FlatList para todos os sucos ou sucos filtrados */}
       <FlatList
-        data={searchText === "" ? juices : filteredJuices}
+        data={searchText ? filteredBySearch() : filteredJuices}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.juiceButtonItemVertical}
-            onPress={() => navigation.navigate("Exibicao", { name: item.name, function: item.function, image: item.image })}
-
+            onPress={() => navigation.navigate("Exibicao", { name: item.nome, function: item.beneficios, image: item.img1 })}
           >
             <View style={styles.juiceItemVertical}>
               <Image
-                source={getImageSource(item.name)}
+                source={{ uri: getImageUrl(item.img1) }}
                 style={styles.juiceImageVertical}
                 resizeMode="contain"
               />
               <View style={styles.juiceInfoVertical}>
                 <Text style={styles.juiceNameVertical}>{item.nome}</Text>
                 <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>
-                {/* {<Text style={styles.juicePriceVertical}>{item.ingredientes}</Text>} */}
               </View>
             </View>
           </TouchableOpacity>
