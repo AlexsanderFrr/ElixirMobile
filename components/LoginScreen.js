@@ -24,20 +24,29 @@ const LoginScreen = ({ navigation }) => {
       clientId: '148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com',
       redirectUri: 'https://auth.expo.io/@carloseduardobelo/Elixir',
       scopes: ['profile', 'email'],
-      responseType: 'token',
+      responseType: 'code',
     },
     { authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth' }
   );
 
   useEffect(() => {
+    if (response) {
+      console.log('Authentication response received:', response);
+    }
+
     if (response?.type === 'success') {
       const { authentication } = response;
-      console.log(authentication);
+      console.log('Authentication successful:', authentication);
       navigation.navigate('Home');
+    } else if (response?.type === 'error') {
+      console.log('Authentication error:', response.error);
+    } else if (response?.type === 'dismiss') {
+      console.log('Authentication dismissed');
     }
   }, [response]);
 
-  async function handleGoogleSignIn(data) {
+  async function handleGoogleSignIn() {
+    console.log('Starting authentication...');
     await promptAsync();
   }
 
