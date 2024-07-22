@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import * as AuthSession from 'expo-auth-session';
 
@@ -17,11 +17,28 @@ const LoginScreen = ({ navigation }) => {
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
-  })
+  });
 
-  const handleLogin = (data) => {
-    console.log(data);
-    navigation.navigate('Home');
+  const [request, response, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId: '148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com',
+      redirectUri: 'https://auth.expo.io/@carloseduardobelo/Elixir',
+      scopes: ['profile', 'email'],
+      responseType: 'token',
+    },
+    { authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth' }
+  );
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      console.log(authentication);
+      navigation.navigate('Home');
+    }
+  }, [response]);
+
+  async function handleGoogleSignIn(data) {
+    await promptAsync();
   }
 
   return (
@@ -78,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
           )}
         />
 
-        <TouchableOpacity style={css.login__button} onPress={handleSubmit(handleLogin)}>
+        <TouchableOpacity style={css.login__button} >
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
@@ -91,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
               //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleGoogleSignIn}>
               <Image
                 source={require('../assets/googleAcess.png')}
                 //style={{ maxWidth: 40, height: 41 }}

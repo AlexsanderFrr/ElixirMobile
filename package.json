@@ -25,7 +25,8 @@
     "react-native-web": "~0.19.6",
     "yup": "^1.4.0",
     "expo-auth-session": "~5.4.0",
-    "expo-crypto": "~12.8.1"
+    "expo-crypto": "~12.8.1",
+    "expo-random": "~13.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
