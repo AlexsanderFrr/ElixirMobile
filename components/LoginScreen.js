@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
+import * as AuthSession from 'expo-auth-session';
+
 import css from './styles';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -89,11 +91,13 @@ const LoginScreen = ({ navigation }) => {
               //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
-            <Image
-              source={require('../assets/googleAcess.png')}
-              //style={{ maxWidth: 40, height: 41 }}
-              resizeMode="contain"
-            />
+            <TouchableOpacity>
+              <Image
+                source={require('../assets/googleAcess.png')}
+                //style={{ maxWidth: 40, height: 41 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
             <Image
               source={require('../assets/emailAcess.png')}
               //style={{ width: 25, height: 41 }}
