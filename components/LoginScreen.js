@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
+import * as AuthSession from 'expo-auth-session';
+
 import css from './styles';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -55,7 +57,7 @@ const LoginScreen = ({ navigation }) => {
             />
           )}
         />
-        
+
         {errors.password && <Text style={css.labelError}>{errors.password?.message}</Text>}
         <Controller
           control={control}
@@ -81,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={css.align_Down}>
-          <Text style={{ color: "#838181", fontSize: 17 }}>Entre com rede social</Text>
+          <Text style={{ color: "#838181", fontSize: 19, fontWeight: "500" }}>Entre com rede social</Text>
 
           <View style={css.social_Container}>
             <Image
@@ -89,11 +91,13 @@ const LoginScreen = ({ navigation }) => {
               //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
-            <Image
-              source={require('../assets/googleAcess.png')}
-              //style={{ maxWidth: 40, height: 41 }}
-              resizeMode="contain"
-            />
+            <TouchableOpacity>
+              <Image
+                source={require('../assets/googleAcess.png')}
+                //style={{ maxWidth: 40, height: 41 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
             <Image
               source={require('../assets/emailAcess.png')}
               //style={{ width: 25, height: 41 }}
@@ -101,8 +105,11 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity style={css.register_button} onPress={() => {navigation.navigate('Cadastro')}}>
-            <Text style={css.register_buttonText}>Não possui uma conta? Cadastre-se</Text>
+          <TouchableOpacity style={css.register_button} onPress={() => { navigation.navigate('Cadastro') }}>
+            <View style={css.textRegisterAlign}>
+              <Text style={css.register_firstText}>Não possui uma conta?</Text>
+              <Text style={css.register_secondText}>Cadastre-se</Text>
+            </View>
           </TouchableOpacity>
 
         </View>

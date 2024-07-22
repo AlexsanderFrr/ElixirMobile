@@ -70,9 +70,11 @@ const styles = StyleSheet.create({
   },
   login__button: {
     width: "100%",
+    height: 60,
     padding: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     //marginTop: 40,
   },
@@ -102,6 +104,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     //marginTop: 40,
   },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#838181",
+  },
   align_Down: {
     alignItems: "center",
     marginTop: 60,
@@ -123,9 +130,19 @@ const styles = StyleSheet.create({
   register_button: {
     marginTop: 30,
   },
-  register_buttonText: {
+  textRegisterAlign: {
+    flexDirection: "row"
+  },
+  register_firstText: {
     fontSize: 16,
-    color: "#838181"
+    fontWeight: "500",
+    color: "#838181",
+    marginRight: 5
+  },
+  register_secondText: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#BB5104"
   }
 });
 export default styles;
