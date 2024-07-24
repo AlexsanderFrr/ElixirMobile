@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
+import css from './styles';
+
 import * as WebBrowser from "expo-web-browser";
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
-
-import css from './styles';
+import AsyncStorage from '@'
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
+
+WebBrowser.maybeCompleteAuthSession();
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
