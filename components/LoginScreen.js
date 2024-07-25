@@ -5,7 +5,7 @@ import css from './styles';
 import * as WebBrowser from "expo-web-browser";
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
-import AsyncStorage from '@'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -24,35 +24,44 @@ const LoginScreen = ({ navigation }) => {
     resolver: yupResolver(schema)
   });
 
-  const [request, response, promptAsync] = AuthSession.useAuthRequest(
-    {
-      clientId: '148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8082',
-      scopes: ['profile', 'email'],
-      responseType: 'code',
-    },
-    { authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth' }
-  );
+  const [userInfo, setUserInfo] = React.useState(null);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    webClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com"
+  });
 
-  useEffect(() => {
-    if (response) {
-      console.log('Authentication response received:', response);
-    }
-
-    if (response?.type === 'success') {
-      const { authentication } = response;
-      console.log('Authentication successful:', authentication);
-      navigation.navigate('Home');
-    } else if (response?.type === 'error') {
-      console.log('Authentication error:', response.error);
-    } else if (response?.type === 'dismiss') {
-      console.log('Authentication dismissed');
+  React.useEffect(() => {
+    if (response?.type === "success") {
+      handleGoogleSignIn(response.authentication.accessToken);
     }
   }, [response]);
 
-  async function handleGoogleSignIn() {
-    console.log('Starting authentication...');
-    await promptAsync();
+  async function handleGoogleSignIn(token) {
+    const user = await AsyncStorage.getItem("@user");
+    if (!user) {
+      await getUserInfo(token);
+    } else {
+      setUserInfo(JSON.parse(user));
+      navigation.navigate('Home');
+    }
+  }
+
+  const getUserInfo = async (token) => {
+    if (!token) return;
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const user = await response.json();
+      await AsyncStorage.setItem("@user", JSON.stringify(user));
+      setUserInfo(user);
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleLogin = (data) => {
@@ -126,7 +135,11 @@ const LoginScreen = ({ navigation }) => {
               //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
-            <TouchableOpacity onPress={handleGoogleSignIn}>
+            <TouchableOpacity
+              disabled={!request}
+              onPress={() => {
+                promptAsync();
+              }}>
               <Image
                 source={require('../assets/googleAcess.png')}
                 //style={{ maxWidth: 40, height: 41 }}
