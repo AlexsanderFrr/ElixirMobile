@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 import {
   View,
   Image,
@@ -19,10 +19,9 @@ const HomeScreen = () => {
   const [juices, setJuices] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Recomendado");
   const [searchText, setSearchText] = useState("");
-  const [filteredJuices, setFilteredJuices] = useState([]);
 
   useEffect(() => {
-
+    // Função para buscar todos os sucos
     const fetchJuices = async () => {
       try {
         const response = await fetch('http://localhost:8081/suco/all');
@@ -37,42 +36,47 @@ const HomeScreen = () => {
     fetchJuices();
   }, []);
 
+  const filterByCategory = () => {
+    let filtered = juices;
+    switch (selectedCategory) {
+      case "Recomendado":
+        filtered = juices.slice(0, 10);
+        break;
+      case "Detox":
+        filtered = juices.slice(10, 20);
+        break;
+      case "Medicinal":
+        filtered = juices.slice(20, 30);
+        break;
+      default:
+        filtered = [];
+        break;
+    }
+    return filtered;
+  };
+
   const handleCategoryPress = (category) => {
     setSelectedCategory(category);
-    setSearchText(""); // Limpa o texto da pesquisa quando uma categoria é selecionada
+    setSearchText(""); // Limpa o texto de pesquisa ao mudar de categoria
   };
 
   const handleSearch = (text) => {
     setSearchText(text);
-    // Filtra os sucos com base no texto de pesquisa
-    const filtered = juices.filter((juice) =>
-      juice.nome.toLowerCase().includes(text.toLowerCase())
+  };
+
+  const filteredBySearch = (juicesToFilter) => {
+    return juicesToFilter.filter((juice) =>
+      juice.nome.toLowerCase().includes(searchText.toLowerCase())
     );
-    setFilteredJuices(filtered);
   };
 
-  // Filtra os sucos com base na categoria selecionada
-  const filteredCategoryJuices = () => {
-    switch (selectedCategory) {
-      case "Recomendado":
-        return juices.slice(0, 10);
-      case "Detox":
-        return juices.slice(10, 20);
-      case "Medicinal":
-        return juices.slice(20, 30);
-      default:
-        return [];
-    }
+  // Função para obter a URL da imagem
+  const getImageUrl = (imgPath) => {
+    return `http://localhost:8081${imgPath}`;
   };
 
-  // Mapear suco para imagens locais
-  const juiceImages = {
-    "garrafa-suco": require('../assets/garrafa-suco.png')
-  };
-
-  const getImageSource = (juiceName) => {
-    return juiceImages[juiceName] || require('../assets/imgExibicaoProv.png');
-  };
+  // Juices filtrados pela categoria e pela pesquisa
+  const filteredJuices = filteredBySearch(filterByCategory());
 
   return (
     <View style={styles.container}>
@@ -124,10 +128,10 @@ const HomeScreen = () => {
         {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
         {!searchText && (
           <ScrollView horizontal style={styles.scrollView}>
-            {filteredCategoryJuices().map((juice) => (
+            {filteredJuices.map((juice) => (
               <View key={juice.id} style={styles.juiceItemHorizontal}>
                 <Image
-                  source={getImageSource(juice.name)}
+                  source={{ uri: getImageUrl(juice.img1) }}
                   style={styles.juiceImageHorizontal}
                   resizeMode="contain"
                 />
@@ -144,24 +148,22 @@ const HomeScreen = () => {
 
       {/* FlatList para todos os sucos ou sucos filtrados */}
       <FlatList
-        data={searchText === "" ? juices : filteredJuices}
+        data={filteredJuices}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.juiceButtonItemVertical}
-            onPress={() => navigation.navigate("Exibicao", { name: item.name, function: item.function, image: item.image })}
-
+            onPress={() => navigation.navigate("Exibicao", { name: item.nome, function: item.beneficios, image: item.img1 })}
           >
             <View style={styles.juiceItemVertical}>
               <Image
-                source={getImageSource(item.name)}
+                source={{ uri: getImageUrl(item.img1) }}
                 style={styles.juiceImageVertical}
                 resizeMode="contain"
               />
               <View style={styles.juiceInfoVertical}>
                 <Text style={styles.juiceNameVertical}>{item.nome}</Text>
                 <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>
-                {/* {<Text style={styles.juicePriceVertical}>{item.ingredientes}</Text>} */}
               </View>
             </View>
           </TouchableOpacity>
@@ -180,10 +182,7 @@ const styles = StyleSheet.create({
   header: {
     height: "20%",
     backgroundColor: "#BB5104",
-    //paddingVertical: 30,
     paddingHorizontal: 30,
-    //alignItems: "center",
-    //justifyContent: "center",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -195,14 +194,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 40,
-    //marginHorizontal: 30
   },
   searchContainer: {
     width: "100%",
     marginTop: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
-
   },
   searchInput: {
     width: "100%",
@@ -231,9 +228,9 @@ const styles = StyleSheet.create({
     color: "#BB5104",
   },
   scrollView: {
-    marginTop: 10, // Ajuste conforme necessário para evitar a sobreposição com a barra de navegação
+    marginTop: 10,
     height: "100%",
-    marginLeft: 30
+    marginLeft: 30,
   },
   juiceItemHorizontal: {
     alignItems: "center",
@@ -261,11 +258,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginLeft: 30,
     marginTop: 30,
-    marginBottom: 20
+    marginBottom: 20,
   },
   juiceItemVertical: {
     flexDirection: "row",
-    //justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 20,
     marginHorizontal: 20,
