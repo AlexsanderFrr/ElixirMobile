@@ -1,10 +1,32 @@
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import React from 'react';
+
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 
 const PerfilScreen = () => {
   const navigation = useNavigation();
+
+  const handlePickerImage = async () => {
+    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!granted) {
+      Alert.alert(
+        'Permissão necessária',
+        'Permita que sua aplicação acesse as imagens'
+      );
+    } else {
+      const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        base64: false,
+        aspect: [4, 4],
+        quality: 1,
+      });
+        return;
+      }
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,9 +48,11 @@ const PerfilScreen = () => {
               <MaterialIcons name='chat' size={18} color={"#F4DEAA"}></MaterialIcons>
             </View>
             <View style={styles.active}></View>
-            <View style={styles.add}>
-              <Ionicons name='add' size={38} color={"#F4DEAA"}></Ionicons>
-            </View>
+            <TouchableOpacity onPress={handlePickerImage}>
+              <View style={styles.add}>
+                <Ionicons name='add' size={38} color={"#F4DEAA"}></Ionicons>
+              </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.infoContainer}>
