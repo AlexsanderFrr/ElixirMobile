@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import css from './styles';
 
 const CadastroScreen = ({ navigation }) => {
-
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [profileImage, setProfileImage] = useState(null);
 
     const handleSignIn = async () => {
         if(username === '' || email === '' || password === ''){
@@ -42,6 +43,31 @@ const CadastroScreen = ({ navigation }) => {
         }
     }
 
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setProfileImage(result.uri);
+        }
+    };
+
+    const takePhoto = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setProfileImage(result.uri);
+        }
+    };
+
     return (
         <KeyboardAvoidingView style={[css.container, css.whitebg]}>
             <View style={css.logo_cadastro}>
@@ -57,17 +83,14 @@ const CadastroScreen = ({ navigation }) => {
                 <View style={css.social_ContainerCad}>
                     <Image
                         source={require('../assets/faceAcess.png')}
-                        //style={{ width: 25, height: 41 }}
                         resizeMode="contain"
                     />
                     <Image
                         source={require('../assets/googleAcess.png')}
-                        //style={{ maxWidth: 40, height: 41 }}
                         resizeMode="contain"
                     />
                     <Image
                         source={require('../assets/emailAcess.png')}
-                        //style={{ width: 25, height: 41 }}
                         resizeMode="contain"
                     />
                 </View>
@@ -75,6 +98,16 @@ const CadastroScreen = ({ navigation }) => {
             </View>
 
             <View style={css.cad_form}>
+                {profileImage && (
+                    <Image source={{ uri: profileImage }} style={{ width: 100, height: 100, borderRadius: 50 }} />
+                )}
+                <TouchableOpacity onPress={pickImage}>
+                    <Text>Escolher uma imagem</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={takePhoto}>
+                    <Text>Tirar uma foto</Text>
+                </TouchableOpacity>
+
                 <TextInput style={css.cad__input} placeholder='Nome:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setUsername(text)} />
                 <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setEmail(text)}/>
                 <TextInput style={css.cad__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
