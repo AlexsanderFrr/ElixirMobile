@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
     height: 41,
     marginBottom: 40,
   },
-  login__msg: (text = "none") => ({
-    fontWeight: "bold",
-    fontSize: 22,
-    color: "red",
-    display: text,
-  }),
+  labelError: {
+    alignSelf: 'flex-start',
+    color: '#eb0909',
+    fontWeight: '700',
+    marginBottom: 11
+  },
   login__form: {
-    flex: 1,
+    //flex: 1,
     width: "100%",
     justifyContent: "center",
     paddingTop: 100,
@@ -63,16 +63,18 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingHorizontal: 15,
     paddingVertical: 13,
-    marginBottom: 30,
+    marginBottom: 20,
     borderWidth: 1.5,
     borderColor: "#FFB100",
     borderRadius: 10,
   },
   login__button: {
     width: "100%",
+    height: 60,
     padding: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     //marginTop: 40,
   },
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 25,
     color: "#F5F5F5",
-    fontFamily: "Lora",
+    fontFamily: "sans-serif",
   },
   cad__input: {
     backgroundColor: "#FFFFFF",
@@ -101,6 +103,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     //marginTop: 40,
+  },
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#838181",
   },
   align_Down: {
     alignItems: "center",
@@ -123,9 +130,19 @@ const styles = StyleSheet.create({
   register_button: {
     marginTop: 30,
   },
-  register_buttonText: {
+  textRegisterAlign: {
+    flexDirection: "row"
+  },
+  register_firstText: {
     fontSize: 16,
-    color: "#838181"
+    fontWeight: "500",
+    color: "#838181",
+    marginRight: 5
+  },
+  register_secondText: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#BB5104"
   }
 });
 export default styles;
