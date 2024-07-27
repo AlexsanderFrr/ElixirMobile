@@ -7,6 +7,8 @@ import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { AuthContext } from '../src/context/authContext';
+
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
@@ -65,10 +67,6 @@ const LoginScreen = ({ navigation }) => {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  const handleLogin = (data) => {
-    navigation.navigate('Home');
   }
 
   return (
