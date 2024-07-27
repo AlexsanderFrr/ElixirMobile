@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
@@ -19,8 +19,8 @@ const schema = yup.object({
 })
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
   const { login } = useContext(AuthContext);
 
   const { control, formState: { errors } } = useForm({
