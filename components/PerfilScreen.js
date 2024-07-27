@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../src/context/authContext';
 
 const PerfilScreen = () => {
+  const {sair} = useContext(AuthContext);
   const navigation = useNavigation();
 
   return (
@@ -50,7 +52,7 @@ const PerfilScreen = () => {
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {sair()}}>
                 <View style={[styles.option, { marginTop: 10 }]}>
                   <Image source={require("../assets/iconLogOut.png")}></Image>
                   <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Sair</Text>
