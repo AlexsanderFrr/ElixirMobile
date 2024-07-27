@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   StatusBar
 } from "react-native";
+import { apiEndpoint } from "../config/constantes";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -26,8 +27,8 @@ const HomeScreen = () => {
     const fetchJuices = async (search = "") => {
       try {
         const url = search
-          ? `http://localhost:8081/suco/search/${search}`
-          : 'http://localhost:8081/suco/all';
+          ? `${apiEndpoint}/suco/search/${search}`
+          : `${apiEndpoint}/suco/all`;
         const response = await fetch(url);
         const data = await response.json();
         console.log("Data fetched: ", data);
@@ -82,7 +83,7 @@ const HomeScreen = () => {
 
   // Função para obter a URL da imagem
   const getImageUrl = (imgPath) => {
-    return `http://localhost:8081${imgPath}`;
+    return `${apiEndpoint}${imgPath}`;
   };
 
   return (
