@@ -19,8 +19,11 @@ const schema = yup.object({
 })
 
 const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const { login } = useContext(AuthContext);
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -88,16 +91,16 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.email && 1,
                 borderColor: errors.email && '#eb0909'
               }]}
               placeholder='Email:' placeholderTextColor='#B1B1B1'
-              onChangeText={(text) => onChange(text)}
+              onChangeText={(text) => setEmail(text)}
               onBlur={onBlur}
-              value={value}
+              value={email}
             />
           )}
         />
@@ -106,7 +109,7 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.password && 1,
@@ -115,9 +118,9 @@ const LoginScreen = ({ navigation }) => {
               placeholder='Senha:'
               placeholderTextColor='#B1B1B1'
               secureTextEntry={true}
-              onChangeText={(text) => onChange(text)}
+              onChangeText={(text) => setPassword(text)}
               onBlur={onBlur}
-              value={value}
+              value={password}
             />
           )}
         />
