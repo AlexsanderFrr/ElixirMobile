@@ -1,12 +1,8 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../src/context/authContext';
-import React, { useState } from 'react';
-
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
 const PerfilScreen = () => {
