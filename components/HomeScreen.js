@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   juiceNameHorizontal: {
-    fontWeight: 500,
+    fontWeight: "500",
     fontSize: 16,
     marginTop: 5,
     textAlign: "center",
