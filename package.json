@@ -28,7 +28,9 @@
     "react-native": "0.73.6",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-web": "~0.19.6",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "expo-auth-session": "~5.4.0",
+    "expo-image-picker": "~14.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
