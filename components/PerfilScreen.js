@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground, Alert } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
 
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
@@ -8,23 +8,20 @@ import * as ImagePicker from 'expo-image-picker';
 const PerfilScreen = () => {
   const navigation = useNavigation();
 
-  const handlePickerImage = async () => {
-    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!granted) {
-      Alert.alert(
-        'Permissão necessária',
-        'Permita que sua aplicação acesse as imagens'
-      );
-    } else {
-      const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        base64: false,
-        aspect: [4, 4],
-        quality: 1,
-      });
-        return;
-      }
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if(!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
 
@@ -42,13 +39,13 @@ const PerfilScreen = () => {
           <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-              <Image source={{ uri: 'https://img.freepik.com/fotos-premium/imagenslegais-e-calmas-para-a-foto-do-perfil-do-whatsapp-arte-gerada-porai_873370-5052.jpg' }} style={styles.image} resizeMode='center' />
+              {image && <Image source={{ uri: image }} style={styles.image} resizeMode='center' /> }
             </View>
             <View style={styles.dm}>
               <MaterialIcons name='chat' size={18} color={"#F4DEAA"}></MaterialIcons>
             </View>
             <View style={styles.active}></View>
-            <TouchableOpacity onPress={handlePickerImage}>
+            <TouchableOpacity onPress={pickImage}>
               <View style={styles.add}>
                 <Ionicons name='add' size={38} color={"#F4DEAA"}></Ionicons>
               </View>
