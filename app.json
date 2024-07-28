@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.Elixir"
+      "package": "com.anonymous.Elixir",
+      "scheme": "ElixirAndroid"
     },
     "web": {
       "favicon": "./assets/favicon.png"
