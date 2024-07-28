@@ -22,8 +22,8 @@ const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    // Função para buscar todos os sucos ou fazer pesquisa se searchText estiver definido
-    const fetchJuices = async (search = "") => {
+
+    const fetchJuices = async () => {
       try {
         const url = search
           ? `${apiEndpoint}/suco/search/${search}`
