@@ -9,13 +9,13 @@ const CadastroScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
 
     const handleSignIn = async () => {
-        if(username === '' || email === '' || password === ''){
+        if (username === '' || email === '' || password === '') {
             alert("Preencha os Campos");
             return;
-        } 
-        
+        }
+
         try {
-            const response = await fetch('http://localhost:8082/usuario/add', {
+            const response = await fetch('http://localhost:8081/usuario/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ const CadastroScreen = ({ navigation }) => {
 
             const data = await response.json();
 
-            if(response.status === 200){
+            if (response.status === 200) {
                 alert(data.message);
                 navigation.navigate('Home');
             } else {
@@ -76,7 +76,7 @@ const CadastroScreen = ({ navigation }) => {
 
             <View style={css.cad_form}>
                 <TextInput style={css.cad__input} placeholder='Nome:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setUsername(text)} />
-                <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setEmail(text)}/>
+                <TextInput style={css.cad__input} placeholder='Email:' placeholderTextColor='#B1B1B1' onChangeText={(text) => setEmail(text)} />
                 <TextInput style={css.cad__input} placeholder='Senha:' placeholderTextColor='#B1B1B1' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
 
                 <TouchableOpacity style={css.cad__button} onPress={handleSignIn}>
@@ -85,7 +85,10 @@ const CadastroScreen = ({ navigation }) => {
             </View>
 
             <TouchableOpacity style={css.register_button} onPress={() => { navigation.navigate('Login') }}>
-                <Text style={css.register_buttonText}>Já possui uma conta? Acesse</Text>
+                <View style={css.textRegisterAlign}>
+                    <Text style={css.register_firstText}>Já possui uma conta?</Text>
+                    <Text style={css.register_secondText}>Acesse</Text>
+                </View>
             </TouchableOpacity>
 
         </KeyboardAvoidingView>

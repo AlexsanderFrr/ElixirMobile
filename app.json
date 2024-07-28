@@ -2,6 +2,7 @@
   "expo": {
     "name": "Elixir",
     "slug": "Elixir",
+    "scheme": "Elixir",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +22,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.Elixir"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "entryPoint": "./App.js"
   }
 }

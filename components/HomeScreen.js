@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   StatusBar
 } from "react-native";
+import { apiEndpoint } from "../config/constantes";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -21,10 +22,13 @@ const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    // Função para buscar todos os sucos
-    const fetchJuices = async () => {
+    // Função para buscar todos os sucos ou fazer pesquisa se searchText estiver definido
+    const fetchJuices = async (search = "") => {
       try {
-        const response = await fetch('http://localhost:8081/suco/all');
+        const url = search
+          ? `${apiEndpoint}/suco/search/${search}`
+          : `${apiEndpoint}/suco/all`;
+        const response = await fetch(url);
         const data = await response.json();
         console.log("Data fetched: ", data);
         setJuices(data);
@@ -33,27 +37,32 @@ const HomeScreen = () => {
       }
     };
 
-    fetchJuices();
-  }, []);
+    fetchJuices(searchText);
+  }, [searchText]);
 
-  const filterByCategory = () => {
-    let filtered = juices;
-    switch (selectedCategory) {
-      case "Recomendado":
-        filtered = juices.slice(0, 10);
-        break;
-      case "Detox":
-        filtered = juices.slice(10, 20);
-        break;
-      case "Medicinal":
-        filtered = juices.slice(20, 30);
-        break;
-      default:
-        filtered = [];
-        break;
-    }
-    return filtered;
-  };
+  useEffect(() => {
+    // Filtra os sucos com base na categoria selecionada
+    const filterByCategory = () => {
+      let filtered = juices;
+      switch (selectedCategory) {
+        case "Recomendado":
+          filtered = juices.slice(0, 10);
+          break;
+        case "Detox":
+          filtered = juices.slice(10, 20);
+          break;
+        case "Medicinal":
+          filtered = juices.slice(20, 30);
+          break;
+        default:
+          filtered = [];
+          break;
+      }
+      setFilteredJuices(filtered);
+    };
+
+    filterByCategory();
+  }, [selectedCategory, juices]);
 
   const handleCategoryPress = (category) => {
     setSelectedCategory(category);
@@ -64,19 +73,17 @@ const HomeScreen = () => {
     setSearchText(text);
   };
 
-  const filteredBySearch = (juicesToFilter) => {
-    return juicesToFilter.filter((juice) =>
+  // Filtra os sucos com base no texto de pesquisa
+  const filteredBySearch = () => {
+    return filteredJuices.filter((juice) =>
       juice.nome.toLowerCase().includes(searchText.toLowerCase())
     );
   };
 
   // Função para obter a URL da imagem
   const getImageUrl = (imgPath) => {
-    return `http://localhost:8081${imgPath}`;
+    return `${apiEndpoint}${imgPath}`;
   };
-
-  // Juices filtrados pela categoria e pela pesquisa
-  const filteredJuices = filteredBySearch(filterByCategory());
 
   return (
     <View style={styles.container}>
@@ -148,7 +155,7 @@ const HomeScreen = () => {
 
       {/* FlatList para todos os sucos ou sucos filtrados */}
       <FlatList
-        data={filteredJuices}
+        data={searchText ? filteredBySearch() : filteredJuices}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -242,7 +249,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   juiceNameHorizontal: {
-    fontWeight: 500,
+    fontWeight: "500",
     fontSize: 16,
     marginTop: 5,
     textAlign: "center",
