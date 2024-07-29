@@ -14,7 +14,7 @@ export default function StackRoutes() {
         <Stack.Navigator initialRouteName="Splash">
             <Stack.Screen name="Elixir" component={SplashScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Home" component={TabRoutes} options={{ headerShown: false }} />
+            <Stack.Screen name="HomeTabs" component={TabRoutes} options={{ headerShown: false }} />
             <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Exibicao" component={ExibicaoScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
