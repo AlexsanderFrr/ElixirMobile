@@ -1,73 +1,90 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useEffect, useState } from "react";
-
 import axios from "axios";
 import { apiEndpoint } from "../../config/constantes";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    const login = (email, senha) => {
+    // Função para login via API
+    const login = async (email, senha) => {
         setIsLoading(true);
-        axios.post(`${apiEndpoint}/usuario/login`, {
-            email,
-            senha
-        })
-            .then(res => {
-                let userInfo = res.data;
-                setUserInfo(userInfo);
-                setUserToken(userInfo.token)
-
-                AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-                AsyncStorage.setItem('userToken', userInfo.token);
-
-                console.log(userInfo);
-                console.log('User Token: ' + userInfo.token);
-            })
-            .catch(e => {
-                console.log(`Login error ${e}`);
+        try {
+            const response = await axios.post(`${apiEndpoint}/usuario/login`, {
+                email,
+                senha
             });
+            const userInfo = response.data;
+            setUserInfo(userInfo);
+            setUserToken(userInfo.token);
 
-        setIsLoading(false);
-    }
+            await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+            await AsyncStorage.setItem('userToken', userInfo.token);
+        } catch (e) {
+            console.error(`Login error: ${e}`);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-    const sair = () => {
+    // Função para login social
+    const loginSocial = async (token) => {
+        setIsLoading(true);
+        try {
+            const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+                //https://www.googleapis.com/userinfo/v2/me caso o de cima não funcione
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const userInfo = await response.json();
+            setUserInfo(userInfo);
+            setUserToken(token);
+
+            await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+            await AsyncStorage.setItem('userToken', token);
+        } catch (e) {
+            console.error(`Login social error: ${e}`);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Função para logout
+    const sair = async () => {
         setIsLoading(true);
         setUserToken(null);
-        AsyncStorage.removeItem('userInfo');
-        AsyncStorage.removeItem('userToken');
+        setUserInfo(null);
+        await AsyncStorage.removeItem('userInfo');
+        await AsyncStorage.removeItem('userToken');
         setIsLoading(false);
-    }
+    };
 
+    // Função para verificar se o usuário está logado
     const isLoggedIn = async () => {
         try {
-            setIsLoading(true);
-            let userInfo = await AsyncStorage.getItem('userInfo');
-            let userToken = await AsyncStorage.getItem('userToken');
-            userInfo = JSON.parse(userInfo);
-
-            if (userInfo) {
-                setUserToken(userToken);
-                setUserInfo(userInfo);
+            const storedUserInfo = await AsyncStorage.getItem('userInfo');
+            const storedUserToken = await AsyncStorage.getItem('userToken');
+            if (storedUserInfo && storedUserToken) {
+                setUserToken(storedUserToken);
+                setUserInfo(JSON.parse(storedUserInfo));
             }
-            setIsLoading(false);
-
         } catch (e) {
-            console.log(`isLogged in error ${e}`);
+            console.error(`isLoggedIn error: ${e}`);
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         isLoggedIn();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ login, sair, isLoading, userToken }}>
+        <AuthContext.Provider value={{ login, loginSocial, sair, isLoading, userToken, userInfo }}>
             {children}
         </AuthContext.Provider>
     );
-}
+};

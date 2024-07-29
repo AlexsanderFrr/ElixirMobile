@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
 import css from './styles';
 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from 'expo-auth-session/providers/google';
-import * as AuthSession from 'expo-auth-session';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { AuthContext } from '../src/context/authContext';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -23,52 +20,22 @@ const schema = yup.object({
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState(null);
   const [password, setPassword] = React.useState(null);
-  const { login } = useContext(AuthContext);
+  const { login, loginSocial } = useContext(AuthContext);
 
   const { control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
-  const [userInfo, setUserInfo] = React.useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "148404174369-1rdjvmj6gvptaqsimhmcf14eaaql9asb.apps.googleusercontent.com",
-    webClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com"
+    webClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (response?.type === "success") {
-      handleGoogleSignIn(response.authentication.accessToken);
+      loginSocial(response.authentication.accessToken);
     }
   }, [response]);
-
-  async function handleGoogleSignIn(token) {
-    const user = await AsyncStorage.getItem("@user");
-    if (!user) {
-      await getUserInfo(token);
-    } else {
-      setUserInfo(JSON.parse(user));
-      navigation.navigate('HomeTabs', { screen: 'Home'});
-    }
-  }
-
-  const getUserInfo = async (token) => {
-    if (!token) return;
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
-      navigation.navigate('HomeTabs', { screen: 'Home'} );
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
