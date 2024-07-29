@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
       await getUserInfo(token);
     } else {
       setUserInfo(JSON.parse(user));
-      navigation.navigate('Home');
+      navigation.navigate("HomeTabs");
     }
   }
 
@@ -64,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
       const user = await response.json();
       await AsyncStorage.setItem("@user", JSON.stringify(user));
       setUserInfo(user);
-      navigation.navigate('Home');
+      navigation.navigate("HomeTabs");
     } catch (error) {
       console.error(error);
     }
