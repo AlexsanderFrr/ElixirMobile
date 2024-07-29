@@ -8,14 +8,14 @@ import { AuthContext } from '../src/context/authContext';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
   password: yup.string().min(6, "A senha deve ter pelo menos 6 digitos").required("Informe sua senha")
-})
+});
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState(null);
@@ -29,6 +29,7 @@ const LoginScreen = ({ navigation }) => {
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "148404174369-1rdjvmj6gvptaqsimhmcf14eaaql9asb.apps.googleusercontent.com",
     webClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com",
+    expoClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com",
   });
 
   useEffect(() => {
