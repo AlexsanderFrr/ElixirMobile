@@ -13,8 +13,8 @@ export default function StackRoutes() {
         <Stack.Navigator>
             <Stack.Screen name="HomeTabs" component={TabRoutes} options={{ headerShown: false }} />
             <Stack.Screen name="Exibicao" component={ExibicaoScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Shop" component={ShopScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Perfil" component={PerfilScreen} options={{ headerShown: false }} />
+            {/*<Stack.Screen name="Shop" component={ShopScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Perfil" component={PerfilScreen} options={{ headerShown: false }} />*/}
         </Stack.Navigator>
     )
 }
