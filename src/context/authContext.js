@@ -24,12 +24,16 @@ export const AuthProvider = ({ children }) => {
 
             await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
             await AsyncStorage.setItem('userToken', userInfo.token);
+
+            console.log(userInfo);
+            console.log('User Token:' + userInfo.token);
         } catch (e) {
             console.error(`Login error: ${e}`);
         } finally {
             setIsLoading(false);
         }
     };
+
 
     // Função para login social
     const loginSocial = async (token) => {
@@ -45,6 +49,9 @@ export const AuthProvider = ({ children }) => {
 
             await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
             await AsyncStorage.setItem('userToken', token);
+
+            console.log(userInfo);
+            console.log('User Token:' + userInfo.token);
         } catch (e) {
             console.error(`Login social error: ${e}`);
         } finally {
