@@ -62,7 +62,7 @@ const PerfilScreen = () => {
               {userInfo ? userInfo.name : 'Nome do Usuário'}
             </Text>
             <Text style={{ fontSize: 20, fontFamily: "HelveticaNeue", color: "#8a8a8a" }}>
-            {userInfo ? userInfo.email : 'email@dominio.com'}
+              {userInfo ? userInfo.email : 'email@dominio.com'}
             </Text>
             <View style={[styles.separator, { marginTop: 10, width: "90%" }]} />
 
