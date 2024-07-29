@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import React, { useContext, useState } from 'react';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../src/context/authContext';
 import * as ImagePicker from 'expo-image-picker';
 
 const PerfilScreen = () => {
-  const {sair} = useContext(AuthContext);
+  const { sair, userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
 
   const [image, setImage] = useState(null);
@@ -21,7 +21,7 @@ const PerfilScreen = () => {
 
     console.log(result);
 
-    if(!result.canceled) {
+    if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
@@ -40,7 +40,11 @@ const PerfilScreen = () => {
           <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-              {image && <Image source={{ uri: image }} style={styles.image} resizeMode='center' /> }
+              {image ? (
+                <Image source={{ uri: image }} style={styles.image} resizeMode='center' />
+              ) : userInfo && userInfo.picture ? (
+                <Image source={{ uri: userInfo.picture }} style={styles.image} resizeMode='contain' />
+              ) : null}
             </View>
             <View style={styles.dm}>
               <MaterialIcons name='chat' size={18} color={"#F4DEAA"}></MaterialIcons>
@@ -54,7 +58,12 @@ const PerfilScreen = () => {
           </View>
 
           <View style={styles.infoContainer}>
-            <Text style={[styles.text, { fontWeight: "600", fontSize: 26, marginTop: 30, fontFamily: "HelveticaNeue", }]}>Alexsandra Ferreira</Text>
+            <Text style={[styles.text, { fontWeight: "600", fontSize: 26, marginTop: 30, fontFamily: "HelveticaNeue", }]}>
+              {userInfo ? userInfo.name : 'Nome do Usuário'}
+            </Text>
+            <Text style={{ fontSize: 20, fontFamily: "HelveticaNeue", color: "#8a8a8a" }}>
+            {userInfo ? userInfo.email : 'email@dominio.com'}
+            </Text>
             <View style={[styles.separator, { marginTop: 10, width: "90%" }]} />
 
             <View style={styles.groupOption}>
@@ -72,7 +81,7 @@ const PerfilScreen = () => {
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
-              <TouchableOpacity onPress={() => {sair()}}>
+              <TouchableOpacity onPress={() => { sair() }}>
                 <View style={[styles.option, { marginTop: 10 }]}>
                   <Image source={require("../assets/iconLogOut.png")}></Image>
                   <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Sair</Text>
