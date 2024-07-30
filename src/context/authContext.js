@@ -10,7 +10,21 @@ export const AuthProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    // Função para login via API
+    const fetchUserInfo = async (token) => {
+        try {
+            const response = await axios.get(`${apiEndpoint}/usuario/all`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response)
+            return response.json();
+        } catch (e) {
+            console.error(`fetchUserInfo error: ${e}`);
+            return null;
+        }
+    };
+
     const login = async (email, senha) => {
         setIsLoading(true);
         try {
@@ -18,15 +32,17 @@ export const AuthProvider = ({ children }) => {
                 email,
                 senha
             });
-            const userInfo = response.data;
+            const { token } = response.json();
+
+            const userInfo = await fetchUserInfo(token);
             setUserInfo(userInfo);
-            setUserToken(userInfo.token);
+            setUserToken(token);
 
             await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-            await AsyncStorage.setItem('userToken', userInfo.token);
+            await AsyncStorage.setItem('userToken', token);
 
             console.log(userInfo);
-            console.log('User Token:' + userInfo.token);
+            console.log('User Token:' + token);
         } catch (e) {
             console.error(`Login error: ${e}`);
         } finally {
@@ -34,13 +50,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-
-    // Função para login social
     const loginSocial = async (token) => {
         setIsLoading(true);
         try {
             const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-                //https://www.googleapis.com/userinfo/v2/me caso o de cima não funcione
                 headers: { Authorization: `Bearer ${token}` },
             });
             const userInfo = await response.json();
@@ -51,7 +64,7 @@ export const AuthProvider = ({ children }) => {
             await AsyncStorage.setItem('userToken', token);
 
             console.log(userInfo);
-            console.log('User Token:' + userInfo.token);
+            console.log('User Token:' + token);
         } catch (e) {
             console.error(`Login social error: ${e}`);
         } finally {
@@ -59,7 +72,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Função para logout
     const sair = async () => {
         setIsLoading(true);
         setUserToken(null);
@@ -69,7 +81,6 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(false);
     };
 
-    // Função para verificar se o usuário está logado
     const isLoggedIn = async () => {
         try {
             const storedUserInfo = await AsyncStorage.getItem('userInfo');
