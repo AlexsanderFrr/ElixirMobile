@@ -1,64 +1,47 @@
-import React from 'react';
-import { View, Text, KeyboardAvoidingView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, KeyboardAvoidingView, StyleSheet, Image, TouchableOpacity, Button, Platform } from 'react-native';
+import * as Calendar from 'expo-calendar';
 
 const ShopScreen = () => {
 
+  useEffect(() => {
+    (
+      async () => {
+        const { status } = await Calendar.requestCalendarPermissionsAsync();
+        if (status === 'granted') {
+          const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+          console.log('Here are all your calendars:');
+          console.log({ calendars });
+        }
+      })();
+  }, []);
+
   return (
+
+
     <KeyboardAvoidingView style={[styles.container, styles.brownbg]}>
       <View style={styles.text_header}>
-        <Text style={styles.textJuice}>Sacola de Suco</Text>
-        <Text style={styles.textPiece}>Um total de 3 produtos</Text>
+        <Text style={styles.textJuice}>Planejamento</Text>
+        <Text style={styles.textPiece}>Por um dia saúdavel</Text>
       </View>
-      <View style={styles.list_item}>
-        <View style={styles.itemCard}>
-          <Image
-            source={require("../assets/garrafa-suco2.png")}
-            style={styles.img_card}
-            resizeMode="contain"
-          />
-          <View style={styles.infoAlign}>
-            <Text style={styles.nameItem}>Suco de Laranja</Text>
-            <Text style={styles.functionItem}>Aumenta a imunidade</Text>
-            <Text style={styles.priceItem}>R$5,00</Text>
-          </View>
-        </View>
 
-        <View style={styles.itemCard}>
-          <Image
-            source={require("../assets/garrafa-suco4.png")}
-            style={styles.img_card}
-            resizeMode="contain"
-          />
-          <View style={styles.infoAlign}>
-            <Text style={styles.nameItem}>Suco de Abacaxi</Text>
-            <Text style={styles.functionItem}>Aumenta a imunidade</Text>
-            <Text style={styles.priceItem}>R$6,00</Text>
-          </View>
-        </View>
-        <View style={styles.itemCard}>
-          <Image
-            source={require("../assets/garrafa-suco5.png")}
-            style={styles.img_card}
-            resizeMode="contain"
-          />
-          <View style={styles.infoAlign}>
-            <Text style={styles.nameItem}>Suco de Morango</Text>
-            <Text style={styles.functionItem}>Aumenta a imunidade</Text>
-            <Text style={styles.priceItem}>R$8,00</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.findBuy}>
-        <View style={styles.textLine_total}>
-          <Text style={styles.textTotal}>Total:</Text>
-          <Text style={styles.textVTotal}>R$19,00</Text>
-        </View>
-        <TouchableOpacity style={styles.shop_button}>
-          <Text style={styles.textButton}>Comprar</Text>
-        </TouchableOpacity>
+      <View>
+        <Text>Calendário</Text>
+        <Button title='Criar um novo Calendario' onPress={createCalendar} />
       </View>
     </KeyboardAvoidingView>
   )
+
+  async function getDefaultCalendarSource() {
+    const defaultCalendar = await Calendar.getDefaultCalendarAsync();
+    return defaultCalendar.source;
+  }
+
+  async function createCalendar() {
+    const defaultCalendarSource = Platform.OS === 'android' ? await getDefaultCalendarSource() : { isLocalAccount: true, name: 'Expo Calendar' };
+    const newCalendarID = await Calendar.createCalendarAsync
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -100,7 +83,7 @@ const styles = StyleSheet.create({
   textTotal: {
     fontSize: 24,
     fontWeight: "500",
-   
+
   },
   textVTotal: {
     fontSize: 24,
