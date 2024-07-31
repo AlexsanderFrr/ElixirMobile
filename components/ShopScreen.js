@@ -4,7 +4,7 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Feather } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 
-import { ptBR } from '../config/localecalendarConfig';
+import { ptBR } from '../config/localeCalendarConfig';
 
 // Configuração de idioma
 LocaleConfig.locales["pt-br"] = ptBR;
