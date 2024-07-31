@@ -1,10 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
-import css from './styles';
+import css from '../../components/styles';
 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from 'expo-auth-session/providers/google';
-import { AuthContext } from '../src/context/authContext';
+import { AuthContext } from '../context/authContext';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

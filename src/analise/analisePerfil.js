@@ -1,5 +1,5 @@
+import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../src/context/authContext';
@@ -10,27 +10,19 @@ const PerfilScreen = () => {
   const navigation = useNavigation();
 
   const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(false);
 
   const pickImage = async () => {
-    try {
-      setLoadingImage(true);
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-      console.log(result);
+    console.log(result);
 
-      if (!result.canceled) {
-        setImage(result.assets[0].uri);
-      }
-    } catch (error) {
-      console.error('Erro ao selecionar imagem:', error);
-    } finally {
-      setLoadingImage(false);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
 
@@ -48,15 +40,11 @@ const PerfilScreen = () => {
           <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-              {loadingImage ? (
-                <ActivityIndicator size="large" color="#fff" />
-              ) : (
-                <Image 
-                  source={{ uri: image || (userInfo && userInfo.picture) || 'https://via.placeholder.com/150' }} 
-                  style={styles.image} 
-                  resizeMode='contain' 
-                />
-              )}
+              {image ? (
+                <Image source={{ uri: image }} style={styles.image} resizeMode='center' />
+              ) : userInfo && userInfo.picture ? (
+                <Image source={{ uri: userInfo.picture }} style={styles.image} resizeMode='contain' />
+              ) : null}
             </View>
             <View style={styles.dm}>
               <MaterialIcons name='chat' size={18} color={"#F4DEAA"}></MaterialIcons>
@@ -70,10 +58,10 @@ const PerfilScreen = () => {
           </View>
 
           <View style={styles.infoContainer}>
-            <Text style={[styles.text, styles.name]}>
+            <Text style={[styles.text, { fontWeight: "600", fontSize: 26, marginTop: 30, fontFamily: "HelveticaNeue", }]}>
               {userInfo ? userInfo.name : 'Nome do Usuário'}
             </Text>
-            <Text style={styles.email}>
+            <Text style={{ fontSize: 20, fontFamily: "HelveticaNeue", color: "#8a8a8a" }}>
               {userInfo ? userInfo.email : 'email@dominio.com'}
             </Text>
             <View style={[styles.separator, { marginTop: 10, width: "90%" }]} />
@@ -82,21 +70,21 @@ const PerfilScreen = () => {
               <TouchableOpacity>
                 <View style={[styles.option, { marginTop: 40 }]}>
                   <Image source={require("../assets/iconDiag.png")}></Image>
-                  <Text style={[styles.text, styles.optionText]}>Meus Diagnósticos</Text>
+                  <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Meus Diagnósticos</Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
               <TouchableOpacity>
                 <View style={[styles.option, { marginTop: 10 }]}>
                   <Image source={require("../assets/iconCora.png")}></Image>
-                  <Text style={[styles.text, styles.optionText]}>Favoritos</Text>
+                  <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Favoritos</Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
-              <TouchableOpacity onPress={sair}>
+              <TouchableOpacity onPress={() => { sair() }}>
                 <View style={[styles.option, { marginTop: 10 }]}>
                   <Image source={require("../assets/iconLogOut.png")}></Image>
-                  <Text style={[styles.text, styles.optionText]}>Sair</Text>
+                  <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Sair</Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
@@ -198,22 +186,6 @@ const styles = StyleSheet.create({
   groupOption: {
     alignItems: "flex-start",
     width: "90%"
-  },
-  name: {
-    fontWeight: "600", 
-    fontSize: 26, 
-    marginTop: 30, 
-    fontFamily: "HelveticaNeue",
-  },
-  email: {
-    fontSize: 20, 
-    fontFamily: "HelveticaNeue", 
-    color: "#8a8a8a"
-  },
-  optionText: {
-    fontSize: 16, 
-    fontWeight: "600", 
-    marginLeft: 10
   }
 });
 

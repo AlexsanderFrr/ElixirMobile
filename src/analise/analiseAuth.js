@@ -10,13 +10,6 @@ export const AuthProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    const storeUserData = async (token, userInfo) => {
-        setUserToken(token);
-        setUserInfo(userInfo);
-        await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-        await AsyncStorage.setItem('userToken', token);
-    };
-
     const fetchUserInfo = async (token) => {
         try {
             const response = await axios.get(`${apiEndpoint}/usuario/all`, {
@@ -24,6 +17,7 @@ export const AuthProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             });
+            console.log(response)
             return response.data;
         } catch (e) {
             console.error(`fetchUserInfo error: ${e}`);
@@ -39,8 +33,13 @@ export const AuthProvider = ({ children }) => {
                 senha
             });
             const { token } = response.data;
+
             const userInfo = await fetchUserInfo(token);
-            await storeUserData(token, userInfo);
+            setUserInfo(userInfo);
+            setUserToken(token);
+
+            await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+            await AsyncStorage.setItem('userToken', token);
 
             console.log(userInfo);
             console.log('User Token:' + token);
@@ -58,7 +57,11 @@ export const AuthProvider = ({ children }) => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const userInfo = await response.json();
-            await storeUserData(token, userInfo);
+            setUserInfo(userInfo);
+            setUserToken(token);
+
+            await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+            await AsyncStorage.setItem('userToken', token);
 
             console.log(userInfo);
             console.log('User Token:' + token);
