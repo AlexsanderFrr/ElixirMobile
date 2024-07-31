@@ -81,13 +81,8 @@ const HomeScreen = () => {
     );
   };
 
-  // Mapear suco para imagens locais
-  const juiceImages = {
-    "garrafa-suco": require('../assets/garrafa-suco.png')
-  };
-
-  const getImageSource = (juiceName) => {
-    return juiceImages[juiceName] || require('../assets/imgExibicaoProv.png');
+  const getImageUrl = (imgPath) => {
+    return `${apiEndpoint}${imgPath}`;
   };
 
   return (
