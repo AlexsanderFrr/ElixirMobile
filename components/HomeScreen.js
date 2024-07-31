@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 import {
   View,
   Image,
@@ -10,20 +10,23 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Modal,
+  Alert
 } from "react-native";
 import { apiEndpoint } from "../config/constantes";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-
   const [juices, setJuices] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Recomendado");
   const [searchText, setSearchText] = useState("");
   const [filteredJuices, setFilteredJuices] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedJuice, setSelectedJuice] = useState(null);
 
   useEffect(() => {
-    // Função para buscar todos os sucos ou fazer pesquisa se searchText estiver definido
     const fetchJuices = async (search = "") => {
       try {
         const url = search
@@ -31,7 +34,6 @@ const HomeScreen = () => {
           : `${apiEndpoint}/suco/all`;
         const response = await fetch(url);
         const data = await response.json();
-        console.log("Data fetched: ", data);
         setJuices(data);
       } catch (error) {
         console.error("Erro ao buscar sucos: ", error);
@@ -42,7 +44,6 @@ const HomeScreen = () => {
   }, [searchText]);
 
   useEffect(() => {
-    // Filtra os sucos com base na categoria selecionada
     const filterByCategory = () => {
       let filtered = juices;
       switch (selectedCategory) {
@@ -74,17 +75,59 @@ const HomeScreen = () => {
     setSearchText(text);
   };
 
-  // Filtra os sucos com base no texto de pesquisa
   const filteredBySearch = () => {
     return filteredJuices.filter((juice) =>
       juice.nome.toLowerCase().includes(searchText.toLowerCase())
     );
   };
 
-  // Função para obter a URL da imagem
   const getImageUrl = (imgPath) => {
     return `${apiEndpoint}${imgPath}`;
   };
+
+  const handleFavoritePress = (juice) => {
+    setFavorites((prevFavorites) => {
+      if (prevFavorites.includes(juice.id)) {
+        return prevFavorites.filter((favId) => favId !== juice.id);
+      } else {
+        return [...prevFavorites, juice.id];
+      }
+    });
+  };
+
+  const handleJuicePress = (juice) => {
+    setSelectedJuice(juice);
+    setModalVisible(true);
+  };
+
+  const renderJuiceItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.juiceButtonItemVertical}
+      onPress={() => handleJuicePress(item)}
+    >
+      <View style={styles.juiceItemVertical}>
+        <Image
+          source={{ uri: getImageUrl(item.img1) }}
+          style={styles.juiceImageVertical}
+          resizeMode="contain"
+        />
+        <View style={styles.juiceInfoVertical}>
+          <Text style={styles.juiceNameVertical}>{item.nome}</Text>
+          <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>
+          <TouchableOpacity
+            onPress={() => handleFavoritePress(item)}
+            style={styles.favoriteButton}
+          >
+            <Ionicons
+              name={favorites.includes(item.id) ? "heart" : "heart-outline"}
+              size={24}
+              color={favorites.includes(item.id) ? "#FF6347" : "#838181"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -96,7 +139,7 @@ const HomeScreen = () => {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Ionicons name="chatbubble-ellipses-outline" size={30} color={"#fff"}></Ionicons>
+          <Ionicons name="chatbubble-ellipses-outline" size={30} color={"#fff"} />
         </View>
         <View style={styles.searchContainer}>
           <TextInput
@@ -110,7 +153,6 @@ const HomeScreen = () => {
       </View>
 
       <View>
-        {/* Barra de navegação */}
         <View style={styles.navigationBar}>
           {["Recomendado", "Detox", "Medicinal"].map((category) => (
             <TouchableOpacity
@@ -133,7 +175,6 @@ const HomeScreen = () => {
           ))}
         </View>
 
-        {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
         {!searchText && (
           <ScrollView horizontal style={styles.scrollView}>
             {filteredJuices.map((juice) => (
@@ -150,34 +191,37 @@ const HomeScreen = () => {
         )}
       </View>
 
-      {/* Linha separadora */}
       <View style={styles.separator} />
       <Text style={styles.catalogText}>Catálogo</Text>
 
-      {/* FlatList para todos os sucos ou sucos filtrados */}
       <FlatList
         data={searchText ? filteredBySearch() : filteredJuices}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.juiceButtonItemVertical}
-            onPress={() => navigation.navigate("Exibicao", { name: item.nome, function: item.beneficios, image: item.img1 })}
-          >
-            <View style={styles.juiceItemVertical}>
-              <Image
-                source={{ uri: getImageUrl(item.img1) }}
-                style={styles.juiceImageVertical}
-                resizeMode="contain"
-              />
-              <View style={styles.juiceInfoVertical}>
-                <Text style={styles.juiceNameVertical}>{item.nome}</Text>
-                <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        )}
+        renderItem={renderJuiceItem}
         contentContainerStyle={styles.flatListContainer}
       />
+
+      {selectedJuice && (
+        <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Image
+                source={{ uri: getImageUrl(selectedJuice.img1) }}
+                style={styles.modalImage}
+                resizeMode="contain"
+              />
+              <Text style={styles.modalTitle}>{selectedJuice.nome}</Text>
+              <Text style={styles.modalDescription}>{selectedJuice.beneficios}</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.modalCloseButtonText}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      )}
     </View>
   );
 };
@@ -190,10 +234,7 @@ const styles = StyleSheet.create({
   header: {
     height: "20%",
     backgroundColor: "#BB5104",
-    //paddingVertical: 30,
     paddingHorizontal: 30,
-    //alignItems: "center",
-    //justifyContent: "center",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -205,14 +246,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 40,
-    //marginHorizontal: 30
   },
   searchContainer: {
     width: "100%",
     marginTop: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
-
   },
   searchInput: {
     width: "100%",
@@ -241,7 +280,7 @@ const styles = StyleSheet.create({
     color: "#BB5104",
   },
   scrollView: {
-    marginTop: 10, // Ajuste conforme necessário para evitar a sobreposição com a barra de navegação
+    marginTop: 10,
     height: "100%",
     marginLeft: 30
   },
@@ -275,7 +314,6 @@ const styles = StyleSheet.create({
   },
   juiceItemVertical: {
     flexDirection: "row",
-    //justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 20,
     marginHorizontal: 20,
@@ -287,6 +325,7 @@ const styles = StyleSheet.create({
   },
   juiceInfoVertical: {
     marginLeft: 15,
+    flex: 1,
   },
   juiceNameVertical: {
     fontSize: 18,
@@ -304,6 +343,48 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     paddingHorizontal: 10,
+  },
+  favoriteButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: 300,
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+  },
+  modalImage: {
+    width: 200,
+    height: 200,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  modalDescription: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  modalCloseButton: {
+    backgroundColor: "#BB5104",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  modalCloseButtonText: {
+    color: "#FFF",
+    fontSize: 16,
   },
 });
 
