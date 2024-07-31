@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "package.anonymous.Elixr"
+      "package": "com.carloseduardobelo.Elixir"
     },
     "web": {
       "favicon": "./assets/favicon.png"
