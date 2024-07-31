@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
 import css from './styles';
 
 import * as WebBrowser from "expo-web-browser";
@@ -14,13 +14,15 @@ WebBrowser.maybeCompleteAuthSession();
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
-  password: yup.string().min(6, "A senha deve ter pelo menos 6 dígitos").required("Informe sua senha")
+  password: yup.string().min(6, "A senha deve ter pelo menos 6 digitos").required("Informe sua senha")
 });
 
 const LoginScreen = ({ navigation }) => {
-  const { login, loginSocial, isLoading } = useContext(AuthContext);
+  const [email, setEmail] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
+  const { login, loginSocial } = useContext(AuthContext);
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -36,10 +38,6 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [response]);
 
-  const onSubmit = data => {
-    login(data.email, data.password);
-  };
-
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
       <View style={[css.logo_login]}>
@@ -52,22 +50,24 @@ const LoginScreen = ({ navigation }) => {
       </View>
 
       <View style={css.login__form}>
-        <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 30 }}>Faça login na sua conta</Text>
+        <View>
+          <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 30 }}>Faça login na sua conta</Text>
+        </View>
 
         {errors.email && <Text style={css.labelError}>{errors.email?.message}</Text>}
         <Controller
           control={control}
           name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
-                borderWidth: errors.email ? 1 : 0,
-                borderColor: errors.email ? '#eb0909' : 'transparent'
+                borderWidth: errors.email && 1,
+                borderColor: errors.email && '#eb0909'
               }]}
               placeholder='Email:' placeholderTextColor='#B1B1B1'
-              onChangeText={onChange}
+              onChangeText={(text) => setEmail(text)}
               onBlur={onBlur}
-              value={value}
+              value={email}
             />
           )}
         />
@@ -76,46 +76,64 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
-                borderWidth: errors.password ? 1 : 0,
-                borderColor: errors.password ? '#eb0909' : 'transparent'
+                borderWidth: errors.password && 1,
+                borderColor: errors.password && '#eb0909'
               }]}
               placeholder='Senha:'
               placeholderTextColor='#B1B1B1'
               secureTextEntry={true}
-              onChangeText={onChange}
+              onChangeText={(text) => setPassword(text)}
               onBlur={onBlur}
-              value={value}
+              value={password}
             />
           )}
         />
 
-        <TouchableOpacity style={css.login__button} onPress={handleSubmit(onSubmit)}>
-          {isLoading ? <ActivityIndicator size="small" color="#fff" /> : <Text style={css.login__buttonText}>Entrar</Text>}
+        <TouchableOpacity style={css.login__button} onPress={() => {
+          login(email, password)
+        }}>
+          <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
         <View style={css.align_Down}>
           <Text style={{ color: "#838181", fontSize: 19, fontWeight: "500" }}>Entre com rede social</Text>
 
           <View style={css.social_Container}>
-            <TouchableOpacity disabled={!request} onPress={() => promptAsync()}>
+            <Image
+              source={require('../assets/faceAcess.png')}
+              //style={{ width: 25, height: 41 }}
+              resizeMode="contain"
+            />
+            <TouchableOpacity
+              disabled={!request}
+              onPress={() => {
+                promptAsync();
+              }}>
               <Image
                 source={require('../assets/googleAcess.png')}
+                //style={{ maxWidth: 40, height: 41 }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            {/* Adicione outros métodos de login social conforme necessário */}
+            <Image
+              source={require('../assets/emailAcess.png')}
+              //style={{ width: 25, height: 41 }}
+              resizeMode="contain"
+            />
           </View>
 
-          <TouchableOpacity style={css.register_button} onPress={() => navigation.navigate('Cadastro')}>
+          <TouchableOpacity style={css.register_button} onPress={() => { navigation.navigate('Cadastro') }}>
             <View style={css.textRegisterAlign}>
               <Text style={css.register_firstText}>Não possui uma conta?</Text>
               <Text style={css.register_secondText}>Cadastre-se</Text>
             </View>
           </TouchableOpacity>
+
         </View>
+
       </View>
     </KeyboardAvoidingView>
   );
