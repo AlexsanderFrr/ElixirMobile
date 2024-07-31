@@ -81,9 +81,27 @@ const HomeScreen = () => {
     );
   };
 
-  // Função para obter a URL da imagem
-  const getImageUrl = (imgPath) => {
-    return `${apiEndpoint}${imgPath}`;
+  // Filtra os sucos com base na categoria selecionada
+  const filteredCategoryJuices = () => {
+    switch (selectedCategory) {
+      case "Recomendado":
+        return juices.slice(0, 4);
+      case "Detox":
+        return juices.slice(4, 8);
+      case "Medicinal":
+        return juices.slice(8, 10);
+      default:
+        return [];
+    }
+  };
+
+  // Mapear suco para imagens locais
+  const juiceImages = {
+    "garrafa-suco": require('../assets/garrafa-suco.png')
+  };
+
+  const getImageSource = (juiceName) => {
+    return juiceImages[juiceName] || require('../assets/imgExibicaoProv.png');
   };
 
   return (
