@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
+
+import * as WebBrowser from "expo-web-browser";
+import * as Google from 'expo-auth-session/providers/google';
+import * as AuthSession from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { AuthContext } from '../src/context/authContext';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
-import { useDispatch } from 'react-redux';
-import { login } from '../src/store/authSlice';
 
-
+WebBrowser.maybeCompleteAuthSession();
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
@@ -16,20 +21,55 @@ const schema = yup.object({
 })
 
 const LoginScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const [email, setEmail] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
+  const { login } = useContext(AuthContext);
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
-  })
+  });
 
-  const handleLogin = (data) => {
-    console.log(data);
-    const user = {id:2, name: "Rafael"};
-    dispatch(login(user));
-    navigation.navigate('Home');
+  const [userInfo, setUserInfo] = React.useState(null);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "148404174369-1rdjvmj6gvptaqsimhmcf14eaaql9asb.apps.googleusercontent.com",
+    webClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com"
+  });
+
+  React.useEffect(() => {
+    if (response?.type === "success") {
+      handleGoogleSignIn(response.authentication.accessToken);
+    }
+  }, [response]);
+
+  async function handleGoogleSignIn(token) {
+    const user = await AsyncStorage.getItem("@user");
+    if (!user) {
+      await getUserInfo(token);
+    } else {
+      setUserInfo(JSON.parse(user));
+      navigation.navigate('Home');
+    }
   }
-    
- 
+
+  const getUserInfo = async (token) => {
+    if (!token) return;
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const user = await response.json();
+      await AsyncStorage.setItem("@user", JSON.stringify(user));
+      setUserInfo(user);
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
       <View style={[css.logo_login]}>
@@ -50,16 +90,16 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.email && 1,
                 borderColor: errors.email && '#eb0909'
               }]}
               placeholder='Email:' placeholderTextColor='#B1B1B1'
-              onChangeText={(text) => onChange(text)}
+              onChangeText={(text) => setEmail(text)}
               onBlur={onBlur}
-              value={value}
+              value={email}
             />
           )}
         />
@@ -68,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
         <Controller
           control={control}
           name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({ field: { onBlur } }) => (
             <TextInput
               style={[css.login__input, {
                 borderWidth: errors.password && 1,
@@ -77,14 +117,16 @@ const LoginScreen = ({ navigation }) => {
               placeholder='Senha:'
               placeholderTextColor='#B1B1B1'
               secureTextEntry={true}
-              onChangeText={(text) => onChange(text)}
+              onChangeText={(text) => setPassword(text)}
               onBlur={onBlur}
-              value={value}
+              value={password}
             />
           )}
         />
 
-        <TouchableOpacity style={css.login__button} onPress={handleSubmit(handleLogin)}>
+        <TouchableOpacity style={css.login__button} onPress={() => {
+          login(email, password)
+        }}>
           <Text style={css.login__buttonText}>Entrar</Text>
         </TouchableOpacity>
 
@@ -97,11 +139,17 @@ const LoginScreen = ({ navigation }) => {
               //style={{ width: 25, height: 41 }}
               resizeMode="contain"
             />
-            <Image
-              source={require('../assets/googleAcess.png')}
-              //style={{ maxWidth: 40, height: 41 }}
-              resizeMode="contain"
-            />
+            <TouchableOpacity
+              disabled={!request}
+              onPress={() => {
+                promptAsync();
+              }}>
+              <Image
+                source={require('../assets/googleAcess.png')}
+                //style={{ maxWidth: 40, height: 41 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
             <Image
               source={require('../assets/emailAcess.png')}
               //style={{ width: 25, height: 41 }}

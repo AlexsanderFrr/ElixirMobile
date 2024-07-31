@@ -1,10 +1,30 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../src/context/authContext';
+import * as ImagePicker from 'expo-image-picker';
 
 const PerfilScreen = () => {
+  const {sair} = useContext(AuthContext);
   const navigation = useNavigation();
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if(!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,15 +40,17 @@ const PerfilScreen = () => {
           <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-              <Image source={{ uri: 'https://img.freepik.com/fotos-premium/imagenslegais-e-calmas-para-a-foto-do-perfil-do-whatsapp-arte-gerada-porai_873370-5052.jpg' }} style={styles.image} resizeMode='center' />
+              {image && <Image source={{ uri: image }} style={styles.image} resizeMode='center' /> }
             </View>
             <View style={styles.dm}>
               <MaterialIcons name='chat' size={18} color={"#F4DEAA"}></MaterialIcons>
             </View>
             <View style={styles.active}></View>
-            <View style={styles.add}>
-              <Ionicons name='add' size={38} color={"#F4DEAA"}></Ionicons>
-            </View>
+            <TouchableOpacity onPress={pickImage}>
+              <View style={styles.add}>
+                <Ionicons name='add' size={38} color={"#F4DEAA"}></Ionicons>
+              </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.infoContainer}>
@@ -50,7 +72,7 @@ const PerfilScreen = () => {
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {sair()}}>
                 <View style={[styles.option, { marginTop: 10 }]}>
                   <Image source={require("../assets/iconLogOut.png")}></Image>
                   <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Sair</Text>
