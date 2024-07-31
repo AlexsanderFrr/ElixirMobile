@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Feather } from '@expo/vector-icons'; 
 
-import { ptBR } from '../config/localeCalendarConfig';
+import { ptBR } from '../config/localecalendarConfig';
 
 // Configuração de idioma
 LocaleConfig.locales["pt-br"] = ptBR;
