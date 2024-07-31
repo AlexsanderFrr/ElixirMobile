@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
                 }
             });
             console.log(response)
-            return response.json();
+            return response.data;
         } catch (e) {
             console.error(`fetchUserInfo error: ${e}`);
             return null;
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
                 email,
                 senha
             });
-            const { token } = response.json();
+            const { token } = response.data;
 
             const userInfo = await fetchUserInfo(token);
             setUserInfo(userInfo);
