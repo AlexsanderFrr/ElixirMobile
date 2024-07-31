@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "host.exp.exponent"
+      "package": "package.anonymous.Elixr"
     },
     "web": {
       "favicon": "./assets/favicon.png"
