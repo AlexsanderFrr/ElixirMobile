@@ -5,6 +5,10 @@ import css from './styles';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux';
+import { login } from '../src/store/authSlice';
+
+
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),
@@ -12,6 +16,7 @@ const schema = yup.object({
 })
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -19,9 +24,12 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = (data) => {
     console.log(data);
+    const user = {id:2, name: "Rafael"};
+    dispatch(login(user));
     navigation.navigate('Home');
   }
-
+    
+ 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
       <View style={[css.logo_login]}>

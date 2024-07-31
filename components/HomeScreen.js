@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from 'react-redux'
 import {
   View,
   Image,
@@ -14,10 +15,15 @@ import {
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-
+  const {isLoggedIn, user} = useSelector(state => state.auth);
+  
   const [selectedCategory, setSelectedCategory] = useState("Recomendado");
   const [searchText, setSearchText] = useState("");
   const [filteredJuices, setFilteredJuices] = useState([]);
+
+
+console.log(isLoggedIn);
+console.log(user);
 
   const handleCategoryPress = (category) => {
     setSelectedCategory(category);
