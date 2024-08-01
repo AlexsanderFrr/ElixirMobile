@@ -30,7 +30,8 @@
     "react-native-calendars": "^1.1306.0",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-web": "~0.19.6",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "expo-system-ui": "~3.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
