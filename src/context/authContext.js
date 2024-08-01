@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUserInfo = async (token) => {
         try {
-            const response = await axios.get(`${apiEndpoint}/usuario/all`, {
+            const response = await axios.get(`${apiEndpoint}/usuario/me`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
