@@ -1,4 +1,4 @@
-package package.anonymous.Elixr
+package com.carloseduardobelo.elixir
 
 import android.os.Build
 import android.os.Bundle
