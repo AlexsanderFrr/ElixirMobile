@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout } from './authSlice';
@@ -33,4 +33,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;*/

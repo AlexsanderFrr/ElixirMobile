@@ -15,11 +15,7 @@
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
-<<<<<<< HEAD
     "@reduxjs/toolkit": "^2.2.7",
-=======
-    "axios": "^1.7.2",
->>>>>>> origin/HomeScreen
     "expo": "~50.0.14",
     "expo-auth-session": "~5.4.0",
     "expo-font": "^11.10.3",
