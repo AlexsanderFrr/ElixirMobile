@@ -80,7 +80,6 @@ const HomeScreen = () => {
     );
   };
 
-  // Função para obter a URL da imagem
   const getImageUrl = (imgPath) => {
     return `${apiEndpoint}${imgPath}`;
   };
