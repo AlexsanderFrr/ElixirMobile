@@ -2,6 +2,7 @@
   "expo": {
     "name": "Elixir",
     "slug": "Elixir",
+    "scheme": "elixir",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.carloseduardobelo.Elixir"
+      "package": "com.carloseduardobelo.elixir"
     },
     "web": {
       "favicon": "./assets/favicon.png"
