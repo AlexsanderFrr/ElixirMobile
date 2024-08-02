@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
 
@@ -15,7 +16,7 @@ const CadastroScreen = ({ navigation }) => {
         }
 
         try {
-            const response = await fetch('http://localhost:8081/usuario/add', {
+            const response = await axios('http://localhost:8081/usuario/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
