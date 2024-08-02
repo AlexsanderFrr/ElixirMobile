@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, } from 'react-native';
 import css from './styles';
+import { apiEndpoint } from "../config/constantes";
 
 const CadastroScreen = ({ navigation }) => {
 
@@ -16,7 +16,7 @@ const CadastroScreen = ({ navigation }) => {
         }
 
         try {
-            const response = await axios('http://localhost:8081/usuario/add', {
+            const response = await fetch(`${apiEndpoint}/usuario/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ const CadastroScreen = ({ navigation }) => {
 
             if (response.status === 200) {
                 alert(data.message);
-                navigation.navigate('Home');
+                navigation.navigate('HomeTabs');
             } else {
                 alert(data.error);
             }
