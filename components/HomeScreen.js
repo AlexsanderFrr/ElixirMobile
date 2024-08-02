@@ -15,9 +15,11 @@ import {
 import { apiEndpoint } from "../config/constantes";
 
 const HomeScreen = () => {
+  
   const navigation = useNavigation();
 
   const [juices, setJuices] = useState([]);
+  const [filteredJuices, setFilteredJuices] = useState([]); // Adicione esta linha
   const [selectedCategory, setSelectedCategory] = useState("Recomendado");
   const [searchText, setSearchText] = useState("");
 
@@ -25,8 +27,8 @@ const HomeScreen = () => {
 
     const fetchJuices = async () => {
       try {
-        const url = search
-          ? `${apiEndpoint}/suco/search/${search}`
+        const url = searchText
+          ? `${apiEndpoint}/suco/search/${searchText}`
           : `${apiEndpoint}/suco/all`;
         const response = await fetch(url);
         const data = await response.json();
