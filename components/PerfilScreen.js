@@ -59,10 +59,10 @@ const PerfilScreen = () => {
 
           <View style={styles.infoContainer}>
             <Text style={[styles.text, { fontWeight: "600", fontSize: 26, marginTop: 30, fontFamily: "HelveticaNeue", }]}>
-              {userInfo ? userInfo.name : 'Nome do Usuário'}
+              {userInfo ? (userInfo.nome || userInfo.name) : 'Nome do Usuário'}
             </Text>
             <Text style={{ fontSize: 20, fontFamily: "HelveticaNeue", color: "#8a8a8a" }}>
-              {userInfo ? userInfo.email : 'email@dominio.com'}
+              {userInfo ? (userInfo.email || userInfo.email) : 'email@dominio.com'}
             </Text>
             <View style={[styles.separator, { marginTop: 10, width: "90%" }]} />
 

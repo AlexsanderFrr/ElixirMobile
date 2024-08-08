@@ -1,3 +1,0 @@
-<NavigationContainer>
-      
-    </NavigationContainer>
