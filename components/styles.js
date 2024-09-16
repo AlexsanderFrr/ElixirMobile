@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -8,7 +9,6 @@ const styles = StyleSheet.create({
     paddingVertical: 70,
   },
   logo_login: {
-    //flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   img_logo: {
     width: 256, 
-    height: 41
+    height: 41,
   },
   img_logocad: {
     width: 256, 
@@ -42,10 +42,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: '#eb0909',
     fontWeight: '700',
-    marginBottom: 11
+    marginBottom: 11,
   },
   login__form: {
-    //flex: 1,
     width: "100%",
     justifyContent: "center",
     paddingTop: 100,
@@ -56,6 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingBottom: 40,
   },
+  inputContainer: {
+    position: 'relative',
+    marginBottom: 20,
+  },
   login__input: {
     backgroundColor: "#FFFFFF",
     width: "100%",
@@ -63,10 +66,24 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingHorizontal: 15,
     paddingVertical: 13,
-    marginBottom: 20,
     borderWidth: 1.5,
     borderColor: "#FFB100",
     borderRadius: 10,
+  },
+  iconStyle: {
+    position: 'absolute',
+    top: '50%',
+    left: 15,
+    transform: [{ translateY: -12 }], // Ajuste vertical para centralizar o ícone
+  },
+  passwordContainer: {
+    position: 'relative',
+  },
+  eyeIcon: {
+    position: 'absolute',
+    top: '50%',
+    right: 15,
+    transform: [{ translateY: -12 }], // Ajuste vertical para centralizar o ícone
   },
   login__button: {
     width: "100%",
@@ -76,7 +93,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-    //marginTop: 40,
   },
   login__buttonText: {
     fontWeight: "500",
@@ -102,7 +118,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#BB5104",
     alignItems: "center",
     borderRadius: 10,
-    //marginTop: 40,
   },
   separator: {
     height: 1,
@@ -115,15 +130,12 @@ const styles = StyleSheet.create({
   },
   align_Top: {
     alignItems: "center",
-    //marginBottom: 60,
   },
   social_Container: {
-    //justifyContent: "space-between",
     flexDirection: "row",
     marginTop: 15,
   },
   social_ContainerCad: {
-    //justifyContent: "space-between",
     flexDirection: "row",
     marginBottom: 15,
   },
@@ -131,18 +143,19 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   textRegisterAlign: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   register_firstText: {
     fontSize: 16,
     fontWeight: "500",
     color: "#838181",
-    marginRight: 5
+    marginRight: 5,
   },
   register_secondText: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#BB5104"
-  }
+    color: "#BB5104",
+  },
 });
+
 export default styles;
