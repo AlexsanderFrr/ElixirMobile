@@ -70,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
                   {
                     borderWidth: errors.email ? 1 : 0,
                     borderColor: errors.email ? '#eb0909' : 'transparent',
-                    paddingLeft: 40 // Ajusta espaço para o ícone dentro do campo
+                    paddingLeft: 42 // Ajusta espaço para o ícone dentro do campo
                   }
                 ]}
                 placeholder='Email'
@@ -97,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
                     {
                       borderWidth: errors.password ? 1 : 0,
                       borderColor: errors.password ? '#eb0909' : 'transparent',
-                      paddingLeft: 40, // Espaço para o ícone de "lock" à esquerda
+                      paddingLeft: 42, // Espaço para o ícone de "lock" à esquerda
                       paddingRight: 40, // Espaço para o ícone de visibilidade à direita
                     }
                   ]}
