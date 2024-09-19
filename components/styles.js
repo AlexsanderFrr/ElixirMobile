@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     position: 'absolute',
     top: '50%',
-    zIndex: '4', //agrupa
+    zIndex: 4, //agrupa
     left: 15,
     transform: [{ translateY: -12 }], // Ajuste vertical para centralizar o ícone
   },
