@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, View, Text, Image } from 'react-native';
 import css from '../../components/styles';
-import Logo from '../../components/Logo';
 import LoginForm from '../../components/LoginForm';
 import SocialLogin from '../../components/SocialLogin';
 import RegisterSection from '../../components/RegisterSection';
@@ -22,7 +21,14 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
-      <Logo />
+      <View style={[css.logo_login]}>
+        <Text style={css.text_welcome}>Bem vindo a</Text>
+        <Image
+          source={require('../../assets/logo.png')}
+          style={css.img_logo}
+          resizeMode="contain"
+        />
+      </View>
       <LoginForm login={login} isLoading={isLoading} />
       <SocialLogin request={request} promptAsync={promptAsync} />
       <RegisterSection navigation={navigation} />
