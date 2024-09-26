@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { KeyboardAvoidingView, View, Text, Image } from 'react-native';
+import { KeyboardAvoidingView, } from 'react-native';
 import css from '../../components/styles';
+import LogoLogin from '../../components/LogoLogin';
 import LoginForm from '../../components/LoginForm';
+import DividerWithText from '../../components/DividerWithText';
 import SocialLogin from '../../components/SocialLogin';
 import RegisterSection from '../../components/RegisterSection';
-
 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from 'expo-auth-session/providers/google';
@@ -21,15 +22,9 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
-      <View style={[css.logo_login]}>
-        <Text style={css.text_welcome}>Bem vindo a</Text>
-        <Image
-          source={require('../../assets/logo.png')}
-          style={css.img_logo}
-          resizeMode="contain"
-        />
-      </View>
+      <LogoLogin />
       <LoginForm login={login} isLoading={isLoading} />
+      <DividerWithText />
       <SocialLogin request={request} promptAsync={promptAsync} />
       <RegisterSection navigation={navigation} />
     </KeyboardAvoidingView>

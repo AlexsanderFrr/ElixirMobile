@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
   login__button: {
     width: "100%",
     height: 60,
-    padding: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-  },
+    paddingHorizontal: 12, // Deixa apenas o preenchimento lateral
+  },  
   login__buttonText: {
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 25,
     color: "#F5F5F5",
     fontFamily: "sans-serif",

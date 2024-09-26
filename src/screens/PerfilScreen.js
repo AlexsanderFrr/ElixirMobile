@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpaci
 import React, { useContext, useState } from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../src/context/authContext';
+import { AuthContext } from '../context/authContext';
 import * as ImagePicker from 'expo-image-picker';
 
 const PerfilScreen = () => {
@@ -28,7 +28,7 @@ const PerfilScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={require("../assets/fundoPerfil.png")} resizeMode="cover" style={styles.imageBG}>
+      <ImageBackground source={require("../../assets/fundoPerfil.png")} resizeMode="cover" style={styles.imageBG}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.titleBar}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -69,21 +69,21 @@ const PerfilScreen = () => {
             <View style={styles.groupOption}>
               <TouchableOpacity>
                 <View style={[styles.option, { marginTop: 40 }]}>
-                  <Image source={require("../assets/iconDiag.png")}></Image>
+                  <Image source={require("../../assets/iconDiag.png")}></Image>
                   <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Meus Diagnósticos</Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
               <TouchableOpacity>
                 <View style={[styles.option, { marginTop: 10 }]}>
-                  <Image source={require("../assets/iconCora.png")}></Image>
+                  <Image source={require("../../assets/iconCora.png")}></Image>
                   <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Favoritos</Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
               <TouchableOpacity onPress={() => { sair() }}>
                 <View style={[styles.option, { marginTop: 10 }]}>
-                  <Image source={require("../assets/iconLogOut.png")}></Image>
+                  <Image source={require("../../assets/iconLogOut.png")}></Image>
                   <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Sair</Text>
                 </View>
               </TouchableOpacity>

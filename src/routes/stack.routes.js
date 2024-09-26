@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import ExibicaoScreen from "../../components/ExibicaoScreen";
-import ShopScreen from "../../components/ShopScreen";
-import PerfilScreen from "../../components/PerfilScreen";
+import ExibicaoScreen from "../screens/ExibicaoScreen";
+import ShopScreen from "../screens/ShopScreen";
+import PerfilScreen from "../screens/PerfilScreen";
 
 import TabRoutes from "./tab.routes";
 
