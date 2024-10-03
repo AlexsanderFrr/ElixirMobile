@@ -20,21 +20,21 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   text_welcome: {
-    fontSize: 24, 
-    fontWeight: 'bold', 
+    fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 15,
   },
   text_newac: {
-    fontSize: 24, 
-    fontWeight: 'bold', 
+    fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 15,
   },
   img_logo: {
-    width: 256, 
+    width: 256,
     height: 41,
   },
   img_logocad: {
-    width: 256, 
+    width: 256,
     height: 41,
     marginBottom: 40,
   },
@@ -70,6 +70,16 @@ const styles = StyleSheet.create({
     borderColor: "#FFB100",
     borderRadius: 10,
   },
+  forgotPasswordButton: {
+    alignSelf: 'flex-end',  // Alinha o botão à direita
+    marginBottom: 20,       // Espaçamento inferior
+  },
+  forgotPasswordText: {
+    fontSize: 18,
+    color: '#BB5104',       // Cor do texto (laranja escuro, como os outros elementos)
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+  },
   iconStyle: {
     position: 'absolute',
     top: '50%',
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     paddingHorizontal: 12, // Deixa apenas o preenchimento lateral
-  },  
+  },
   login__buttonText: {
     fontWeight: "600",
     fontSize: 25,

@@ -25,6 +25,8 @@ const LoginForm = ({ login, isLoading }) => {
   return (
     <View style={css.login__form}>
       <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 30 }}>Faça login na sua conta</Text>
+      
+      {/* Campo de Email */}
       <ErrorMessage message={errors.email?.message} />
       <Controller
         control={control}
@@ -40,6 +42,8 @@ const LoginForm = ({ login, isLoading }) => {
           />
         )}
       />
+
+      {/* Campo de Senha */}
       <ErrorMessage message={errors.password?.message} />
       <Controller
         control={control}
@@ -53,6 +57,13 @@ const LoginForm = ({ login, isLoading }) => {
           />
         )}
       />
+
+      {/* Botão Esqueceu sua senha? */}
+      <TouchableOpacity style={css.forgotPasswordButton} onPress={() => {/* Ação para redefinir senha */}}>
+        <Text style={css.forgotPasswordText}>Esqueceu sua senha?</Text>
+      </TouchableOpacity>
+
+      {/* Botão de Entrar */}
       <TouchableOpacity style={css.login__button} onPress={handleSubmit(onSubmit)}>
         {isLoading ? <ActivityIndicator size="small" color="#fff" /> : <Text style={css.login__buttonText}>Entrar</Text>}
       </TouchableOpacity>

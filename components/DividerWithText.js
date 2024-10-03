@@ -1,3 +1,4 @@
+// DividerWithText.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -16,17 +17,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 50,
+    width: '90%', // Garante que o contêiner ocupe toda a largura disponível
   },
   line: {
-    flex: 1,
     height: 0.5,
-    backgroundColor: '#838181', // cor cinza clara
+    flex: 1, // Permite que as linhas cresçam proporcionalmente
+    backgroundColor: "#838181",
   },
   text: {
-    marginHorizontal: 10,
-    fontWeight: '500', // corrigido para string
+    marginHorizontal: 30,
+    fontWeight: '500',
     fontSize: 20,
-    color: '#838181', // cor cinza clara para o texto
+    color: '#838181',
   },
 });
 
