@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   login__form: {
     width: "100%",
     justifyContent: "center",
-    paddingTop: 100,
+    marginTop: 60,
   },
   cad_form: {
     flex: 1,
