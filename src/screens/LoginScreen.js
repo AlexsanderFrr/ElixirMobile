@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { KeyboardAvoidingView, } from 'react-native';
 import css from '../../components/styles';
 import LogoLogin from '../../components/LogoLogin';
@@ -19,6 +19,12 @@ const LoginScreen = ({ navigation }) => {
     androidClientId: "148404174369-1rdjvmj6gvptaqsimhmcf14eaaql9asb.apps.googleusercontent.com",
     webClientId: "148404174369-lhjrjf9qilr71oohe32ccpv6689047ol.apps.googleusercontent.com"
   });
+  
+  useEffect(() => {
+    if (response?.type === "success") {
+      loginSocial(response.authentication.accessToken);
+    }
+  }, [response]);
 
   return (
     <KeyboardAvoidingView style={[css.container, css.whitebg]}>
