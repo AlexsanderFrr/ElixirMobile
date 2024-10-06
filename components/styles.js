@@ -38,17 +38,16 @@ const styles = StyleSheet.create({
     height: 41,
     marginBottom: 40,
   },
+  labelError: {
+    alignSelf: 'flex-start',
+    color: '#eb0909',
+    fontWeight: '700',
+    marginBottom: 11,
+  },
   login__form: {
     width: "100%",
     justifyContent: "center",
     marginTop: 60,
-  },
-  formTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
   },
   cad_form: {
     flex: 1,
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,       // Espaçamento inferior
   },
   forgotPasswordText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#BB5104',       // Cor do texto (laranja escuro, como os outros elementos)
     fontWeight: '600',
     textDecorationLine: 'underline',
@@ -105,20 +104,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     paddingHorizontal: 12, // Deixa apenas o preenchimento lateral
-    opacity: 1,
   },
   login__buttonText: {
     fontWeight: "600",
-    fontSize: 18,
+    fontSize: 25,
     color: "#F5F5F5",
     fontFamily: "sans-serif",
-  },
-  errorMessage: {
-    color: '#eb0909',
-    fontSize: 14,
-    marginTop: 5,
-    marginBottom: 10,
-    alignSelf: 'flex-start',
   },
   cad__input: {
     backgroundColor: "#FFFFFF",
