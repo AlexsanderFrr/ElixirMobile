@@ -12,7 +12,7 @@ const InputField = ({ icon, placeholder, value, onChangeText, onBlur, error }) =
                 {
                     borderWidth: 1.5,
                     borderColor: error ? '#eb0909' : '#FFB100',
-                    paddingLeft: 42
+                    paddingLeft: 48
                 }
             ]}
             placeholder={placeholder}

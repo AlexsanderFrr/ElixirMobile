@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'relative',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   login__input: {
     backgroundColor: "#FFFFFF",
