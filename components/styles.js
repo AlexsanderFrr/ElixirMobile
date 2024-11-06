@@ -20,21 +20,21 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   text_welcome: {
-    fontSize: 24, 
-    fontWeight: 'bold', 
+    fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 15,
   },
   text_newac: {
-    fontSize: 24, 
-    fontWeight: 'bold', 
+    fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 15,
   },
   img_logo: {
-    width: 256, 
+    width: 256,
     height: 41,
   },
   img_logocad: {
-    width: 256, 
+    width: 256,
     height: 41,
     marginBottom: 40,
   },
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   login__form: {
     width: "100%",
     justifyContent: "center",
-    paddingTop: 100,
+    marginTop: 60,
   },
   cad_form: {
     flex: 1,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'relative',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   login__input: {
     backgroundColor: "#FFFFFF",
@@ -69,6 +69,16 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#FFB100",
     borderRadius: 10,
+  },
+  forgotPasswordButton: {
+    alignSelf: 'flex-end',  // Alinha o botão à direita
+    marginBottom: 20,       // Espaçamento inferior
+  },
+  forgotPasswordText: {
+    fontSize: 18,
+    color: '#BB5104',       // Cor do texto (laranja escuro, como os outros elementos)
+    fontWeight: '600',
+    textDecorationLine: 'underline',
   },
   iconStyle: {
     position: 'absolute',
@@ -89,14 +99,14 @@ const styles = StyleSheet.create({
   login__button: {
     width: "100%",
     height: 60,
-    padding: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
+    paddingHorizontal: 12, // Deixa apenas o preenchimento lateral
   },
   login__buttonText: {
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 25,
     color: "#F5F5F5",
     fontFamily: "sans-serif",
