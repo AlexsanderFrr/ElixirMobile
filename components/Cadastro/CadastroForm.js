@@ -1,3 +1,4 @@
+// CadastroForm.js
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import css from '../styles';
@@ -8,10 +9,12 @@ const CadastroForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState(''); // Novo campo para confirmação de senha
 
     const [usernameValid, setUsernameValid] = useState(null);
     const [emailValid, setEmailValid] = useState(null);
     const [passwordValid, setPasswordValid] = useState(null);
+    const [passwordsMatch, setPasswordsMatch] = useState(null); // Validação para verificar se as senhas coincidem
 
     const validateUsername = (text) => {
         setUsername(text);
@@ -29,10 +32,20 @@ const CadastroForm = ({ navigation }) => {
         setPassword(text);
         const isValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(text); // Pelo menos 8 caracteres, letras e números
         setPasswordValid(isValid);
+        checkPasswordsMatch(text, confirmPassword); // Checa a confirmação ao atualizar senha
+    };
+
+    const validateConfirmPassword = (text) => {
+        setConfirmPassword(text);
+        checkPasswordsMatch(password, text); // Checa se as senhas coincidem
+    };
+
+    const checkPasswordsMatch = (password, confirmPassword) => {
+        setPasswordsMatch(password === confirmPassword);
     };
 
     const handleSignIn = async () => {
-        if (!usernameValid || !emailValid || !passwordValid) {
+        if (!usernameValid || !emailValid || !passwordValid || !passwordsMatch) {
             alert("Por favor, preencha todos os campos corretamente.");
             return;
         }
@@ -137,6 +150,33 @@ const CadastroForm = ({ navigation }) => {
                         name={passwordValid ? 'checkmark-circle' : 'close-circle'}
                         size={20}
                         color={passwordValid ? 'green' : 'red'}
+                        style={styles.icon}
+                    />
+                )}
+            </View>
+
+            {/* Campo de Confirmação de Senha */}
+            {passwordsMatch === false && <Text style={styles.errorText}>As senhas não coincidem.</Text>}
+            <View style={styles.inputContainer}>
+                <Ionicons
+                    name="lock-closed-outline"
+                    size={24}
+                    color="#F5B700"
+                    style={css.iconStyle}
+                />
+                <TextInput
+                    style={[css.cad__input, passwordsMatch === false && styles.inputError]}
+                    placeholder='Confirmar Senha:'
+                    placeholderTextColor='#B1B1B1'
+                    secureTextEntry
+                    onChangeText={validateConfirmPassword}
+                    value={confirmPassword}
+                />
+                {passwordsMatch !== null && (
+                    <Ionicons
+                        name={passwordsMatch ? 'checkmark-circle' : 'close-circle'}
+                        size={20}
+                        color={passwordsMatch ? 'green' : 'red'}
                         style={styles.icon}
                     />
                 )}
