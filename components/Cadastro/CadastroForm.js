@@ -1,6 +1,5 @@
-// CadastroForm.js
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import css from '../styles';
 import { apiEndpoint } from "../../config/constantes";
 import { Ionicons } from '@expo/vector-icons';
@@ -9,35 +8,37 @@ const CadastroForm = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState(''); // Novo campo para confirmação de senha
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // Estado para o carregamento
+    const [errorMessage, setErrorMessage] = useState(''); // Estado para mensagens de erro
 
     const [usernameValid, setUsernameValid] = useState(null);
     const [emailValid, setEmailValid] = useState(null);
     const [passwordValid, setPasswordValid] = useState(null);
-    const [passwordsMatch, setPasswordsMatch] = useState(null); // Validação para verificar se as senhas coincidem
+    const [passwordsMatch, setPasswordsMatch] = useState(null);
 
     const validateUsername = (text) => {
         setUsername(text);
-        const isValid = /^[A-Za-z]{3,}$/.test(text); // Pelo menos 3 letras
+        const isValid = /^[A-Za-z]{3,}$/.test(text);
         setUsernameValid(isValid);
     };
 
     const validateEmail = (text) => {
         setEmail(text);
-        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text); // Validação simples de email
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
         setEmailValid(isValid);
     };
 
     const validatePassword = (text) => {
         setPassword(text);
-        const isValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(text); // Pelo menos 8 caracteres, letras e números
+        const isValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(text);
         setPasswordValid(isValid);
-        checkPasswordsMatch(text, confirmPassword); // Checa a confirmação ao atualizar senha
+        checkPasswordsMatch(text, confirmPassword);
     };
 
     const validateConfirmPassword = (text) => {
         setConfirmPassword(text);
-        checkPasswordsMatch(password, text); // Checa se as senhas coincidem
+        checkPasswordsMatch(password, text);
     };
 
     const checkPasswordsMatch = (password, confirmPassword) => {
@@ -46,9 +47,12 @@ const CadastroForm = ({ navigation }) => {
 
     const handleSignIn = async () => {
         if (!usernameValid || !emailValid || !passwordValid || !passwordsMatch) {
-            alert("Por favor, preencha todos os campos corretamente.");
+            setErrorMessage("Por favor, preencha todos os campos corretamente.");
             return;
         }
+
+        setIsLoading(true); // Exibe o indicador de carregamento
+        setErrorMessage(''); // Limpa mensagens de erro anteriores
 
         try {
             const response = await fetch(`${apiEndpoint}/usuario/add`, {
@@ -60,15 +64,19 @@ const CadastroForm = ({ navigation }) => {
             });
 
             const data = await response.json();
+            setIsLoading(false);
 
             if (response.status === 200) {
                 alert(data.message);
                 navigation.navigate('HomeTabs');
+            } else if (response.status === 400) {
+                setErrorMessage(data.error || "Erro no cadastro. Verifique os dados informados.");
             } else {
-                alert(data.error);
+                setErrorMessage("Erro inesperado. Tente novamente mais tarde.");
             }
         } catch (error) {
-            alert("Ocorreu um erro ao cadastrar. Tente novamente.");
+            setIsLoading(false);
+            setErrorMessage("Problema de conexão. Verifique sua internet e tente novamente.");
             console.error(error);
         }
     };
@@ -78,16 +86,11 @@ const CadastroForm = ({ navigation }) => {
             {/* Campo de Nome */}
             {usernameValid === false && <Text style={styles.errorText}>Nome deve ter pelo menos 3 letras.</Text>}
             <View style={styles.inputContainer}>
-                <Ionicons
-                    name="person"
-                    size={24}
-                    color="#F5B700"
-                    style={css.iconStyle}
-                />
+                <Ionicons name="person" size={24} color="#F5B700" style={css.iconStyle} />
                 <TextInput
                     style={[css.cad__input, usernameValid === false && styles.inputError]}
-                    placeholder='Nome:'
-                    placeholderTextColor='#B1B1B1'
+                    placeholder="Nome:"
+                    placeholderTextColor="#B1B1B1"
                     onChangeText={validateUsername}
                     value={username}
                 />
@@ -104,16 +107,11 @@ const CadastroForm = ({ navigation }) => {
             {/* Campo de Email */}
             {emailValid === false && <Text style={styles.errorText}>Insira um email válido.</Text>}
             <View style={styles.inputContainer}>
-                <Ionicons
-                    name="mail-outline"
-                    size={24}
-                    color="#F5B700"
-                    style={css.iconStyle}
-                />
+                <Ionicons name="mail-outline" size={24} color="#F5B700" style={css.iconStyle} />
                 <TextInput
                     style={[css.cad__input, emailValid === false && styles.inputError]}
-                    placeholder='Email:'
-                    placeholderTextColor='#B1B1B1'
+                    placeholder="Email:"
+                    placeholderTextColor="#B1B1B1"
                     onChangeText={validateEmail}
                     value={email}
                     keyboardType="email-address"
@@ -131,16 +129,11 @@ const CadastroForm = ({ navigation }) => {
             {/* Campo de Senha */}
             {passwordValid === false && <Text style={styles.errorText}>A senha deve ter pelo menos 8 caracteres, incluindo letras e números.</Text>}
             <View style={styles.inputContainer}>
-                <Ionicons
-                    name="lock-closed-outline"
-                    size={24}
-                    color="#F5B700"
-                    style={css.iconStyle}
-                />
+                <Ionicons name="lock-closed-outline" size={24} color="#F5B700" style={css.iconStyle} />
                 <TextInput
                     style={[css.cad__input, passwordValid === false && styles.inputError]}
-                    placeholder='Senha:'
-                    placeholderTextColor='#B1B1B1'
+                    placeholder="Senha:"
+                    placeholderTextColor="#B1B1B1"
                     secureTextEntry
                     onChangeText={validatePassword}
                     value={password}
@@ -158,16 +151,11 @@ const CadastroForm = ({ navigation }) => {
             {/* Campo de Confirmação de Senha */}
             {passwordsMatch === false && <Text style={styles.errorText}>As senhas não coincidem.</Text>}
             <View style={styles.inputContainer}>
-                <Ionicons
-                    name="lock-closed-outline"
-                    size={24}
-                    color="#F5B700"
-                    style={css.iconStyle}
-                />
+                <Ionicons name="lock-closed-outline" size={24} color="#F5B700" style={css.iconStyle} />
                 <TextInput
                     style={[css.cad__input, passwordsMatch === false && styles.inputError]}
-                    placeholder='Confirmar Senha:'
-                    placeholderTextColor='#B1B1B1'
+                    placeholder="Confirmar Senha:"
+                    placeholderTextColor="#B1B1B1"
                     secureTextEntry
                     onChangeText={validateConfirmPassword}
                     value={confirmPassword}
@@ -182,10 +170,16 @@ const CadastroForm = ({ navigation }) => {
                 )}
             </View>
 
-            {/* Botão de Inscrição */}
-            <TouchableOpacity style={css.cad__button} onPress={handleSignIn}>
-                <Text style={css.login__buttonText}>Inscrever-se</Text>
-            </TouchableOpacity>
+            {/* Indicador de Carregamento e Botão de Inscrição */}
+            {isLoading ? (
+                <ActivityIndicator size="large" color="#F5B700" />
+            ) : (
+                <TouchableOpacity style={css.cad__button} onPress={handleSignIn}>
+                    <Text style={css.login__buttonText}>Inscrever-se</Text>
+                </TouchableOpacity>
+            )}
+            {/* Exibição de mensagem de erro */}
+            {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
         </View>
     );
 };
