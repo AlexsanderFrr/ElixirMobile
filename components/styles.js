@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     justifyContent: "center",
-    paddingBottom: 40,
   },
   inputContainer: {
     position: 'relative',
@@ -118,16 +117,18 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingHorizontal: 15,
     paddingVertical: 13,
-    marginBottom: 30,
+    paddingLeft: 48,
     borderWidth: 1.5,
     borderColor: "#FFB100",
     borderRadius: 10,
   },
   cad__button: {
     width: "100%",
+    height: 60,
     padding: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
   },
   separator: {
