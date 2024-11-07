@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, senha) => {
         setIsLoading(true);
         try {
+            console.log(email, senha);
             const response = await axios.post(`${apiEndpoint}/usuario/login`, {
                 email,
                 senha

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator, CheckBox, Linking } from 'react-native';
 import css from '../styles';
 import { apiEndpoint } from "../../config/constantes";
 import { Ionicons } from '@expo/vector-icons';
@@ -9,13 +9,13 @@ const CadastroForm = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // Estado para o carregamento
-    const [errorMessage, setErrorMessage] = useState(''); // Estado para mensagens de erro
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [usernameValid, setUsernameValid] = useState(null);
     const [emailValid, setEmailValid] = useState(null);
     const [passwordValid, setPasswordValid] = useState(null);
     const [passwordsMatch, setPasswordsMatch] = useState(null);
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     const validateUsername = (text) => {
         setUsername(text);
@@ -46,13 +46,13 @@ const CadastroForm = ({ navigation }) => {
     };
 
     const handleSignIn = async () => {
-        if (!usernameValid || !emailValid || !passwordValid || !passwordsMatch) {
-            setErrorMessage("Por favor, preencha todos os campos corretamente.");
+        if (!usernameValid || !emailValid || !passwordValid || !passwordsMatch || !termsAccepted) {
+            setErrorMessage("Por favor, preencha todos os campos corretamente e aceite os termos.");
             return;
         }
 
-        setIsLoading(true); // Exibe o indicador de carregamento
-        setErrorMessage(''); // Limpa mensagens de erro anteriores
+        setIsLoading(true);
+        setErrorMessage('');
 
         try {
             const response = await fetch(`${apiEndpoint}/usuario/add`, {
@@ -170,11 +170,34 @@ const CadastroForm = ({ navigation }) => {
                 )}
             </View>
 
+            {/* Checkbox para Termos de Serviço e Política de Privacidade */}
+            <View style={styles.termsContainer}>
+                <CheckBox
+                    value={termsAccepted}
+                    onValueChange={setTermsAccepted}
+                    style={styles.checkbox}
+                />
+                <Text style={styles.termsText}>
+                    Eu li e aceito os{" "}
+                    <Text style={styles.linkText} onPress={() => Linking.openURL('https://example.com/termos')}>
+                        Termos de Serviço
+                    </Text>{" "}
+                    e a{" "}
+                    <Text style={styles.linkText} onPress={() => Linking.openURL('https://example.com/politica')}>
+                        Política de Privacidade
+                    </Text>.
+                </Text>
+            </View>
+
             {/* Indicador de Carregamento e Botão de Inscrição */}
             {isLoading ? (
                 <ActivityIndicator size="large" color="#F5B700" />
             ) : (
-                <TouchableOpacity style={css.cad__button} onPress={handleSignIn}>
+                <TouchableOpacity
+                    style={[css.cad__button, !termsAccepted && styles.disabledButton]}
+                    onPress={handleSignIn}
+                    disabled={!termsAccepted}
+                >
                     <Text style={css.login__buttonText}>Inscrever-se</Text>
                 </TouchableOpacity>
             )}
@@ -202,6 +225,25 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 12,
         marginBottom: 5,
+    },
+    termsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    checkbox: {
+        marginRight: 10,
+    },
+    termsText: {
+        fontSize: 12,
+        color: '#000',
+    },
+    linkText: {
+        color: '#1E90FF',
+        textDecorationLine: 'underline',
+    },
+    disabledButton: {
+        opacity: 0.6,
     },
 });
 

@@ -22,7 +22,7 @@ export default function TabRoutes() {
             }
             }}>
             <Tab.Screen
-                name="Home"
+                name="TabsHome"
                 component={HomeScreen}
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {
