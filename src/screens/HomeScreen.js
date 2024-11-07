@@ -42,35 +42,6 @@ const HomeScreen = () => {
     fetchJuices(searchText);
   }, [searchText]);
 
-  useEffect(() => {
-    // Filtra os sucos com base na categoria selecionada
-    const filterByCategory = () => {
-      let filtered = juices;
-      switch (selectedCategory) {
-        case "Recomendado":
-          filtered = juices.slice(0, 10);
-          break;
-        case "Detox":
-          filtered = juices.slice(10, 20);
-          break;
-        case "Medicinal":
-          filtered = juices.slice(20, 30);
-          break;
-        default:
-          filtered = [];
-          break;
-      }
-      setFilteredJuices(filtered);
-    };
-
-    filterByCategory();
-  }, [selectedCategory, juices]);
-
-  const handleCategoryPress = (category) => {
-    setSelectedCategory(category);
-    setSearchText(""); // Limpa o texto de pesquisa ao mudar de categoria
-  };
-
   const handleSearch = (text) => {
     setSearchText(text);
   };
@@ -110,29 +81,6 @@ const HomeScreen = () => {
       </View>
 
       <View>
-        {/* Barra de navegação */}
-        <View style={styles.navigationBar}>
-          {["Recomendado", "Detox", "Medicinal"].map((category) => (
-            <TouchableOpacity
-              key={category}
-              style={[
-                styles.categoryItem,
-                selectedCategory === category && styles.selectedCategoryItem,
-              ]}
-              onPress={() => handleCategoryPress(category)}
-            >
-              <Text
-                style={[
-                  styles.categoryText,
-                  selectedCategory === category && styles.selectedCategoryText,
-                ]}
-              >
-                {category}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
         {/* Renderiza o ScrollView horizontal somente se não houver texto de pesquisa */}
         {!searchText && (
           <ScrollView horizontal style={styles.scrollView}>
