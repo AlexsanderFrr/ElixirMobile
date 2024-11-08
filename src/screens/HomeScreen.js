@@ -54,7 +54,7 @@ const HomeScreen = () => {
   };
 
   const getImageUrl = (imgPath) => {
-    return `${apiEndpoint}${imgPath}`;
+    return `${imgPath}`;
   };
 
   return (
