@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { apiEndpoint } from '../../config/constantes';
+import { FontAwesome } from '@expo/vector-icons';
 import ProductCard from './ProductCard'; // Importação do ProductCard
 
 export default function RecommendedSection() {
@@ -10,6 +11,7 @@ export default function RecommendedSection() {
   const [juices, setJuices] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filteredJuices, setFilteredJuices] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('Todos'); // Estado para armazenar a categoria selecionada
 
   useEffect(() => {
     const fetchJuices = async () => {
@@ -29,14 +31,44 @@ export default function RecommendedSection() {
     fetchJuices();
   }, [searchText]);
 
+  const filterJuices = (category) => {
+    setSelectedCategory(category);
+
+    if (category === 'Todos') {
+      setFilteredJuices(juices);
+    } else {
+      const filtered = juices.filter((juice) => juice.categoria === category);
+      setFilteredJuices(filtered);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recomendado Para Você</Text>
-      <View style={styles.filterContainer}>
-        <Text style={styles.filter}>Todos</Text>
-        <Text style={styles.filter}>Detox</Text>
-        <Text style={styles.filter}>Medicinal</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Recomendado Para Você</Text>
+        <TouchableOpacity style={styles.filterIcon} onPress={() => {/* Função para abrir o filtro */ }}>
+          <FontAwesome name="filter" size={24} color="#BB5104" />
+        </TouchableOpacity>
       </View>
+
+      <View style={styles.filterContainer}>
+        {['Todos', 'Detox', 'Medicinal'].map((category) => (
+          <TouchableOpacity key={category} onPress={() => filterJuices(category)}>
+            <View style={[
+              styles.filterButttom,
+              selectedCategory === category && styles.activeFilterBackground, // Aplicação do background ao contêiner
+            ]}>
+              <Text style={[
+                styles.filter,
+                selectedCategory === category && styles.activeFilterText, // Altera a cor do texto da categoria selecionada
+              ]}>
+                {category}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <FlatList
         data={filteredJuices}
         keyExtractor={(item) => item.id.toString()}
@@ -62,22 +94,40 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
   },
+  filterIcon: {
+    padding: 5,
+  },
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 30,
+    marginVertical: 20,
+  },
+  filterButttom: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 10,
   },
   filter: {
     fontWeight: 'bold',
-    color: '#B85A25',
+  },
+  activeFilterBackground: {
+    backgroundColor: '#BB5104', // Fundo para o botão selecionado
+  },
+  activeFilterText: {
+    color: '#FFFFFF', // Cor do texto para o botão selecionado
   },
   juiceButtonItemVertical: {
     marginBottom: 20,
-    //flexDirection: 'row',
   },
   flatListContainer: {
     paddingBottom: 40,
