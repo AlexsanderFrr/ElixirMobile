@@ -19,12 +19,11 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   const [juices, setJuices] = useState([]);
-  const [filteredJuices, setFilteredJuices] = useState([]); // Adicione esta linha
+  const [filteredJuices, setFilteredJuices] = useState([]); 
   const [selectedCategory, setSelectedCategory] = useState("Recomendado");
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-
     const fetchJuices = async () => {
       try {
         const url = searchText
@@ -34,12 +33,13 @@ const HomeScreen = () => {
         const data = await response.json();
         console.log("Data fetched: ", data);
         setJuices(data);
+        setFilteredJuices(data); // Atualiza filteredJuices com os dados da API
       } catch (error) {
         console.error("Erro ao buscar sucos: ", error);
       }
     };
 
-    fetchJuices(searchText);
+    fetchJuices();
   }, [searchText]);
 
   const handleSearch = (text) => {
@@ -48,7 +48,7 @@ const HomeScreen = () => {
 
   // Filtra os sucos com base no texto de pesquisa
   const filteredBySearch = () => {
-    return filteredJuices.filter((juice) =>
+    return juices.filter((juice) =>
       juice.nome.toLowerCase().includes(searchText.toLowerCase())
     );
   };
@@ -104,7 +104,7 @@ const HomeScreen = () => {
 
       {/* FlatList para todos os sucos ou sucos filtrados */}
       <FlatList
-        data={searchText ? filteredBySearch() : filteredJuices}
+        data={searchText ? filteredBySearch() : juices} // Atualiza para usar 'juices' diretamente
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
