@@ -9,19 +9,7 @@ export default function Categories() {
     <View style={styles.container}>
       <Text style={styles.title}>Categorias</Text>
       <Text style={styles.viewAll}>Ver Tudo</Text>
-      <View style={styles.categoryList}>
-        {categories.map((category, index) => (
-          <View
-            key={category}
-            style={[
-              styles.category,
-              index === categories.length - 1 && styles.highlightedCategory, // Adiciona borda ao último card
-            ]}
-          >
-            <Text style={styles.categoryText}>{category}</Text>
-          </View>
-        ))}
-      </View>
+      
     </View>
   );
 }
@@ -63,7 +51,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   viewAll: {
-    position: 'absolute',
     right: 0,
     fontSize: 14,
     color: '#B85A25',

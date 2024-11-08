@@ -35,7 +35,7 @@ export default function RecommendedSection() {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    paddingHorizontal: 30,
   },
   title: {
     fontSize: 18,
