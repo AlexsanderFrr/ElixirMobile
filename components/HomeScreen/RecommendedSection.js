@@ -1,15 +1,33 @@
 // components/RecommendedSection.js
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import ProductCard from './ProductCard';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { apiEndpoint } from '../../config/constantes';
+import ProductCard from './ProductCard'; // Importação do ProductCard
 
 export default function RecommendedSection() {
-  const products = [
-    { title: 'Suco', type: 'Medicinal', healthBenefit: 'Diabetes' },
-    { title: 'Vitamina', type: 'Detox', healthBenefit: 'Emagrecimento' },
-    { title: 'Chá', type: 'Controla', healthBenefit: 'Sono' },
-    { title: 'Sheik', type: 'Rico em', healthBenefit: 'Saboroso' },
-  ];
+  const navigation = useNavigation();
+  const [juices, setJuices] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [filteredJuices, setFilteredJuices] = useState([]);
+
+  useEffect(() => {
+    const fetchJuices = async () => {
+      try {
+        const url = searchText
+          ? `${apiEndpoint}/suco/search/${searchText}`
+          : `${apiEndpoint}/suco/all`;
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log('Data fetched: ', data);
+        setJuices(data);
+        setFilteredJuices(data);
+      } catch (error) {
+        console.error('Erro ao buscar sucos: ', error);
+      }
+    };
+    fetchJuices();
+  }, [searchText]);
 
   return (
     <View style={styles.container}>
@@ -19,16 +37,23 @@ export default function RecommendedSection() {
         <Text style={styles.filter}>Detox</Text>
         <Text style={styles.filter}>Medicinal</Text>
       </View>
-      <View style={styles.productList}>
-        {products.map((product, index) => (
-          <ProductCard
-            key={index}
-            title={product.title}
-            type={product.type}
-            healthBenefit={product.healthBenefit}
-          />
-        ))}
-      </View>
+      <FlatList
+        data={filteredJuices}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.juiceButtonItemVertical}
+            onPress={() => navigation.navigate('Exibicao', {
+              name: item.nome,
+              function: item.beneficios,
+              image: item.img1,
+            })}
+          >
+            <ProductCard item={item} /> {/* Uso do ProductCard no FlatList */}
+          </TouchableOpacity>
+        )}
+        contentContainerStyle={styles.flatListContainer}
+      />
     </View>
   );
 }
@@ -44,15 +69,17 @@ const styles = StyleSheet.create({
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 10,
+    marginVertical: 30,
   },
   filter: {
     fontWeight: 'bold',
     color: '#B85A25',
   },
-  productList: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+  juiceButtonItemVertical: {
+    marginBottom: 20,
+    //flexDirection: 'row',
+  },
+  flatListContainer: {
+    paddingBottom: 40,
   },
 });

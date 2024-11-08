@@ -1,38 +1,63 @@
 // components/ProductCard.js
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function ProductCard({ title, type, healthBenefit }) {
+export default function ProductCard({ item }) {
+  const getImageUrl = (imgPath) => `${imgPath}`;
+
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.type}>{type}</Text>
-      <Text style={styles.healthBenefit}>{healthBenefit}</Text>
-      <FontAwesome name="heart-o" size={24} color="red" style={styles.icon} />
+      {/*<View style={styles.juiceItemVertical}>
+        <Image
+          source={{ uri: getImageUrl(item.img1) }}
+          style={styles.juiceImageVertical}
+          resizeMode="contain"
+        />
+        <View style={styles.juiceInfoVertical}>
+          <Text style={styles.juiceNameVertical}>{item.nome}</Text>
+          <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>*
+        </View>
+      </View>
+      <FontAwesome name="heart-o" size={24} color="red" style={styles.icon} />*/}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
+    width: "99%",
     backgroundColor: '#FFF',
     padding: 15,
+    borderRadius: 15,
+    height: 130,
+    // Sombra para iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 5, height: 5 }, // Eixo X e Y
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    // Sombra para Android
+    elevation: 8,
+  },  
+  juiceItemVertical: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginVertical: 10,
-    borderRadius: 8,
-    width: '45%',
+    borderRadius: 10,
   },
-  title: {
+  juiceImageVertical: {
+    width: 100,
+    height: 100,
+  },
+  juiceInfoVertical: {
+    marginLeft: 15,
+  },
+  juiceNameVertical: {
     fontSize: 16,
     fontWeight: 'bold',
   },
-  type: {
+  juiceFunctionVertical: {
     fontSize: 14,
-    color: '#B85A25',
-  },
-  healthBenefit: {
-    fontSize: 12,
-    color: '#6e6e6e',
   },
   icon: {
     position: 'absolute',
