@@ -8,18 +8,18 @@ export default function ProductCard({ item }) {
 
   return (
     <View style={styles.card}>
-      {/*<View style={styles.juiceItemVertical}>
+      <View style={styles.juiceItemVertical}>
         <Image
           source={{ uri: getImageUrl(item.img1) }}
           style={styles.juiceImageVertical}
-          resizeMode="contain"
+          resizeMode="cover"
         />
         <View style={styles.juiceInfoVertical}>
           <Text style={styles.juiceNameVertical}>{item.nome}</Text>
-          <Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>*
+          {/*<Text style={styles.juiceFunctionVertical}>{item.beneficios}</Text>*/}
         </View>
+        <FontAwesome name="heart-o" size={24} color="red" style={styles.icon} />
       </View>
-      <FontAwesome name="heart-o" size={24} color="red" style={styles.icon} />*/}
     </View>
   );
 }
@@ -38,17 +38,19 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     // Sombra para Android
     elevation: 8,
-  },  
+  },
   juiceItemVertical: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
-    borderRadius: 10,
   },
   juiceImageVertical: {
     width: 100,
     height: 100,
+    borderRadius: 15,
+    borderWidth: 0.5,
+    borderColor: "#838181"
   },
+  
   juiceInfoVertical: {
     marginLeft: 15,
   },
