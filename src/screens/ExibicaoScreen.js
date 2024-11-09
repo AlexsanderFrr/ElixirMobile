@@ -13,7 +13,6 @@ const ExibicaoScreen = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#BB5104" />
       <JuiceImage imageUri={image} />
       <Header />
       <View style={styles.main}>
@@ -30,10 +29,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    backgroundColor: "#BB5104",
+    backgroundColor: "#F4DEAA",
     height: "75%",
-    borderTopRightRadius: 40,
-    borderTopLeftRadius: 40,
     paddingVertical: 25,
     paddingHorizontal: 30,
   },

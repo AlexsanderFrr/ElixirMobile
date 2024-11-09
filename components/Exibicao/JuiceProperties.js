@@ -16,7 +16,6 @@ export default function JuiceProperties({ name }) {
 
 const styles = StyleSheet.create({
   nameJuice: {
-    color: "#fff",
     fontSize: 30,
     fontWeight: "600",
     marginBottom: 10,
@@ -25,8 +24,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   textProperty: {
-    color: "#DC9B00",
-    backgroundColor: "#F4DEAA",
+    color: "#BB5114",
+    backgroundColor: "#fff",
     fontSize: 16,
     fontWeight: "600",
     paddingHorizontal: 10,

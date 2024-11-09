@@ -8,12 +8,17 @@ export default function Header() {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={40} color="#fff" />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Ionicons name="notifications-outline" size={40} color="#fff" />
-      </TouchableOpacity>
+      <View style={styles.iconButton}>
+        <TouchableOpacity onPress={() => navigation.goBack()} >
+          <Ionicons name="arrow-back" size={40} color="#BB5114" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.iconButton}>
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={40} color="#BB5114" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -25,7 +30,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     paddingTop: 30,
     paddingHorizontal: 30,
-    height: "25%",
     width: "100%",
+  },
+  iconButton: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 15,
   },
 });
