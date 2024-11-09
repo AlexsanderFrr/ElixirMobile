@@ -76,12 +76,13 @@ export default function RecommendedSection() {
           <TouchableOpacity
             style={styles.juiceButtonItemVertical}
             onPress={() => navigation.navigate('Exibicao', {
-              name: item.nome,
+              nome: item.nome,
               function: item.beneficios,
-              image: item.img1,
+              image: item.img1,  // Certifique-se de que o caminho da imagem seja corretamente usado aqui
+              ingredientes: item.ingredientes,  // Se você tiver uma lista de ingredientes
             })}
           >
-            <ProductCard item={item} /> {/* Uso do ProductCard no FlatList */}
+            <ProductCard item={item} />
           </TouchableOpacity>
         )}
         contentContainerStyle={styles.flatListContainer}
