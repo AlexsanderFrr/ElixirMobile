@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   ingredientText: {
-    color: "#fff",
+    color: "#8a8a8a",
     fontSize: 18,
     fontWeight: "500",
     marginRight: 24,

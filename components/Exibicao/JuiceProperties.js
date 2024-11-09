@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   textProperty: {
-    color: "#BB5114",
+    color: "#DC9B00",
     backgroundColor: "#fff",
     fontSize: 16,
     fontWeight: "600",

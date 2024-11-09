@@ -1,12 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { ScrollView } from "react-native-web";
 
 export default function JuiceBenefits({ benefits }) {
   return (
-    <View style={styles.benefContainer}>
-      <Text style={styles.titleBenefits}>Benefícios:</Text>
-      <Text style={styles.benefitsInfo}>{benefits}</Text>
-    </View>
+    <ScrollView>
+      <View style={styles.benefContainer}>
+        <Text style={styles.titleBenefits}>Benefícios:</Text>
+        <Text style={styles.benefitsInfo}>{benefits}</Text>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -21,7 +24,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   benefitsInfo: {
-    color: "#fff",
+    color: "#8a8a8a",
     fontSize: 20,
     fontWeight: "600",
   },
