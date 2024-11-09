@@ -1,6 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 
 export default function Header() {
@@ -16,7 +17,7 @@ export default function Header() {
 
       <View style={styles.iconButton}>
         <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={40} color="#BB5114" />
+          <FontAwesome name="heart-o" size={40} color="red" />
         </TouchableOpacity>
       </View>
     </View>
