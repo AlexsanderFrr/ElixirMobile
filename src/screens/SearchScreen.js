@@ -1,29 +1,39 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
 import HeaderBar from '../../components/Pesquisar/HeaderBar';
 import SearchBar from '../../components/Pesquisar/SearchBar';
 import SectionList from '../../components/Pesquisar/SectionList';
 
 export default function SearchScreen() {
-  const recentSearches = ['Suco de Pêssego', 'Vitamina de Banana', 'Sucos Medicinais'];
-  const similarSearches = ['Sheiks', 'Sucos Emagrecimento'];
+  const [recentSearches, setRecentSearches] = useState(['Suco de Pêssego']);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleBackPress = () => {
-    console.log('Voltar pressionado');
+  const handleSearch = (query) => {
+    if (query.trim() === '') {
+      Alert.alert('Erro', 'A pesquisa não pode estar vazia!');
+      return;
+    }
+    setRecentSearches((prev) => [query, ...prev.filter((item) => item !== query)]);
+    setSearchQuery('');
   };
 
   const handleRemoveRecent = (item) => {
-    console.log(`Removido: ${item}`);
+    setRecentSearches((prev) => prev.filter((search) => search !== item));
   };
 
   const handleSimilarSearch = (item) => {
-    console.log(`Selecionado: ${item}`);
+    Alert.alert('Pesquisa Semelhante Selecionada', `Você escolheu: ${item}`);
   };
 
   return (
     <View style={styles.container}>
       <HeaderBar title="Procurar" />
-      <SearchBar placeholder="Abacaxi" />
+      <SearchBar
+        placeholder="Pesquisar..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        onSearch={() => handleSearch(searchQuery)}
+      />
       <SectionList
         title="Pesquisas Recentes"
         data={recentSearches}
@@ -32,7 +42,7 @@ export default function SearchScreen() {
       />
       <SectionList
         title="Pesquisas Semelhantes"
-        data={similarSearches}
+        data={['Sheiks', 'Sucos Emagrecimento']}
         actionIcon="arrow-forward-outline"
         onActionPress={handleSimilarSearch}
       />

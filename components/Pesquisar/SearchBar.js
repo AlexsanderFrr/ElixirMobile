@@ -1,20 +1,25 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function SearchBar() {
-
+export default function SearchBar({ placeholder, value, onChangeText, onSearch }) {
   return (
-    <View
-      style={styles.searchContainer}
-    >
+    <View style={styles.searchContainer}>
       <Ionicons name="search" size={24} color="#B85A25" style={styles.icon} />
       <TextInput
         style={styles.searchInput}
-        placeholder="Pesquisar..."
+        placeholder={placeholder}
         placeholderTextColor="#838181"
+        value={value}
+        onChangeText={onChangeText}
+        onSubmitEditing={() => {
+          onSearch();
+          Keyboard.dismiss();
+        }}
       />
-      <Ionicons name="mic-outline" size={20} color="#B85A25" />
+      <TouchableOpacity onPress={onSearch}>
+        <Ionicons name="mic-outline" size={24} color="#B85A25" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -22,13 +27,18 @@ export default function SearchBar() {
 const styles = StyleSheet.create({
   searchContainer: {
     width: '100%',
-    marginTop: 40,
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    marginBottom: 30,
+    paddingHorizontal: 15,
     elevation: 5,
+    borderTopWidth: 0.5,
+    borderRightWidth: 0.5,
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 2,
+    borderColor: '#BB5104',
+    borderRadius: 10,
   },
   icon: {
     marginRight: 10,
@@ -36,6 +46,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 40,
-    color: '#838181',
+    color: '#000',
+    fontWeight: '650',
   },
 });

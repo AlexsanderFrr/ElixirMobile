@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native
 import { Ionicons } from '@expo/vector-icons';
 
 export default function SectionList({ title, data, actionIcon, onActionPress }) {
+  
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>{title}</Text>
