@@ -1,24 +1,21 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
 export default function SearchBar() {
-  const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
+    <View
       style={styles.searchContainer}
-      onPress={() => navigation.navigate('SearchScreen')} // Navega para a tela de pesquisa
     >
       <Ionicons name="search" size={24} color="#B85A25" style={styles.icon} />
       <TextInput
         style={styles.searchInput}
         placeholder="Pesquisar..."
         placeholderTextColor="#838181"
-        editable={false} // Torna o campo não editável
       />
-    </TouchableOpacity>
+      <Ionicons name="mic-outline" size={20} color="#B85A25" />
+    </View>
   );
 }
 
