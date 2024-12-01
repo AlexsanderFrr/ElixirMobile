@@ -1,10 +1,12 @@
-// components/Header.js
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'; // Importação da função useNavigation
 import SearchBar from '../../components/HomeScreen/SearchBar';
 
 export default function Header() {
+    const navigation = useNavigation(); // Uso da função useNavigation para acessar a navegação
+
     return (
         <View style={styles.header}>
             <View style={styles.firstGroup}>
@@ -13,7 +15,9 @@ export default function Header() {
                     style={styles.logo}
                     resizeMode="contain"
                 />
-                <Ionicons name="chatbubble-ellipses-outline" size={30} color="#fff" />     
+                <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+                    <Ionicons name="chatbubble-ellipses-outline" size={30} color="#fff" />
+                </TouchableOpacity>
             </View>
             <SearchBar />
         </View>
