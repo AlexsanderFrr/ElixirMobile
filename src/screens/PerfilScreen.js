@@ -1,16 +1,30 @@
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
-import React, { useContext, useState } from 'react';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../context/authContext';
-import * as ImagePicker from 'expo-image-picker';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  ImageBackground,
+  Modal,
+  Button,
+} from "react-native";
+import React, { useContext, useState } from "react";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../context/authContext";
+import { apiEndpoint } from "../../config/constantes";
+import * as ImagePicker from "expo-image-picker";
 
 const PerfilScreen = () => {
   const { sair, userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
-
   const [image, setImage] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
+  // Função para selecionar a imagem da galeria
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -19,72 +33,179 @@ const PerfilScreen = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setModalVisible(true); // Abre o modal para confirmação da imagem
     }
+  };
+
+  // Função para enviar a imagem para o backend
+  const updateProfileImage = async () => {
+    if (!userInfo?.token) {
+      alert("Token de autenticação ausente. Faça login novamente.");
+      return;
+    }
+  
+    setIsUploading(true);
+  
+    const fileType = image.split(".").pop();
+    const formData = new FormData();
+    formData.append("imagem", {
+      uri: image,
+      type: `image/${fileType}`,
+      name: `profile_${userInfo.id}.${fileType}`,
+    });
+  
+    try {
+      const response = await fetch(`${apiEndpoint}/usuario/me`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+        body: formData,
+      });
+  
+      const data = await response.json();
+      console.log("userInfo:", userInfo);
+  
+      if (response.ok) {
+        alert("Foto de perfil atualizada com sucesso!");
+        setModalVisible(false); // Fecha o modal após salvar
+      } else {
+        // Logando a resposta de erro no console para depuração
+        console.error("Erro na resposta do servidor:", data);
+        alert(data.message || "Erro ao atualizar foto de perfil");
+      }
+    } catch (error) {
+      // Logando detalhes completos do erro para depuração
+      console.error("Erro ao atualizar foto de perfil:", error);
+      alert("Erro ao atualizar foto de perfil. Detalhes no console.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+  
+  
+
+  const cancelImage = () => {
+    setModalVisible(false); // Fecha o modal sem salvar a imagem
+    setImage(null); // Reseta a imagem selecionada
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={require("../../assets/fundoPerfil.png")} resizeMode="cover" style={styles.imageBG}>
+      <ImageBackground
+        source={require("../../assets/fundoPerfil.png")}
+        resizeMode="cover"
+        style={styles.imageBG}
+      >
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.titleBar}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons name='arrow-back' size={40} color={"#fff"}></Ionicons>
+              <Ionicons name="arrow-back" size={40} color={"#fff"} />
             </TouchableOpacity>
-            <Ionicons name='settings-sharp' size={40} color={"#fff"}></Ionicons>
+            <Ionicons name="settings-sharp" size={40} color={"#fff"} />
           </View>
 
           <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
               {image ? (
-                <Image source={{ uri: image }} style={styles.image} resizeMode='center' />
-              ) : userInfo && userInfo.picture ? (
-                <Image source={{ uri: userInfo.picture }} style={styles.image} resizeMode='contain' />
+                <Image
+                  source={{ uri: image }}
+                  style={styles.image}
+                  resizeMode="center"
+                />
+              ) : userInfo?.imagem ? (
+                <Image
+                  source={{ uri: userInfo.imagem }}
+                  style={styles.image}
+                  resizeMode="contain"
+                />
               ) : null}
             </View>
             <View style={styles.dm}>
-              <MaterialIcons name='chat' size={18} color={"#F4DEAA"}></MaterialIcons>
+              <MaterialIcons name="chat" size={18} color={"#F4DEAA"} />
             </View>
             <View style={styles.active}></View>
             <TouchableOpacity onPress={pickImage}>
               <View style={styles.add}>
-                <Ionicons name='add' size={38} color={"#F4DEAA"}></Ionicons>
+                <Ionicons name="add" size={38} color={"#F4DEAA"} />
               </View>
             </TouchableOpacity>
           </View>
 
           <View style={styles.infoContainer}>
-            <Text style={[styles.text, { fontWeight: "600", fontSize: 26, marginTop: 30, fontFamily: "HelveticaNeue", }]}>
-              {userInfo ? (userInfo.nome || userInfo.name) : 'Nome do Usuário'}
+            <Text
+              style={[
+                styles.text,
+                {
+                  fontWeight: "600",
+                  fontSize: 26,
+                  marginTop: 30,
+                  fontFamily: "HelveticaNeue",
+                },
+              ]}
+            >
+              {userInfo ? userInfo.nome || userInfo.name : "Nome do Usuário"}
             </Text>
-            <Text style={{ fontSize: 20, fontFamily: "HelveticaNeue", color: "#8a8a8a" }}>
-              {userInfo ? (userInfo.email || userInfo.email) : 'email@dominio.com'}
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "HelveticaNeue",
+                color: "#8a8a8a",
+              }}
+            >
+              {userInfo
+                ? userInfo.email || userInfo.email
+                : "email@dominio.com"}
             </Text>
             <View style={[styles.separator, { marginTop: 10, width: "90%" }]} />
 
-            <View style={styles.groupOption}>
+            <View style={[styles.groupOption]}>
               <TouchableOpacity>
                 <View style={[styles.option, { marginTop: 40 }]}>
-                  <Image source={require("../../assets/iconDiag.png")}></Image>
-                  <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Meus Diagnósticos</Text>
+                  <Image source={require("../../assets/iconDiag.png")} />
+                  <Text
+                    style={[
+                      styles.text,
+                      { fontSize: 16, fontWeight: "600", marginLeft: 10 },
+                    ]}
+                  >
+                    Meus Diagnósticos
+                  </Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
               <TouchableOpacity>
                 <View style={[styles.option, { marginTop: 10 }]}>
-                  <Image source={require("../../assets/iconCora.png")}></Image>
-                  <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Favoritos</Text>
+                  <Image source={require("../../assets/iconCora.png")} />
+                  <Text
+                    style={[
+                      styles.text,
+                      { fontSize: 16, fontWeight: "600", marginLeft: 10 },
+                    ]}
+                  >
+                    Favoritos
+                  </Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
-              <TouchableOpacity onPress={() => { sair() }}>
+              <TouchableOpacity
+                onPress={() => {
+                  sair();
+                }}
+              >
                 <View style={[styles.option, { marginTop: 10 }]}>
-                  <Image source={require("../../assets/iconLogOut.png")}></Image>
-                  <Text style={[styles.text, { fontSize: 16, fontWeight: "600", marginLeft: 10 }]}>Sair</Text>
+                  <Image source={require("../../assets/iconLogOut.png")} />
+                  <Text
+                    style={[
+                      styles.text,
+                      { fontSize: 16, fontWeight: "600", marginLeft: 10 },
+                    ]}
+                  >
+                    Sair
+                  </Text>
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
@@ -92,38 +213,60 @@ const PerfilScreen = () => {
           </View>
         </ScrollView>
       </ImageBackground>
+
+      {/* Modal para visualização da foto e confirmação */}
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={cancelImage}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Image source={{ uri: image }} style={styles.modalImage} />
+            <View style={styles.modalButtons}>
+              <Button title="Cancelar" onPress={cancelImage} color="#f44336" />
+              <Button
+                title="Salvar"
+                onPress={updateProfileImage}
+                disabled={isUploading || !image}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   imageBG: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   textMain: {
     color: "#fff",
     fontSize: 20,
     fontWeight: "700",
     textAlign: "center",
-    marginBottom: 15
+    marginBottom: 15,
   },
   text: {
-    color: "#000000"
+    color: "#000000",
   },
   titleBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 30,
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   image: {
     flex: 1,
     width: undefined,
-    height: undefined
+    height: undefined,
   },
   profileImage: {
     width: 150,
@@ -131,7 +274,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 2,
     borderColor: "#000000",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   dm: {
     backgroundColor: "#BB5104",
@@ -141,7 +284,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   active: {
     backgroundColor: "#34FF89",
@@ -151,7 +294,7 @@ const styles = StyleSheet.create({
     padding: 4,
     height: 20,
     width: 20,
-    borderRadius: 10
+    borderRadius: 10,
   },
   add: {
     backgroundColor: "#BB5104",
@@ -162,31 +305,54 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 30,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   separator: {
     height: 2,
     width: "100%",
-    backgroundColor: "#000000"
+    backgroundColor: "#000000",
   },
   infoContainer: {
     backgroundColor: "#fff",
-    width: "90%",
-    height: 550,
-    alignSelf: "center",
-    alignItems: "center",
-    marginTop: 15,
-    borderRadius: 15
+    borderRadius: 10,
+    marginHorizontal: 20,
+    marginTop: 30,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  groupOption: {
+    paddingVertical: 10,
   },
   option: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
-  groupOption: {
-    alignItems: "flex-start",
-    width: "90%"
-  }
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    width: "80%",
+    alignItems: "center",
+  },
+  modalImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
 });
 
 export default PerfilScreen;
