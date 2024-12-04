@@ -77,9 +77,10 @@ export default function RecommendedSection() {
               style={styles.juiceButtonItemVertical}
               onPress={() => navigation.navigate('Exibicao', {
                 nome: item.nome,
-                function: item.beneficios,
+                benefits: item.beneficios,
                 image: item.img1,  // Certifique-se de que o caminho da imagem seja corretamente usado aqui
                 ingredientes: item.ingredientes,  // Se você tiver uma lista de ingredientes
+                ingredients: item.ingredientes,
               })}
             >
               <ProductCard item={item} />

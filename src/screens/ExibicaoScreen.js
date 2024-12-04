@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StatusBar, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import Header from "../../components/Exibicao/Header";
 import JuiceImage from "../../components/Exibicao/JuiceImage";
@@ -9,7 +9,13 @@ import JuiceBenefits from "../../components/Exibicao/JuiceBenefits";
 
 const ExibicaoScreen = () => {
   const route = useRoute();
-  const { nome, function: juiceFunction, image } = route.params;
+
+  const {
+    nome,
+    benefits: juiceBenefits,
+    image,
+    ingredients
+  } = route.params;
 
   return (
     <View style={styles.container}>
@@ -17,8 +23,8 @@ const ExibicaoScreen = () => {
       <Header />
       <View style={styles.main}>
         <JuiceProperties name={nome} />
-        <IngredientList />
-        <JuiceBenefits benefits={juiceFunction} />
+        {/* <IngredientList ingredients={ingredients} /> */}
+        <JuiceBenefits benefits={juiceBenefits} />
       </View>
     </View>
   );
