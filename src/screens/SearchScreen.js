@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Text, ActivityIndicator, Alert, Image, } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, FlatList, Text, ActivityIndicator, Alert, Image } from 'react-native';
 import HeaderBar from '../../components/Pesquisar/HeaderBar';
 import SearchBar from '../../components/Pesquisar/SearchBar';
 import { apiEndpoint } from '../../config/constantes';
@@ -9,24 +9,34 @@ export default function SearchScreen() {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const handleSearch = async () => {
-        if (!searchQuery.trim()) {
-            Alert.alert('Erro', 'Digite algo para pesquisar.');
-            return;
-        }
-
+    // Função de busca
+    const fetchResults = async (query) => {
         setLoading(true);
         try {
-            const response = await fetch(`${apiEndpoint}/suco/title/li`);
+            const url = query
+                ? `${apiEndpoint}/suco/search/${query}`
+                : `${apiEndpoint}/suco/all`;
+            const response = await fetch(url);
             if (!response.ok) throw new Error('Erro ao buscar dados');
             const data = await response.json();
-            setResults(data.results || []); // Supondo que os resultados vêm em `data.results`
+            console;log('Data fetched1: ', data);
+            setResults(data); // Ajuste dependendo da estrutura da resposta da API
         } catch (error) {
             Alert.alert('Erro', 'Não foi possível buscar os dados.');
+            console.error('Erro ao buscar dados:', error);
         } finally {
             setLoading(false);
         }
-    }
+    };
+    
+    // Efeito para busca automática quando a consulta muda
+    useEffect(() => {
+        if (searchQuery.length > 0) {
+            fetchResults(searchQuery);
+        } else {
+            fetchResults(null); // Busca todos os itens caso a consulta esteja vazia
+        }
+    }, [searchQuery]);
 
     return (
         <View style={styles.container}>
@@ -35,7 +45,7 @@ export default function SearchScreen() {
                 placeholder="Pesquisar..."
                 value={searchQuery}
                 onChangeText={setSearchQuery}
-                onSearch={handleSearch}
+                onSearch={() => fetchResults(searchQuery)} // Realiza a busca manualmente
             />
             {loading ? (
                 <ActivityIndicator size="large" color="#B85A25" style={styles.loader} />
@@ -43,7 +53,9 @@ export default function SearchScreen() {
                 <FlatList
                     data={results}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <Text style={styles.resultItem}>{item.nome}</Text>} // Supondo que o item tem um campo `name`
+                    renderItem={({ item }) => (
+                        <Text style={styles.resultItem}>{item.nome}</Text>
+                    )} // Ajuste se o campo correto for diferente de `nome`
                     ListEmptyComponent={
                         <View style={styles.emptyContainer}>
                             <Image
@@ -51,7 +63,9 @@ export default function SearchScreen() {
                                 style={styles.emptyImage}
                             />
                             <Text style={styles.emptyTitle}>Não Encontrado!</Text>
-                            <Text style={styles.emptyMessage}>Não foi encontrado nenhum item relacionado a sua pesquisa. Tente novamente!</Text>
+                            <Text style={styles.emptyMessage}>
+                                Não foi encontrado nenhum item relacionado à sua pesquisa. Tente novamente!
+                            </Text>
                         </View>
                     }
                 />
@@ -82,7 +96,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 50,
-      },
+    },
     emptyImage: {
         marginBottom: 20,
         resizeMode: 'contain', // Ajusta a imagem para caber no espaço
@@ -96,7 +110,7 @@ const styles = StyleSheet.create({
     emptyTitle: {
         textAlign: 'center',
         color: '#000',
-        fontWeight: 650,
+        fontWeight: 'bold', // Corrigido para um valor válido
         fontSize: 30,
-    }
+    },
 });
