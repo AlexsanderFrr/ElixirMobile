@@ -2,8 +2,15 @@ import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 
 export default function IngredientList({ ingredients }) {
-  // Verifica se há ingredientes e formata adequadamente
-  if (!ingredients || ingredients.length === 0) {
+  // Converte a string para array, caso seja necessário
+  const formattedIngredients = Array.isArray(ingredients)
+    ? ingredients
+    : typeof ingredients === "string"
+    ? ingredients.split(",").map((item) => item.trim())
+    : [];
+
+  // Verifica se há ingredientes disponíveis
+  if (!formattedIngredients || formattedIngredients.length === 0) {
     return <Text style={styles.emptyText}>Nenhum ingrediente disponível</Text>;
   }
 
@@ -11,11 +18,13 @@ export default function IngredientList({ ingredients }) {
     <View style={styles.container}>
       <Text style={styles.title}>Ingredientes:</Text>
       <FlatList
-        data={ingredients}
+        data={formattedIngredients}
         keyExtractor={(item, index) => index.toString()} // Evitar conflitos de key
         renderItem={({ item }) => (
-          <Text style={styles.ingredientItem}>- {item}</Text>
+          <Text style={styles.ingredientItem}>{item}</Text>
         )}
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );
@@ -23,10 +32,12 @@ export default function IngredientList({ ingredients }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 20,
+    maxHeight: 200, // Restringe a altura do contêiner
+    overflow: "hidden", // Evita que o conteúdo extrapole
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "600",
     textTransform: "uppercase",
     marginBottom: 10,
@@ -38,5 +49,11 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: "#888",
+  },
+  list: {
+    flexGrow: 0, // Evita que a lista cresça infinitamente
+  },
+  listContent: {
+    paddingBottom: 10,
   },
 });

@@ -23,8 +23,9 @@ const ExibicaoScreen = () => {
       <Header />
       <View style={styles.main}>
         <JuiceProperties name={nome} />
-        {/* <IngredientList ingredients={ingredients} /> */}
+        <IngredientList ingredients={ingredients} />
         <JuiceBenefits benefits={juiceBenefits} />
+        {/* <PreparationMethod /> */}
       </View>
     </View>
   );
