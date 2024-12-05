@@ -1,12 +1,58 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { apiEndpoint } from '../../config/constantes';
+import axios from 'axios'; // Certifique-se de ter instalado axios
 
-export default function ProductCard({ item }) {
-  const [liked, setLiked] = useState(false); // Estado para controlar o botão de curtir
+export default function ProductCard({ item, userToken }) {
+  const [liked, setLiked] = useState(false); // Estado para controle da curtida
+  const [loading, setLoading] = useState(false); // Estado para controle de requisições
 
-  const handleLikePress = () => {
-    setLiked(!liked); // Alterna o estado de curtir
+  useEffect(() => {
+    // Verifica se o suco está nos favoritos do usuário ao carregar o componente
+    const checkIfLiked = async () => {
+      try {
+        const response = await axios.get(`${apiEndpoint}/favoritos/all'`, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        });
+        const favoritos = response.data.map(fav => fav.suco.id);
+        setLiked(favoritos.includes(item.id)); // Define o estado inicial
+      } catch (error) {
+        console.error('Erro ao verificar favoritos:', error);
+      }
+    };
+
+    checkIfLiked();
+  }, [item.id, userToken]);
+
+  const handleLikePress = async () => {
+    if (loading) return; // Impede múltiplos cliques
+    setLoading(true);
+
+    try {
+      if (liked) {
+        // Remove dos favoritos
+        await axios.delete(`/favoritos/delete/${item.id}`, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        });
+        setLiked(false);
+        Alert.alert('Sucesso', 'Suco removido dos favoritos!');
+      } else {
+        // Adiciona aos favoritos
+        await axios.post(
+          '/favoritos/add',
+          { id: item.id },
+          { headers: { Authorization: `Bearer ${userToken}` } },
+        );
+        setLiked(true);
+        Alert.alert('Sucesso', 'Suco adicionado aos favoritos!');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar favorito:', error);
+      Alert.alert('Erro', 'Não foi possível atualizar os favoritos.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getImageUrl = (imgPath) => `${imgPath}`;
@@ -27,7 +73,7 @@ export default function ProductCard({ item }) {
           style={styles.iconContainer} // Estilo para o botão de curtir
         >
           <FontAwesome
-            name={liked ? "heart" : "heart-o"} // Ícone alternado
+            name={liked ? 'heart' : 'heart-o'} // Ícone alternado
             size={24}
             color="red"
           />
@@ -39,7 +85,7 @@ export default function ProductCard({ item }) {
 
 const styles = StyleSheet.create({
   card: {
-    width: "99%",
+    width: '99%',
     backgroundColor: '#FFF',
     padding: 15,
     borderRadius: 15,
@@ -61,7 +107,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 15,
     borderWidth: 0.5,
-    borderColor: "#838181",
+    borderColor: '#838181',
   },
   juiceInfoVertical: {
     marginLeft: 15,
@@ -72,7 +118,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   iconContainer: {
-    //padding: 10, // Facilita o toque
     position: 'absolute',
     bottom: 10,
     right: 10,
