@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { apiEndpoint } from '../../config/constantes';
-import axios from 'axios'; // Certifique-se de ter instalado axios
-
+import api from '../../config/axiosConfig';
 export default function ProductCard({ item, userToken }) {
-  const [liked, setLiked] = useState(false); // Estado para controle da curtida
-  const [loading, setLoading] = useState(false); // Estado para controle de requisições
+  const [liked, setLiked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Verifica se o suco está nos favoritos do usuário ao carregar o componente
     const checkIfLiked = async () => {
       try {
-        const response = await axios.get(`${apiEndpoint}/favoritos/all'`, {
+        const response = await api.get('/favoritos/all', {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         const favoritos = response.data.map(fav => fav.suco.id);
-        setLiked(favoritos.includes(item.id)); // Define o estado inicial
+        setLiked(favoritos.includes(item.id));
       } catch (error) {
         console.error('Erro ao verificar favoritos:', error);
       }
@@ -26,20 +23,18 @@ export default function ProductCard({ item, userToken }) {
   }, [item.id, userToken]);
 
   const handleLikePress = async () => {
-    if (loading) return; // Impede múltiplos cliques
+    if (loading) return;
     setLoading(true);
 
     try {
       if (liked) {
-        // Remove dos favoritos
-        await axios.delete(`/favoritos/delete/${item.id}`, {
+        await api.delete(`/favoritos/delete/${item.id}`, {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         setLiked(false);
         Alert.alert('Sucesso', 'Suco removido dos favoritos!');
       } else {
-        // Adiciona aos favoritos
-        await axios.post(
+        await api.post(
           '/favoritos/add',
           { id: item.id },
           { headers: { Authorization: `Bearer ${userToken}` } },
@@ -55,28 +50,15 @@ export default function ProductCard({ item, userToken }) {
     }
   };
 
-  const getImageUrl = (imgPath) => `${imgPath}`;
-
   return (
     <View style={styles.card}>
       <View style={styles.juiceItemVertical}>
-        <Image
-          source={{ uri: getImageUrl(item.img1) }}
-          style={styles.juiceImageVertical}
-          resizeMode="cover"
-        />
+        <Image source={{ uri: item.img1 }} style={styles.juiceImageVertical} />
         <View style={styles.juiceInfoVertical}>
           <Text style={styles.juiceNameVertical}>{item.nome}</Text>
         </View>
-        <TouchableOpacity
-          onPress={handleLikePress}
-          style={styles.iconContainer} // Estilo para o botão de curtir
-        >
-          <FontAwesome
-            name={liked ? 'heart' : 'heart-o'} // Ícone alternado
-            size={24}
-            color="red"
-          />
+        <TouchableOpacity onPress={handleLikePress} style={styles.iconContainer}>
+          <FontAwesome name={liked ? 'heart' : 'heart-o'} size={24} color="red" />
         </TouchableOpacity>
       </View>
     </View>
