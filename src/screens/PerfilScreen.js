@@ -45,9 +45,9 @@ const PerfilScreen = () => {
       alert("Token de autenticação ausente. Faça login novamente.");
       return;
     }
-  
+
     setIsUploading(true);
-  
+
     const fileType = image.split(".").pop();
     const formData = new FormData();
     formData.append("imagem", {
@@ -55,7 +55,7 @@ const PerfilScreen = () => {
       type: `image/${fileType}`,
       name: `profile_${userInfo.id}.${fileType}`,
     });
-  
+
     try {
       const response = await fetch(`${apiEndpoint}/usuario/me`, {
         method: "PUT",
@@ -64,10 +64,10 @@ const PerfilScreen = () => {
         },
         body: formData,
       });
-  
+
       const data = await response.json();
       console.log("userInfo:", userInfo);
-  
+
       if (response.ok) {
         alert("Foto de perfil atualizada com sucesso!");
         setModalVisible(false); // Fecha o modal após salvar
@@ -84,8 +84,8 @@ const PerfilScreen = () => {
       setIsUploading(false);
     }
   };
-  
-  
+
+
 
   const cancelImage = () => {
     setModalVisible(false); // Fecha o modal sem salvar a imagem
@@ -116,14 +116,21 @@ const PerfilScreen = () => {
                   style={styles.image}
                   resizeMode="center"
                 />
-              ) : userInfo?.imagem ? (
+              ) : userInfo?.imagem || userInfo?.picture ? ( // Verifica imagem ou picture
                 <Image
-                  source={{ uri: userInfo.imagem }}
+                  source={{ uri: userInfo.imagem || userInfo.picture }} // Usa o campo disponível
                   style={styles.image}
                   resizeMode="contain"
                 />
-              ) : null}
+              ) : (
+                <Image
+                  source={require("../../assets/adaptive-icon.png")} // Imagem padrão
+                  style={styles.image}
+                  resizeMode="contain"
+                />
+              )}
             </View>
+
             <View style={styles.dm}>
               <MaterialIcons name="chat" size={18} color={"#F4DEAA"} />
             </View>
