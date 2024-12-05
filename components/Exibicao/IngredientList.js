@@ -33,17 +33,19 @@ export default function IngredientList({ ingredients }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    maxHeight: 200, // Restringe a altura do contêiner
+    maxHeight: 250, // Restringe a altura do contêiner
     overflow: "hidden", // Evita que o conteúdo extrapole
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "600",
     textTransform: "uppercase",
     marginBottom: 10,
   },
   ingredientItem: {
-    fontSize: 16,
+    color: "#8a8a8a",
+    fontSize: 20,
+    fontWeight: "600",
     marginVertical: 5,
   },
   emptyText: {

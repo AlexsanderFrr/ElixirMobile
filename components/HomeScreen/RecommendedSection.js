@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { apiEndpoint } from '../../config/constantes';
 import { FontAwesome } from '@expo/vector-icons';
 import ProductCard from './ProductCard'; // Importação do ProductCard
+import PreparationMethod from '../Exibicao/PreparationMethod';
 
 export default function RecommendedSection() {
   const navigation = useNavigation();
@@ -80,7 +81,7 @@ export default function RecommendedSection() {
                 benefits: item.beneficios,
                 image: item.img1,  // Certifique-se de que o caminho da imagem seja corretamente usado aqui
                 ingredients: item.ingredientes,  // Se você tiver uma lista de ingredientes
-                // ingredients: item.ingredientes,
+                preparationSteps: item.modo_de_preparo,
               })}
             >
               <ProductCard item={item} />
