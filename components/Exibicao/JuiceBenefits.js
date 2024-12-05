@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   scrollContent: {
-    paddingBottom: 15, // Evita que o conteúdo toque no final abruptamente
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    padding: 15,
   },
   benefitsInfo: {
-    color: "#8a8a8a",
+    color: "#DC9B00",
     fontSize: 20,
     fontWeight: "600",
   },

@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   ingredientItem: {
-    color: "#8a8a8a",
+    color: "#DC9B00",
     fontSize: 20,
     fontWeight: "600",
-    marginVertical: 5,
+    // marginVertical: 5,
   },
   emptyText: {
     fontSize: 16,
@@ -54,8 +54,11 @@ const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 0, // Evita que a lista cresça infinitamente
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    padding: 15,
   },
   listContent: {
-    paddingBottom: 10,
+
   },
 });

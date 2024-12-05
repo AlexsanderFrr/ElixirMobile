@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     maxHeight: 250, // Restringe a altura do contêiner
     overflow: "hidden", // Evita que o conteúdo extrapole
+    paddingBottom: 15,
   },
   title: {
     fontSize: 24,
@@ -43,10 +44,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   stepItem: {
-    color: "#8a8a8a",
+    color: "#DC9B00",
     fontSize: 20,
     fontWeight: "600",
-    marginVertical: 5,
   },
   emptyText: {
     fontSize: 16,
@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 0, // Evita que a lista cresça infinitamente
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    padding: 15,
   },
   listContent: {
     paddingBottom: 10,
