@@ -23,8 +23,12 @@ export default function RecommendedSection() {
         const response = await fetch(url);
         const data = await response.json();
         console.log('Data fetched: ', data);
-        setJuices(data);
-        setFilteredJuices(data);
+        // Filtrar itens inválidos
+        const validData = data.filter((juice) => juice.suco_id); // Certifique-se de que cada item tenha um ID
+        console.log('DataInvalid fetched: ', validData);
+
+        setJuices(validData);
+        setFilteredJuices(validData);
       } catch (error) {
         console.error('Erro ao buscar sucos: ', error);
       }
@@ -72,21 +76,22 @@ export default function RecommendedSection() {
 
       <FlatList
         data={filteredJuices}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => (item.suco_id ? item.suco_id.toString() : `key-${index}`)}
         renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.juiceButtonItemVertical}
-              onPress={() => navigation.navigate('Exibicao', {
-                nome: item.nome,
-                benefits: item.beneficios,
-                image: item.img1,  // Certifique-se de que o caminho da imagem seja corretamente usado aqui
-                ingredients: item.ingredientes,  // Se você tiver uma lista de ingredientes
-                preparationSteps: item.modo_de_preparo,
-              })}
-            >
-              <ProductCard item={item} />
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.juiceButtonItemVertical}
+            onPress={() => navigation.navigate('Exibicao', {
+              nome: item.suco_nome,
+              benefits: item.beneficios,
+              image: item.img1,
+              ingredients: item.ingredientes,
+              preparationSteps: item.modo_de_preparo,
+            })}
+          >
+            <ProductCard item={item} />
+          </TouchableOpacity>
         )}
+        ListEmptyComponent={<Text style={styles.emptyText}>Nenhum suco disponível no momento.</Text>} // Mensagem caso não haja dados
         contentContainerStyle={styles.flatListContainer}
       />
     </View>
@@ -134,5 +139,11 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     paddingBottom: 40,
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#888',
+    marginTop: 20,
   },
 });

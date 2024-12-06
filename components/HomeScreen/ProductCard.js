@@ -86,7 +86,7 @@ export default function ProductCard({ item, userToken }) {
       <View style={styles.juiceItemVertical}>
         <Image source={{ uri: item.img1 }} style={styles.juiceImageVertical} />
         <View style={styles.juiceInfoVertical}>
-          <Text style={styles.juiceNameVertical}>{item.nome}</Text>
+          <Text style={styles.juiceNameVertical}>{item.suco_nome}</Text>
         </View>
         <TouchableOpacity onPress={handleLikePress} style={styles.iconContainer}>
           <FontAwesome name={liked ? 'heart' : 'heart-o'} size={24} color="red" />
