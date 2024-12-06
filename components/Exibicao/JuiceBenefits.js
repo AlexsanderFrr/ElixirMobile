@@ -1,31 +1,38 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-web";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 export default function JuiceBenefits({ benefits }) {
   return (
-    <ScrollView>
-      <View style={styles.benefContainer}>
-        <Text style={styles.titleBenefits}>Benefícios:</Text>
+    <View style={styles.container}>
+      {/* Título fixo */}
+      <Text style={styles.titleBenefits}>Benefícios:</Text>
+
+      {/* Conteúdo rolável */}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.benefitsInfo}>{benefits}</Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  benefContainer: {
+  container: {
     marginTop: 30,
   },
   titleBenefits: {
     fontSize: 24,
-    fontWeight: "600",
+    fontWeight: '600',
     textTransform: "uppercase",
     marginBottom: 15,
   },
+  scrollContent: {
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    padding: 15,
+  },
   benefitsInfo: {
-    color: "#8a8a8a",
+    color: "#DC9B00",
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 });

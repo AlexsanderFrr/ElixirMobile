@@ -1,27 +1,27 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 
-export default function IngredientList({ ingredients }) {
+export default function PreparationMethod({ preparationSteps }) {
   // Converte a string para array, caso seja necessário
-  const formattedIngredients = Array.isArray(ingredients)
-    ? ingredients
-    : typeof ingredients === "string"
-    ? ingredients.split(",").map((item) => item.trim())
+  const formattedSteps = Array.isArray(preparationSteps)
+    ? preparationSteps
+    : typeof preparationSteps === "string"
+    ? preparationSteps.split(",").map((step) => step.trim())
     : [];
 
-  // Verifica se há ingredientes disponíveis
-  if (!formattedIngredients || formattedIngredients.length === 0) {
-    return <Text style={styles.emptyText}>Nenhum ingrediente disponível</Text>;
+  // Verifica se há passos de preparo disponíveis
+  if (!formattedSteps || formattedSteps.length === 0) {
+    return <Text style={styles.emptyText}>Nenhum modo de preparo disponível</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ingredientes:</Text>
+      <Text style={styles.title}>Modo de Preparo:</Text>
       <FlatList
-        data={formattedIngredients}
+        data={formattedSteps}
         keyExtractor={(item, index) => index.toString()} // Evitar conflitos de key
         renderItem={({ item }) => (
-          <Text style={styles.ingredientItem}>{item}</Text>
+          <Text style={styles.stepItem}>{item}</Text>
         )}
         style={styles.list}
         contentContainerStyle={styles.listContent}
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     maxHeight: 250, // Restringe a altura do contêiner
     overflow: "hidden", // Evita que o conteúdo extrapole
+    paddingBottom: 15,
   },
   title: {
     fontSize: 24,
@@ -42,11 +43,10 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginBottom: 10,
   },
-  ingredientItem: {
+  stepItem: {
     color: "#DC9B00",
     fontSize: 20,
     fontWeight: '600',
-    // marginVertical: 5,
   },
   emptyText: {
     fontSize: 16,
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   listContent: {
-
+    paddingBottom: 10,
   },
 });

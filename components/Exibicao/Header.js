@@ -1,6 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Header() {
@@ -8,15 +9,17 @@ export default function Header() {
 
   return (
     <View style={styles.header}>
+      {/* Botão de voltar */}
       <View style={styles.iconButton}>
-        <TouchableOpacity onPress={() => navigation.goBack()} >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={40} color="#BB5114" />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.iconButton}>
+      {/* Ícone de coração */}
+      <View style={[styles.iconButton, styles.centerIcon]}>
         <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={40} color="#BB5114" />
+          <FontAwesome name="heart-o" size={40} color="red" />
         </TouchableOpacity>
       </View>
     </View>
@@ -36,5 +39,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 10,
     borderRadius: 15,
+    borderWidth: 1.5,
+    borderColor: '#BB5114',
+  },
+  centerIcon: {
+    justifyContent: "center", // Alinha verticalmente
+    alignItems: "center", // Alinha horizontalmente
   },
 });
