@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12, // Deixa apenas o preenchimento lateral
   },
   login__buttonText: {
-    fontWeight: "600",
+    fontWeight: '600',
     fontSize: 25,
     color: "#F5F5F5",
     fontFamily: "sans-serif",
@@ -159,13 +159,13 @@ const styles = StyleSheet.create({
   },
   register_firstText: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: '500',
     color: "#838181",
     marginRight: 5,
   },
   register_secondText: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: '500',
     color: "#BB5104",
   },
 });

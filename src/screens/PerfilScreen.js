@@ -147,7 +147,7 @@ const PerfilScreen = () => {
               style={[
                 styles.text,
                 {
-                  fontWeight: "600",
+                  fontWeight: '600',
                   fontSize: 26,
                   marginTop: 30,
                   fontFamily: "HelveticaNeue",

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   titleBenefits: {
     fontSize: 24,
-    fontWeight: "600",
+    fontWeight: '600',
     textTransform: "uppercase",
     marginBottom: 15,
   },
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
   benefitsInfo: {
     color: "#DC9B00",
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 });
