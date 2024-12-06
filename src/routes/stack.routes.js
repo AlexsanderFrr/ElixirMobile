@@ -4,7 +4,7 @@ import SearchScreen from "../screens/SearchScreen";
 import ExibicaoScreen from "../screens/ExibicaoScreen";
 import ShopScreen from "../screens/ShopScreen";
 import PerfilScreen from "../screens/PerfilScreen";
-import FavoriteScreen from "../screens/FavoriteScreen";
+import FavoriteScreen from "../screens/favoriteScreen";
 
 import TabRoutes from "./tab.routes";
 
