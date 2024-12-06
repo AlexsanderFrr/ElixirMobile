@@ -184,7 +184,8 @@ const PerfilScreen = () => {
                 </View>
               </TouchableOpacity>
               <View style={[styles.separator, { opacity: 0.1 }]} />
-              <TouchableOpacity>
+              <TouchableOpacity
+              onPress={() => navigation.navigate('Favoritos')}>
                 <View style={[styles.option, { marginTop: 10 }]}>
                   <Image source={require("../../assets/iconCora.png")} />
                   <Text
