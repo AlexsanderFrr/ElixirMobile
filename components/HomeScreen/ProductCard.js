@@ -10,8 +10,7 @@ export default function ProductCard({ item, userToken }) {
   useEffect(() => {
     const checkIfLiked = async () => {
       try {
-        // Log para verificar o token recebido
-        console.log('Token recebido:', userToken);
+        console.log('Token enviado:', userToken); // Log para verificar o token
   
         const response = await fetch(`${apiEndpoint}/favoritos/all`, {
           method: 'GET',
@@ -20,22 +19,25 @@ export default function ProductCard({ item, userToken }) {
           },
         });
   
+        if (response.status === 403) {
+          console.error('Erro 403: Acesso negado');
+          throw new Error('Acesso negado. Verifique seu token de autenticação.');
+        }
+  
         if (!response.ok) {
-          const errorResponse = await response.json();
-          console.error('Erro do servidor:', errorResponse); // Log detalhado do erro
-          throw new Error('Erro ao buscar favoritos');
+          throw new Error(`Erro do servidor: ${response.statusText}`);
         }
   
         const data = await response.json();
         const favoritos = data.map((fav) => fav.suco.id);
         setLiked(favoritos.includes(item.id));
       } catch (error) {
-        console.error('Erro ao verificar favoritos:', error);
+        console.error('Erro ao verificar favoritos:', error.message); // Mostra mensagem detalhada
       }
     };
   
     checkIfLiked();
-  }, [item.id, userToken]);
+  }, [item.id, userToken]);  
 
   const handleLikePress = async () => {
     if (loading) return;
