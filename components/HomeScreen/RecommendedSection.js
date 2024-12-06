@@ -86,6 +86,7 @@ export default function RecommendedSection() {
               image: item.img1,
               ingredients: item.ingredientes,
               preparationSteps: item.modo_de_preparo,
+              diagnostico: item.diagnostico_nome_da_condicao,
             })}
           >
             <ProductCard item={item} />

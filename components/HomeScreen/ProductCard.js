@@ -11,23 +11,23 @@ export default function ProductCard({ item, userToken }) {
     const checkIfLiked = async () => {
       try {
         console.log('Token enviado:', userToken); // Log para verificar o token
-  
+
         const response = await fetch(`${apiEndpoint}/favoritos/all`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
         });
-  
+
         if (response.status === 403) {
           console.error('Erro 403: Acesso negado');
           throw new Error('Acesso negado. Verifique seu token de autenticação.');
         }
-  
+
         if (!response.ok) {
           throw new Error(`Erro do servidor: ${response.statusText}`);
         }
-  
+
         const data = await response.json();
         const favoritos = data.map((fav) => fav.suco.id);
         setLiked(favoritos.includes(item.id));
@@ -35,9 +35,9 @@ export default function ProductCard({ item, userToken }) {
         console.error('Erro ao verificar favoritos:', error.message); // Mostra mensagem detalhada
       }
     };
-  
+
     checkIfLiked();
-  }, [item.id, userToken]);  
+  }, [item.id, userToken]);
 
   const handleLikePress = async () => {
     if (loading) return;
@@ -86,7 +86,20 @@ export default function ProductCard({ item, userToken }) {
       <View style={styles.juiceItemVertical}>
         <Image source={{ uri: item.img1 }} style={styles.juiceImageVertical} />
         <View style={styles.juiceInfoVertical}>
-          <Text style={styles.juiceNameVertical}>{item.suco_nome}</Text>
+          <Text
+            style={styles.juiceNameVertical}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {item.suco_nome}
+          </Text>
+          <Text
+            style={styles.juiceDiagnosticoVertical}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {item.diagnostico_nome_da_condicao || 'Diagnóstico não disponível'}
+          </Text>
         </View>
         <TouchableOpacity onPress={handleLikePress} style={styles.iconContainer}>
           <FontAwesome name={liked ? 'heart' : 'heart-o'} size={24} color="red" />
@@ -102,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     padding: 15,
     borderRadius: 15,
-    height: 130,
+    height: 140,
     shadowColor: '#000',
     shadowOffset: { width: 5, height: 5 },
     shadowOpacity: 0.3,
@@ -123,10 +136,19 @@ const styles = StyleSheet.create({
   juiceInfoVertical: {
     marginLeft: 15,
     flex: 1,
+    justifyContent: 'center',
   },
   juiceNameVertical: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+    flexWrap: 'wrap', // Permitir quebra de linha
+  },
+  juiceDiagnosticoVertical: {
+    fontSize: 14,
+    color: '#666',
+    flexWrap: 'wrap', // Permitir quebra de linha
   },
   iconContainer: {
     position: 'absolute',

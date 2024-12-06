@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     juiceNameHorizontal: {
-        fontWeight: "500",
+        fontWeight: '500',
         fontSize: 16,
         marginTop: 5,
         textAlign: "center",
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     },
     catalogText: {
         fontSize: 20,
-        fontWeight: "700",
+        fontWeight: '700',
         alignSelf: "flex-start",
         marginLeft: 30,
         marginTop: 30,
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     },
     juiceNameVertical: {
         fontSize: 18,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginBottom: 5,
     },
     juiceFunctionVertical: {

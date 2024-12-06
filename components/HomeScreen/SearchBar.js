@@ -40,6 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     color: '#838181',
-    fontWeight: 650,
+    fontWeight: '600',
   },
 });
