@@ -4,15 +4,14 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { useNavigation } from '@react-navigation/native';
 import { apiEndpoint } from '../../config/constantes';
 import { FontAwesome } from '@expo/vector-icons';
-import ProductCard from './ProductCard'; // Importação do ProductCard
-import PreparationMethod from '../Exibicao/PreparationMethod';
+import ProductCard from './ProductCard';
 
 export default function RecommendedSection({ userToken }) {
   const navigation = useNavigation();
   const [juices, setJuices] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filteredJuices, setFilteredJuices] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('Todos'); // Estado para armazenar a categoria selecionada
+  const [selectedCategory, setSelectedCategory] = useState('Todos');
 
   useEffect(() => {
     const fetchJuices = async () => {
@@ -22,10 +21,14 @@ export default function RecommendedSection({ userToken }) {
           : `${apiEndpoint}/suco/all`;
         const response = await fetch(url);
         const data = await response.json();
-        console.log('Data fetched: ', data);
-        // Filtrar itens inválidos
-        const validData = data.filter((juice) => juice.suco_id); // Certifique-se de que cada item tenha um ID
-        console.log('DataInvalid fetched: ', validData);
+
+        // 🔁 Adiciona `id` com base em `suco_id`
+        const validData = data
+          .filter((juice) => juice.suco_id)
+          .map((juice) => ({
+            ...juice,
+            id: juice.suco_id, // alias para consistência
+          }));
 
         setJuices(validData);
         setFilteredJuices(validData);
@@ -33,12 +36,12 @@ export default function RecommendedSection({ userToken }) {
         console.error('Erro ao buscar sucos: ', error);
       }
     };
+
     fetchJuices();
   }, [searchText]);
 
   const filterJuices = (category) => {
     setSelectedCategory(category);
-
     if (category === 'Todos') {
       setFilteredJuices(juices);
     } else {
@@ -51,7 +54,7 @@ export default function RecommendedSection({ userToken }) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Recomendado Para Você</Text>
-        <TouchableOpacity style={styles.filterIcon} onPress={() => {/* Função para abrir o filtro */ }}>
+        <TouchableOpacity style={styles.filterIcon}>
           <FontAwesome name="filter" size={24} color="#BB5104" />
         </TouchableOpacity>
       </View>
@@ -61,11 +64,11 @@ export default function RecommendedSection({ userToken }) {
           <TouchableOpacity key={category} onPress={() => filterJuices(category)}>
             <View style={[
               styles.filterButttom,
-              selectedCategory === category && styles.activeFilterBackground, // Aplicação do background ao contêiner
+              selectedCategory === category && styles.activeFilterBackground,
             ]}>
               <Text style={[
                 styles.filter,
-                selectedCategory === category && styles.activeFilterText, // Altera a cor do texto da categoria selecionada
+                selectedCategory === category && styles.activeFilterText,
               ]}>
                 {category}
               </Text>
@@ -76,7 +79,7 @@ export default function RecommendedSection({ userToken }) {
 
       <FlatList
         data={filteredJuices}
-        keyExtractor={(item, index) => (item.suco_id ? item.suco_id.toString() : `key-${index}`)}
+        keyExtractor={(item, index) => item.id?.toString() ?? `key-${index}`}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.juiceButtonItemVertical}
@@ -92,7 +95,7 @@ export default function RecommendedSection({ userToken }) {
             <ProductCard item={item} userToken={userToken} />
           </TouchableOpacity>
         )}
-        ListEmptyComponent={<Text style={styles.emptyText}>Nenhum suco disponível no momento.</Text>} // Mensagem caso não haja dados
+        ListEmptyComponent={<Text style={styles.emptyText}>Nenhum suco disponível no momento.</Text>}
         contentContainerStyle={styles.flatListContainer}
       />
     </View>
