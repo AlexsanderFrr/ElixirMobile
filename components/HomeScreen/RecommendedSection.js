@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import ProductCard from './ProductCard'; // Importação do ProductCard
 import PreparationMethod from '../Exibicao/PreparationMethod';
 
-export default function RecommendedSection() {
+export default function RecommendedSection({ userToken }) {
   const navigation = useNavigation();
   const [juices, setJuices] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -89,7 +89,7 @@ export default function RecommendedSection() {
               diagnostico: item.diagnostico_nome_da_condicao,
             })}
           >
-            <ProductCard item={item} />
+            <ProductCard item={item} userToken={userToken} />
           </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.emptyText}>Nenhum suco disponível no momento.</Text>} // Mensagem caso não haja dados
