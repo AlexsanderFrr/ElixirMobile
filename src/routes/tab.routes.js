@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import ShopScreen from '../screens/ShopScreen';
 import HomeScreen from "../screens/HomeScreen";
 import PerfilScreen from "../screens/PerfilScreen";
-import ChatScreen from '../screens/ChatScreen'; 
+import ChatScreen from '../screens/ChatScreen';
+import favoriteScreen from "../screens/favoriteScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +32,19 @@ export default function TabRoutes() {
                             return <Ionicons name="home" color={"#F5F5F5"} size={size} />;
                         }
                         return <Ionicons name="home-outline" color={color} size={size} />;
+                    }
+                }}
+            />
+
+            <Tab.Screen
+                name="Favoritos"
+                component={favoriteScreen}
+                options={{
+                    tabBarIcon: ({ color, size, focused }) => {
+                        if (focused) {
+                            return <Ionicons name="heart" color={"#F5F5F5"} size={size} />;
+                        }
+                        return <Ionicons name="heart-outline" color={color} size={size} />;
                     }
                 }}
             />
