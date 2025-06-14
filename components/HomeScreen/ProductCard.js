@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { apiEndpoint } from '../../config/constantes';
 
 export default function ProductCard({ item, userToken }) {
-  //console.log('🔍 item recebido no ProductCard:', item);
+  console.log('🔍 item recebido no ProductCard:', item);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   //console.log('item.id:', item.id, 'item.suco_id:', item.suco_id);
