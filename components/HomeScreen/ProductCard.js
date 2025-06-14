@@ -4,9 +4,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import { apiEndpoint } from '../../config/constantes';
 
 export default function ProductCard({ item, userToken }) {
-  console.log('🔍 item recebido no ProductCard:', item);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  // console.log('🔍 item recebido no ProductCard:', item);
   //console.log('item.id:', item.id, 'item.suco_id:', item.suco_id);
 
   useEffect(() => {
@@ -60,11 +60,12 @@ export default function ProductCard({ item, userToken }) {
         setLiked(false);
         Alert.alert('Sucesso', 'Suco removido dos favoritos!');
       } else {
+        console.log('API Endpoint:', apiEndpoint);
         const response = await fetch(`${apiEndpoint}/favoritos/add`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${userToken}`,
-            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ id: item.id }),
         });
