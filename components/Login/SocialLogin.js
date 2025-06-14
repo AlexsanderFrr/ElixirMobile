@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import css from './styles';
+import css from '../styles';
 
 const SocialLogin = ({ request, promptAsync }) => (
     <View style={css.align_Down}>
@@ -8,7 +8,7 @@ const SocialLogin = ({ request, promptAsync }) => (
         <View style={css.social_Container}>
             <TouchableOpacity disabled={!request} onPress={() => promptAsync()}>
                 <Image
-                    source={require('../assets/googleAcess.png')}
+                    source={require('../../assets/googleAcess.png')}
                     resizeMode="contain"
                 />
             </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
-import css from './styles';
+import css from '../styles';
 
 const RegisterSection = ({ navigation }) => (
   <TouchableOpacity style={css.register_button} onPress={() => navigation.navigate('Cadastro')}>

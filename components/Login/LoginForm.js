@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import css from './styles';
-import InputField from './InputField';
-import PasswordField from './PasswordField';
-import ErrorMessage from './ErrorMessage';
+import css from '../styles';
+import InputField from '../InputField';
+import PasswordField from '../PasswordField';
+import ErrorMessage from '../ErrorMessage';
 
 const schema = yup.object({
   email: yup.string().email("Email Inválido").required("Informe seu email"),

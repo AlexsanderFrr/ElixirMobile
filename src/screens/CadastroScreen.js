@@ -2,7 +2,7 @@ import React from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import css from '../../components/styles';
 import LogoCadastro from '../../components/Cadastro/LogoCadastro';
-import SocialSignUp from '../../components/SocialLogin';
+import SocialSignUp from '../../components/Login/SocialLogin';
 import CadastroForm from '../../components/Cadastro/CadastroForm';
 import LoginRedirect from '../../components/Cadastro/LoginRedirect';
 

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { KeyboardAvoidingView, } from 'react-native';
 import css from '../../components/styles';
-import LogoLogin from '../../components/LogoLogin';
-import LoginForm from '../../components/LoginForm';
-import DividerWithText from '../../components/DividerWithText';
-import SocialLogin from '../../components/SocialLogin';
-import RegisterSection from '../../components/RegisterSection';
+import LogoLogin from '../../components/Login/LogoLogin';
+import LoginForm from '../../components/Login/LoginForm';
+import DividerWithText from '../../components/Login/DividerWithText';
+import SocialLogin from '../../components/Login/SocialLogin';
+import RegisterSection from '../../components/Login/RegisterSection';
 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from 'expo-auth-session/providers/google';
