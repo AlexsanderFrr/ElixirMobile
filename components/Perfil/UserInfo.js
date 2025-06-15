@@ -1,40 +1,15 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { View, Text } from "react-native";
 
-const ProfileInfo = ({ userInfo, image, pickImage }) => (
-  <View style={{ alignSelf: "center" }}>
-    <Text style={styles.textMain}>Meu Perfil</Text>
-    <View style={styles.profileImage}>
-      {image ? (
-        <Image source={{ uri: image }} style={styles.image} resizeMode="center" />
-      ) : userInfo?.imagem || userInfo?.picture ? (
-        <Image
-          source={{ uri: userInfo.imagem || userInfo.picture }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      ) : (
-        <Image
-          source={require("../../assets/adaptive-icon.png")}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      )}
+const UserInfo = ({ userInfo }) => (
+    <View style={{ alignItems: "center", marginTop: 30 }}>
+        <Text style={{ fontWeight: "600", fontSize: 26, fontFamily: "HelveticaNeue" }}>
+            {userInfo?.nome || userInfo?.name || "Nome do Usuário"}
+        </Text>
+        <Text style={{ fontSize: 20, fontFamily: "HelveticaNeue", color: "#8a8a8a" }}>
+            {userInfo?.email || "email@dominio.com"}
+        </Text>
     </View>
-    <View style={styles.dm}>
-      <MaterialIcons name="chat" size={18} color="#F4DEAA" />
-    </View>
-    <TouchableOpacity onPress={pickImage}>
-      <View style={styles.add}>
-        <Ionicons name="add" size={38} color="#F4DEAA" />
-      </View>
-    </TouchableOpacity>
-  </View>
 );
 
-const styles = StyleSheet.create({
-  // Estilos aqui
-});
-
-export default ProfileInfo;
+export default UserInfo;
