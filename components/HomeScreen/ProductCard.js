@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-na
 import { FontAwesome } from '@expo/vector-icons';
 import { apiEndpoint } from '../../config/constantes';
 
-export default function ProductCard({ item, userToken }) {
+export default function ProductCard({ item, userToken, screen }) {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   // console.log('🔍 item recebido no ProductCard:', item);
@@ -95,7 +95,7 @@ export default function ProductCard({ item, userToken }) {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {item.suco_nome}
+            { screen == "favoritos" ? item.nome : item.suco_nome }
           </Text>
           <Text
             style={styles.juiceDiagnosticoVertical}

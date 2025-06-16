@@ -55,6 +55,7 @@ export default function Favoritos() {
                 : [];
 
             setFavoritos(sucos);
+            console.log(data);
         } catch (error) {
             console.error("Erro ao buscar favoritos:", error);
             Alert.alert('Erro', 'Não foi possível carregar os favoritos.');
@@ -81,7 +82,7 @@ export default function Favoritos() {
                 <View style={styles.emptyContainer}>
                     <Image
                         source={require('../../assets/bebidaNotFound.png')}
-                        style={styles.emptyImage}                                                                                                                       
+                        style={styles.emptyImage}
                         resizeMode='contain'
                     />
                     <Text style={styles.emptyTitle}>Nenhum favorito</Text>
@@ -108,6 +109,7 @@ export default function Favoritos() {
                             <ProductCard
                                 item={item}
                                 userToken={userToken}
+                                screen="favoritos"
                                 onRemoveFavorite={handleRemover}
                             />
                         </TouchableOpacity>
@@ -151,6 +153,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     juiceButtonItemVertical: {
-    marginBottom: 20,
-  },
+        marginBottom: 20,
+    },
 });
