@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-na
 import { FontAwesome } from '@expo/vector-icons';
 import { apiEndpoint } from '../../config/constantes';
 
-export default function ProductCard({ item, userToken, onRemoveFavorite }) {
+export default function ProductCard({ item, userToken, favoritos, setFavoritos, onRemoveFavorite }) {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isFavorito = favoritos?.some(fav => fav.id === item.id);
   // console.log('🔍 item recebido no ProductCard:', item);
   //console.log('item.id:', item.id, 'item.suco_id:', item.suco_id);
 
@@ -42,45 +43,31 @@ export default function ProductCard({ item, userToken, onRemoveFavorite }) {
     checkIfLiked();
   }, [item.id, userToken]);
 
-  const handleLikePress = async () => {
+  const toggleFavorite = async () => {
     if (loading) return;
     setLoading(true);
 
     try {
-      if (liked) {
-        const response = await fetch(`${apiEndpoint}/favoritos/delete/${item.id}`, {
+      if (isFavorito) {
+        await fetch(`${apiEndpoint}/favoritos/delete/${item.id}`, {
           method: 'DELETE',
-          headers: { Authorization: `Bearer ${userToken}` },
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao remover dos favoritos');
-        }
-
-        setLiked(false);
-        Alert.alert('Sucesso', 'Suco removido dos favoritos!');
-
-        if (onRemoveFavorite) {
-          onRemoveFavorite(item.id);
-        }
-
-      } else {
-        console.log('API Endpoint:', apiEndpoint);
-        const response = await fetch(`${apiEndpoint}/favoritos/add`, {
-          method: 'POST',
           headers: {
             Authorization: `Bearer ${userToken}`,
+          },
+        });
+        const updated = favoritos.filter(fav => fav.id !== item.id);
+        setFavoritos(updated);
+        if (onRemoveFavorite) onRemoveFavorite(item.id);
+      } else {
+        await fetch(`${apiEndpoint}/favoritos/add`, {
+          method: 'POST',
+          headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`,
           },
           body: JSON.stringify({ id: item.id }),
         });
-
-        if (!response.ok) {
-          throw new Error('Erro ao adicionar aos favoritos');
-        }
-
-        setLiked(true);
-        Alert.alert('Sucesso', 'Suco adicionado aos favoritos!');
+        setFavoritos([...favoritos, item]);
       }
     } catch (error) {
       console.error('Erro ao atualizar favorito:', error);
@@ -110,8 +97,8 @@ export default function ProductCard({ item, userToken, onRemoveFavorite }) {
             {item.diagnostico_nome_da_condicao || 'Diagnóstico não disponível'}
           </Text>
         </View>
-        <TouchableOpacity onPress={handleLikePress} style={styles.iconContainer}>
-          <FontAwesome name={liked ? 'heart' : 'heart-o'} size={24} color="red" />
+        <TouchableOpacity onPress={toggleFavorite} style={styles.iconContainer}>
+          <FontAwesome name={isFavorito ? 'heart' : 'heart-o'} size={24} color="red" />
         </TouchableOpacity>
       </View>
     </View>

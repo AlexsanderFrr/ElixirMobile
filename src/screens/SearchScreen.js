@@ -59,7 +59,7 @@ export default function SearchScreen() {
                     ListEmptyComponent={
                         <View style={styles.emptyContainer}>
                             <Image
-                                source={require('../../assets/Discovery-cuate 1.png')} // Caminho para a imagem
+                                source={require('../../assets/Discovery-cuate1.png')} // Caminho para a imagem
                                 style={styles.emptyImage}
                             />
                             <Text style={styles.emptyTitle}>Não Encontrado!</Text>

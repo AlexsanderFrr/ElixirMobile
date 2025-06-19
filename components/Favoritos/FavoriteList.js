@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import ProductCard from '../HomeScreen/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 
-export default function FavoriteList({ favoritos, userToken, }) {
+export default function FavoriteList({ favoritos, userToken, setFavoritos }) {
     const navigation = useNavigation();
     const [sucosFavoritos, setSucosFavoritos] = useState(favoritos);
 
@@ -14,6 +14,7 @@ export default function FavoriteList({ favoritos, userToken, }) {
     const handleRemoveFavorite = (idToRemove) => {
         const updatedList = sucosFavoritos.filter(item => item.id !== idToRemove);
         setSucosFavoritos(updatedList);
+        setFavoritos(updatedList);
     };
 
     return (
@@ -35,7 +36,9 @@ export default function FavoriteList({ favoritos, userToken, }) {
                     <ProductCard
                         item={item}
                         userToken={userToken}
-                        onRemoveFavorite={handleRemoveFavorite} // ✅ passa callback
+                        onRemoveFavorite={handleRemoveFavorite}
+                        favoritos={favoritos}
+                        setFavoritos={setFavoritos}
                     />
                 </TouchableOpacity>
             )}

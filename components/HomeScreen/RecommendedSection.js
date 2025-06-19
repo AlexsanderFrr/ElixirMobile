@@ -6,7 +6,7 @@ import { apiEndpoint } from '../../config/constantes';
 import { FontAwesome } from '@expo/vector-icons';
 import ProductCard from './ProductCard';
 
-export default function RecommendedSection({ userToken }) {
+export default function RecommendedSection({ userToken, favoritos, setFavoritos }) {
   const navigation = useNavigation();
   const [juices, setJuices] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -95,6 +95,8 @@ export default function RecommendedSection({ userToken }) {
             <ProductCard
               item={item}
               userToken={userToken}
+              favoritos={favoritos}
+              setFavoritos={setFavoritos}
             />
           </TouchableOpacity>
         )}
