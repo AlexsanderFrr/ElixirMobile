@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { apiEndpoint } from '../../config/constantes';
 import { AuthContext } from '../context/authContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 import Header from '../../components/Favoritos/Header';
 import EmptyState from '../../components/Favoritos/EmptyState';
@@ -21,8 +22,10 @@ export default function Favoritos() {
         setLoading(true);
         try {
             const response = await fetch(`${apiEndpoint}/favoritos/all`, {
+                method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${userToken}`
+                    Authorization: `Bearer ${userToken}`,
+                    Accept: 'application/json'
                 },
             });
 
@@ -44,9 +47,11 @@ export default function Favoritos() {
         }
     }, [userToken]);
 
-    useEffect(() => {
-        fetchFavoritos();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            fetchFavoritos();
+        }, [fetchFavoritos])
+    );
 
     return (
         <View style={styles.container}>

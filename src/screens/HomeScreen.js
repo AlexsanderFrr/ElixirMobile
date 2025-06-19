@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiEndpoint } from '../../config/constantes';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../../components/HomeScreen/Header';
 import Categories from '../../components/HomeScreen/Categories';
@@ -38,9 +39,13 @@ export default function HomeScreen() {
     }
   }, [userToken]);
 
-  useEffect(() => {
-    if (userToken) fetchFavoritos();
-  }, [userToken, fetchFavoritos]);
+  useFocusEffect(
+    useCallback(() => {
+      if (userToken) {
+        fetchFavoritos(); // 🔁 atualiza favoritos quando volta para HomeScreen
+      }
+    }, [userToken, fetchFavoritos])
+  );
 
   return (
     <ScrollView style={styles.container}>
