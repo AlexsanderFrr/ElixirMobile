@@ -92,7 +92,10 @@ export default function RecommendedSection({ userToken }) {
               diagnostico: item.diagnostico_nome_da_condicao,
             })}
           >
-            <ProductCard item={item} userToken={userToken} />
+            <ProductCard
+              item={item}
+              userToken={userToken}
+            />
           </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.emptyText}>Nenhum suco disponível no momento.</Text>}

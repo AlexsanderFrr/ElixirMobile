@@ -60,6 +60,7 @@ export default function Favoritos() {
                 <FavoriteList
                     favoritos={favoritos}
                     userToken={userToken}
+                    setFavoritos={setFavoritos}
                     onRefresh={fetchFavoritos}
                 />
             )}
