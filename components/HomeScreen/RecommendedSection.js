@@ -84,7 +84,7 @@ export default function RecommendedSection({ userToken }) {
           <TouchableOpacity
             style={styles.juiceButtonItemVertical}
             onPress={() => navigation.navigate('Exibicao', {
-              nome: item.suco_nome,
+              name: item.suco_nome,
               benefits: item.beneficios,
               image: item.img1,
               ingredients: item.ingredientes,

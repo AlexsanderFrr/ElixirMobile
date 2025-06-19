@@ -22,8 +22,7 @@ export default function Favoritos() {
         try {
             const response = await fetch(`${apiEndpoint}/favoritos/all`, {
                 headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    Accept: 'application/json',
+                    Authorization: `Bearer ${userToken}`
                 },
             });
 
@@ -47,7 +46,7 @@ export default function Favoritos() {
 
     useEffect(() => {
         fetchFavoritos();
-    }, [fetchFavoritos]);
+    }, []);
 
     return (
         <View style={styles.container}>

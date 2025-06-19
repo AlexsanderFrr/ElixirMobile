@@ -5,26 +5,26 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function FavoriteList({ favoritos, userToken, }) {
     const navigation = useNavigation();
-    const [localFavoritos, setLocalFavoritos] = useState(favoritos);
+    const [sucosFavoritos, setSucosFavoritos] = useState(favoritos);
 
     useEffect(() => {
-        setLocalFavoritos(favoritos); // atualiza quando favoritos da prop mudam
+        setSucosFavoritos(favoritos); // atualiza quando favoritos da prop mudam
     }, [favoritos]);
 
     const handleRemoveFavorite = (idToRemove) => {
-        const updatedList = localFavoritos.filter(item => item.id !== idToRemove);
-        setLocalFavoritos(updatedList);
+        const updatedList = sucosFavoritos.filter(item => item.id !== idToRemove);
+        setSucosFavoritos(updatedList);
     };
 
     return (
         <FlatList
-            data={localFavoritos}
+            data={sucosFavoritos}
             keyExtractor={(item) => item.id?.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
                     style={styles.juiceButtonItemVertical}
                     onPress={() => navigation.navigate('Exibicao', {
-                        nome: item.suco_nome,
+                        name: item.nome,
                         benefits: item.beneficios,
                         image: item.img1,
                         ingredients: item.ingredientes,
@@ -35,7 +35,6 @@ export default function FavoriteList({ favoritos, userToken, }) {
                     <ProductCard
                         item={item}
                         userToken={userToken}
-                        screen="favoritos"
                         onRemoveFavorite={handleRemoveFavorite} // ✅ passa callback
                     />
                 </TouchableOpacity>

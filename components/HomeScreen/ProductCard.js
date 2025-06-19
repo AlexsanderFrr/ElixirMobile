@@ -100,7 +100,7 @@ export default function ProductCard({ item, userToken, screen, onRemoveFavorite 
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {screen == "favoritos" ? item.nome : item.suco_nome}
+            { item.nome || item.suco_nome}
           </Text>
           <Text
             style={styles.juiceDiagnosticoVertical}
