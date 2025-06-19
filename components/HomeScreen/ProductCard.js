@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-na
 import { FontAwesome } from '@expo/vector-icons';
 import { apiEndpoint } from '../../config/constantes';
 
-export default function ProductCard({ item, userToken, screen }) {
+export default function ProductCard({ item, userToken, screen, onRemoveFavorite }) {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   // console.log('🔍 item recebido no ProductCard:', item);
@@ -59,6 +59,11 @@ export default function ProductCard({ item, userToken, screen }) {
 
         setLiked(false);
         Alert.alert('Sucesso', 'Suco removido dos favoritos!');
+
+        if (onRemoveFavorite) {
+          onRemoveFavorite(item.id);
+        }
+
       } else {
         console.log('API Endpoint:', apiEndpoint);
         const response = await fetch(`${apiEndpoint}/favoritos/add`, {
@@ -95,7 +100,7 @@ export default function ProductCard({ item, userToken, screen }) {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            { screen == "favoritos" ? item.nome : item.suco_nome }
+            {screen == "favoritos" ? item.nome : item.suco_nome}
           </Text>
           <Text
             style={styles.juiceDiagnosticoVertical}

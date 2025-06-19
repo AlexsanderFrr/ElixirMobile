@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import ProductCard from '../HomeScreen/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 
-export default function FavoriteList({ favoritos, userToken, onRefresh }) {
+export default function FavoriteList({ favoritos, userToken, }) {
     const navigation = useNavigation();
+    const [localFavoritos, setLocalFavoritos] = useState(favoritos);
+
+    useEffect(() => {
+        setLocalFavoritos(favoritos); // atualiza quando favoritos da prop mudam
+    }, [favoritos]);
+
+    const handleRemoveFavorite = (idToRemove) => {
+        const updatedList = localFavoritos.filter(item => item.id !== idToRemove);
+        setLocalFavoritos(updatedList);
+    };
 
     return (
         <FlatList
-            data={favoritos}
+            data={localFavoritos}
             keyExtractor={(item) => item.id?.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
@@ -26,7 +36,7 @@ export default function FavoriteList({ favoritos, userToken, onRefresh }) {
                         item={item}
                         userToken={userToken}
                         screen="favoritos"
-                        onRemoveFavorite={onRefresh}
+                        onRemoveFavorite={handleRemoveFavorite} // ✅ passa callback
                     />
                 </TouchableOpacity>
             )}
