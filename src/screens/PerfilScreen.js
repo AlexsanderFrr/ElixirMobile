@@ -86,7 +86,6 @@ const PerfilScreen = () => {
     <SafeAreaView style={styles.container}>
       <ImageBackground
         source={require("../../assets/fundoPerfil.png")}
-        resizeMode="cover"
         style={styles.imageBG}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -94,7 +93,7 @@ const PerfilScreen = () => {
           <ProfileImageSection image={image} userInfo={userInfo} onPickImage={pickImage} />
           <View style={styles.infoContainer}>
             <UserInfo userInfo={userInfo} />
-            <View style={[styles.separator, { marginTop: 10, width: "90%" }]} />
+            <View style={[styles.separator, { marginTop: 10, marginBottom: 10, width: "100%" }]} />
             <OptionList
               onNavigateDiagnosticos={() => { }}
               onNavigateFavoritos={() => navigation.navigate("Favoritos")}

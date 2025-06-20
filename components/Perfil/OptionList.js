@@ -1,27 +1,47 @@
 import React from "react";
 import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
 import ProfileOption from "./ProfileOption";
 import styles from "./perfilStyles";
 
 const OptionList = ({ onNavigateDiagnosticos, onNavigateFavoritos, onLogout }) => (
     <View style={styles.groupOption}>
-        <ProfileOption
-            icon={require("../../assets/iconDiag.png")}
-            label="Meus Diagnósticos"
-            onPress={onNavigateDiagnosticos}
-        />
+        <View style={styles.optionContent}>
+            <ProfileOption
+                icon={require("../../assets/iconEdit.png")}
+                label="Editar Perfil"
+                onPress={onNavigateDiagnosticos}
+            />
+            <Ionicons name="arrow-forward" size={40} color="#F24E1E" />
+        </View>
         <View style={[styles.separator, { opacity: 0.1 }]} />
-        <ProfileOption
-            icon={require("../../assets/iconCora.png")}
-            label="Favoritos"
-            onPress={onNavigateFavoritos}
-        />
+        <View style={styles.optionContent}>
+            <ProfileOption
+                icon={require("../../assets/iconDiag.png")}
+                label="Meus Diagnósticos"
+                onPress={onNavigateDiagnosticos}
+            />
+            <Ionicons name="arrow-forward" size={40} color="#F24E1E" />
+        </View>
         <View style={[styles.separator, { opacity: 0.1 }]} />
-        <ProfileOption
-            icon={require("../../assets/iconLogOut.png")}
-            label="Sair"
-            onPress={onLogout}
-        />
+        <View style={styles.optionContent}>
+            <ProfileOption
+                icon={require("../../assets/iconCora.png")}
+                label="Favoritos"
+                onPress={onNavigateFavoritos}
+            />
+            <Ionicons name="arrow-forward" size={40} color="#F24E1E" />
+        </View>
+        <View style={[styles.separator, { opacity: 0.1 }]} />
+        <View style={styles.optionContent}>
+            <ProfileOption
+                icon={require("../../assets/iconLogOut.png")}
+                label="Sair"
+                onPress={onLogout}
+            />
+            <Ionicons name="arrow-forward" size={40} color="#F24E1E" />
+        </View>
         <View style={[styles.separator, { opacity: 0.1 }]} />
     </View>
 );

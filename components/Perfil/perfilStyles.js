@@ -6,8 +6,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageBG: {
-    flex: 1,
-    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   textMain: {
     color: "#fff",
@@ -77,19 +78,23 @@ const styles = StyleSheet.create({
   infoContainer: {
     backgroundColor: "#fff",
     borderRadius: 10,
-    marginHorizontal: 20,
-    marginTop: 30,
+    marginHorizontal: 30,
+    marginVertical: 30,
     paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   groupOption: {
     paddingVertical: 10,
+  },
+  optionContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   option: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 10,
-    paddingHorizontal: 20,
   },
   modalContainer: {
     flex: 1,
