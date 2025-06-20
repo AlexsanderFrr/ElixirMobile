@@ -1,9 +1,9 @@
 ## Implementações a concluir:
-
-- Componentizar tela de Favoritos
 - Tratar o recebimento de informações dos cards de exibição dos itens favoritados
+- Adicionar tratamento de favoritos no botão de curtir dentro da tela exibição  
+
+## Implementações concluídas:
+- Componentizar tela de Favoritos
 - Tratar a entrada e saída de itens favoritados:
     Após suco ser curtido atualizar na tela de favoritos 
     Após suco ser descurtido atualizar na tela de favoritos e home
-
-- Adicionar opção de curtir suco dentro da exibição do suco 
