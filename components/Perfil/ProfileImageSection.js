@@ -7,14 +7,14 @@ const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
     const imageSource = image
         ? { uri: image }
         : userInfo?.imagem || userInfo?.picture
-            ? { uri: userInfo.imagem || userInfo.picture }
+            ? { uri: `${userInfo.imagem || userInfo.picture}?t=${new Date().getTime()}` }
             : require("../../assets/adaptive-icon.png");
 
     return (
         <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-                <Image source={imageSource} style={styles.image} resizeMode="contain" />
+                <Image source={imageSource} style={styles.image} />
             </View>
             <View style={styles.dm}>
                 <MaterialIcons name="chat" size={18} color={"#F4DEAA"} />

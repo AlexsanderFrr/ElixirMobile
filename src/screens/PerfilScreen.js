@@ -13,7 +13,7 @@ import ImagePickerModal from "../../components/Perfil/ImagePickerModal";
 import styles from "../../components/Perfil/perfilStyles";
 
 const PerfilScreen = () => {
-  const { sair, userInfo } = useContext(AuthContext);
+  const { sair, setUserInfo, userToken, userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,7 +33,7 @@ const PerfilScreen = () => {
   };
 
   const updateProfileImage = async () => {
-    if (!userInfo?.token) return alert("Token ausente.");
+    if (!userToken) return alert("Token ausente.");
 
     setIsUploading(true);
     const fileType = image.split(".").pop();
@@ -48,15 +48,28 @@ const PerfilScreen = () => {
       const response = await fetch(`${apiEndpoint}/usuario/me`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userToken}`,
         },
         body: formData,
       });
 
       const data = await response.json();
       if (response.ok) {
-        alert("Foto atualizada!");
         setModalVisible(false);
+        setImage(null); // limpa o estado para voltar a usar userInfo.imagem
+        alert("Foto atualizada!");
+
+        // Recarrega o userInfo com a nova imagem
+        const updatedUserInfo = await fetch(`${apiEndpoint}/usuario/me`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        const newUserInfo = await updatedUserInfo.json();
+        setUserInfo({
+          ...newUserInfo,
+          imagem: `${apiEndpoint}/${newUserInfo.imagem}`
+        }); // <-- Atualiza o contexto
       } else {
         console.error("Erro:", data);
         alert(data.message || "Erro ao atualizar.");
