@@ -12,7 +12,7 @@ const ExibicaoScreen = () => {
   const route = useRoute();
 
   const {
-    nome,
+    name: suco_nome,
     benefits: juiceBenefits,
     image,
     ingredients: listIngredientes,
@@ -25,7 +25,7 @@ const ExibicaoScreen = () => {
       <Header />
       {/* Tornar todo o conteúdo rolável */}
       <ScrollView contentContainerStyle={styles.main}>
-        <JuiceProperties name={nome} />
+        <JuiceProperties name={suco_nome} />
         <IngredientList ingredients={listIngredientes} />
         <JuiceBenefits benefits={juiceBenefits} />
         <PreparationMethod preparationSteps={preparationSteps} />
