@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, View, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/authContext";
@@ -18,6 +18,13 @@ const PerfilScreen = () => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [fotoPerfil, setFotoPerfil] = useState(userInfo?.imagem || null);
+
+  useEffect(() => {
+    if (userInfo?.imagem) {
+      setFotoPerfil(userInfo.imagem);
+    }
+  }, [userInfo]);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -61,15 +68,15 @@ const PerfilScreen = () => {
 
         // Recarrega o userInfo com a nova imagem
         const updatedUserInfo = await fetch(`${apiEndpoint}/usuario/me`, {
+          method: "GET",
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
         });
         const newUserInfo = await updatedUserInfo.json();
-        setUserInfo({
-          ...newUserInfo,
-          imagem: `${apiEndpoint}/${newUserInfo.imagem}`
-        }); // <-- Atualiza o contexto
+        const novaImagem = `${apiEndpoint}/${newUserInfo.imagem}`;
+        setUserInfo({ ...newUserInfo, imagem: novaImagem });
+        setFotoPerfil(novaImagem); // <-- força o update da imagem na UI// <-- Atualiza o contexto
       } else {
         console.error("Erro:", data);
         alert(data.message || "Erro ao atualizar.");
@@ -90,7 +97,7 @@ const PerfilScreen = () => {
       >
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderBar onBack={() => navigation.goBack()} />
-          <ProfileImageSection image={image} userInfo={userInfo} onPickImage={pickImage} />
+          <ProfileImageSection image={fotoPerfil} userInfo={userInfo} onPickImage={pickImage} />
           <View style={styles.infoContainer}>
             <UserInfo userInfo={userInfo} />
             <View style={[styles.separator, { marginTop: 10, marginBottom: 10, width: "100%" }]} />
