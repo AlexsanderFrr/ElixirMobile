@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator, CheckBox, Linking } from 'react-native';
-import css from '../styles';
 import { apiEndpoint } from "../../config/constantes";
 import { Ionicons } from '@expo/vector-icons';
+import { AuthContext } from '../../src/context/authContext';
+
+import css from '../styles';
 
 const CadastroForm = ({ navigation }) => {
+    const { login } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -64,11 +67,13 @@ const CadastroForm = ({ navigation }) => {
             });
 
             const data = await response.json();
+            console.log(data);
             setIsLoading(false);
 
             if (response.status === 200) {
                 alert(data.message);
-                navigation.navigate('HomeTabs');
+                console.log("Navegando para a tela:", 'Home');
+                await login(email, password);
             } else if (response.status === 400) {
                 setErrorMessage(data.error || "Erro no cadastro. Verifique os dados informados.");
             } else {
