@@ -8,7 +8,7 @@ const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
         ? { uri: image }
         : userInfo?.imagem || userInfo?.picture
             ? { uri: `${userInfo.imagem || userInfo.picture}?t=${new Date().getTime()}` }
-            : require("../../assets/adaptive-icon.png");
+            : require("../../assets/emptyProfile.jpg");
 
     return (
         <View style={{ alignSelf: "center" }}>
