@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 15,
-    borderWidth: 1.5,
+    padding: 15,
+    borderRadius: 30,
+    borderWidth: 0.5,
     borderColor: '#BB5114',
   },
   centerIcon: {
