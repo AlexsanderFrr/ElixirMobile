@@ -96,6 +96,13 @@ export default function ProductCard({ item, userToken, favoritos, setFavoritos, 
           >
             {item.diagnostico_nome_da_condicao || 'Diagnóstico não disponível'}
           </Text>
+          <Text
+            style={styles.juiceCategoriaVertical}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {item.categoria_nome || 'Categoria não disponível'}
+          </Text>
         </View>
         <TouchableOpacity onPress={toggleFavorite} style={styles.iconContainer}>
           <FontAwesome name={isFavorito ? 'heart' : 'heart-o'} size={24} color="red" />
@@ -138,13 +145,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 5,
+    marginBottom: 3,
     flexWrap: 'wrap', // Permitir quebra de linha
   },
   juiceDiagnosticoVertical: {
     fontSize: 14,
     color: '#666',
+    marginBottom: 10,
     flexWrap: 'wrap', // Permitir quebra de linha
+  },
+  juiceCategoriaVertical:{
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 5,
   },
   iconContainer: {
     position: 'absolute',

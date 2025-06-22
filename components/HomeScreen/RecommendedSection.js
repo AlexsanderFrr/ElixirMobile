@@ -9,36 +9,28 @@ import ProductCard from './ProductCard';
 export default function RecommendedSection({ userToken, favoritos, setFavoritos }) {
   const navigation = useNavigation();
   const [juices, setJuices] = useState([]);
-  const [searchText, setSearchText] = useState('');
   const [filteredJuices, setFilteredJuices] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
 
   useEffect(() => {
     const fetchJuices = async () => {
       try {
-        const url = searchText
-          ? `${apiEndpoint}/suco/search/${searchText}`
-          : `${apiEndpoint}/suco/all`;
-        const response = await fetch(url);
+        const response = await fetch(`${apiEndpoint}/suco/all`);
         const data = await response.json();
-
-        // 🔁 Adiciona `id` com base em `suco_id`
         const validData = data
           .filter((juice) => juice.suco_id)
           .map((juice) => ({
             ...juice,
-            id: juice.suco_id, // alias para consistência
+            id: juice.suco_id,
           }));
-
         setJuices(validData);
         setFilteredJuices(validData);
       } catch (error) {
         console.error('Erro ao buscar sucos: ', error);
       }
     };
-
     fetchJuices();
-  }, [searchText]);
+  }, []);
 
   const filterJuices = (category) => {
     setSelectedCategory(category);
@@ -90,6 +82,7 @@ export default function RecommendedSection({ userToken, favoritos, setFavoritos 
               ingredients: item.ingredientes,
               preparationSteps: item.modo_de_preparo,
               diagnostico: item.diagnostico_nome_da_condicao,
+              categorita: item.categoria_nome,
             })}
           >
             <ProductCard
