@@ -11,6 +11,7 @@ import {
 import HeaderBar from '../../components/Pesquisar/HeaderBar';
 import SearchBar from '../../components/Pesquisar/SearchBar';
 import { apiEndpoint } from '../../config/constantes';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SearchScreen() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +56,10 @@ export default function SearchScreen() {
                     data={results}
                     keyExtractor={(item) => item.id?.toString() ?? Math.random().toString()}
                     renderItem={({ item }) => (
-                        <Text style={styles.resultItem}>{item.suco_nome || item.nome}</Text>
+                        <View style={styles.resultItem}>
+                            <Ionicons name="timer-outline" size={22} color="#B85A25" style={styles.icon} />
+                            <Text style={styles.resultText}>{item.suco_nome || item.nome}</Text>
+                        </View>
                     )}
                     ListEmptyComponent={
                         <View style={styles.emptyContainer}>
@@ -85,13 +89,23 @@ const styles = StyleSheet.create({
     loader: {
         marginTop: 20,
     },
+    icon: {
+        marginLeft: 5,
+    },
     resultItem: {
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
         backgroundColor: '#FFF',
-        padding: 10,
+        padding: 5,
         marginBottom: 10,
         borderRadius: 5,
         elevation: 2,
+    },
+    resultText: {
         color: '#000',
+        fontWeight: 'bold',
+        marginLeft: 5,
     },
     emptyContainer: {
         justifyContent: 'center',
