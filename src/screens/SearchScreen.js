@@ -5,7 +5,6 @@ import {
     FlatList,
     Text,
     ActivityIndicator,
-    Alert,
     Image,
 } from 'react-native';
 import HeaderBar from '../../components/Pesquisar/HeaderBar';
@@ -13,32 +12,61 @@ import SearchBar from '../../components/Pesquisar/SearchBar';
 import { apiEndpoint } from '../../config/constantes';
 import { Ionicons } from '@expo/vector-icons';
 
+let debounceTimer;
+
 export default function SearchScreen() {
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [searchSubmitted, setSearchSubmitted] = useState(false); // ✅ novo estado
 
     const fetchResults = async (query) => {
+        if (!query || query.trim() === '') {
+            setResults([]);
+            return;
+        }
+
         setLoading(true);
         try {
-            const url = query
-                ? `${apiEndpoint}/suco/title/${encodeURIComponent(query)}`
-                : `${apiEndpoint}/suco/all`; // Busca todos se não houver query
+            const url = `${apiEndpoint}/suco/title/${encodeURIComponent(query)}`;
             const response = await fetch(url);
             if (!response.ok) throw new Error('Erro ao buscar dados');
             const data = await response.json();
             setResults(data);
         } catch (error) {
-            Alert.alert('Erro', 'Não foi possível buscar os dados.');
             console.error('Erro ao buscar dados:', error);
         } finally {
             setLoading(false);
         }
     };
 
+    // Efeito para busca automática enquanto digita
     useEffect(() => {
-        fetchResults(searchQuery.length > 0 ? searchQuery : null);
+        clearTimeout(debounceTimer);
+
+        if (searchQuery.trim().length === 0) {
+            setResults([]);
+            setSearchSubmitted(false); // reseta o envio se o campo for apagado
+            return;
+        }
+
+        debounceTimer = setTimeout(() => {
+            fetchResults(searchQuery);
+        }, 300);
+
+        return () => clearTimeout(debounceTimer);
     }, [searchQuery]);
+
+    // Envio manual da busca
+    const handleManualSearch = () => {
+        if (searchQuery.trim().length > 0) {
+            setSearchSubmitted(true); // ✅ ativa o modo "busca enviada"
+            fetchResults(searchQuery);
+        } else {
+            setResults([]);
+            setSearchSubmitted(false);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -46,12 +74,16 @@ export default function SearchScreen() {
             <SearchBar
                 placeholder="Pesquisar..."
                 value={searchQuery}
-                onChangeText={setSearchQuery}
-                onSearch={() => fetchResults(searchQuery)}
+                onChangeText={(text) => {
+                    setSearchQuery(text);
+                    setSearchSubmitted(false); // ✅ evita mostrar "não encontrado" enquanto digita
+                }}
+                onSearch={handleManualSearch}
             />
+
             {loading ? (
                 <ActivityIndicator size="large" color="#B85A25" style={styles.loader} />
-            ) : (
+            ) : searchQuery.trim().length > 0 ? (
                 <FlatList
                     data={results}
                     keyExtractor={(item) => item.id?.toString() ?? Math.random().toString()}
@@ -62,19 +94,22 @@ export default function SearchScreen() {
                         </View>
                     )}
                     ListEmptyComponent={
-                        <View style={styles.emptyContainer}>
-                            <Image
-                                source={require('../../assets/Discovery-cuate.png')}
-                                style={styles.emptyImage}
-                            />
-                            <Text style={styles.emptyTitle}>Não Encontrado!</Text>
-                            <Text style={styles.emptyMessage}>
-                                Não foi encontrado nenhum item relacionado à sua pesquisa. Tente novamente!
-                            </Text>
-                        </View>
+                        // ✅ Só mostra se o usuário tiver enviado a busca e não encontrou nada
+                        searchSubmitted && results.length === 0 ? (
+                            <View style={styles.emptyContainer}>
+                                <Image
+                                    source={require('../../assets/Discovery-cuate.png')}
+                                    style={styles.emptyImage}
+                                />
+                                <Text style={styles.emptyTitle}>Não Encontrado!</Text>
+                                <Text style={styles.emptyMessage}>
+                                    Não foi encontrado nenhum item relacionado à sua pesquisa. Tente novamente!
+                                </Text>
+                            </View>
+                        ) : null
                     }
                 />
-            )}
+            ) : null}
         </View>
     );
 }
