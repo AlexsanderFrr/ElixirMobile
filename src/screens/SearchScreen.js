@@ -96,7 +96,9 @@ export default function SearchScreen() {
                   fetchResults(title);
                 }}
                 onTitlePress={() => {
-                  console.log('Título clicado:', title);
+                  setSearchQuery(title);
+                  setSearchSubmitted(true);
+                  fetchResults(title); // <-- Adicione esta chamada
                 }}
               />
             );
