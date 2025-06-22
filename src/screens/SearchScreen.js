@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,15 +9,21 @@ import HeaderBar from '../../components/Pesquisar/HeaderBar';
 import SearchBar from '../../components/Pesquisar/SearchBar';
 import ResultItem from '../../components/Pesquisar/ResultItem';
 import EmptyResults from '../../components/Pesquisar/EmptyResults';
+import ProductCard from '../../components/HomeScreen/ProductCard';
+
 import { apiEndpoint } from '../../config/constantes';
+import { AuthContext } from '../context/authContext';
 
 let debounceTimer;
 
-export default function SearchScreen() {
+export default function SearchScreen({ favoritos, setFavoritos }) {
+  const { userToken } = useContext(AuthContext);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchSubmitted, setSearchSubmitted] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null); // Novo estado
 
   const fetchResults = async (query) => {
     if (!query || query.trim() === '') {
@@ -74,6 +80,7 @@ export default function SearchScreen() {
         onChangeText={(text) => {
           setSearchQuery(text);
           setSearchSubmitted(false);
+          setSelectedItem(null); // limpa o card ao digitar novamente
         }}
         onSearch={handleManualSearch}
       />
@@ -88,19 +95,26 @@ export default function SearchScreen() {
             const title = item.suco_nome || item.nome;
 
             return (
-              <ResultItem
-                title={title}
-                onArrowPress={() => {
-                  setSearchQuery(title);
-                  setSearchSubmitted(true);
-                  fetchResults(title);
-                }}
-                onTitlePress={() => {
-                  setSearchQuery(title);
-                  setSearchSubmitted(true);
-                  fetchResults(title); // <-- Adicione esta chamada
-                }}
-              />
+              <View key={item.id}>
+                <ResultItem
+                  title={title}
+                  onArrowPress={() => setSelectedItem(null)}
+                  onTitlePress={() => {
+                    setSearchQuery(title);
+                    setSearchSubmitted(true);
+                    setSelectedItem(item);
+                  }}
+                />
+                {searchSubmitted && selectedItem?.id === item.id && (
+                  <ProductCard
+                    item={item}
+                    userToken={userToken}
+                    favoritos={favoritos}
+                    setFavoritos={setFavoritos}
+                    onRemoveFavorite={() => { }}
+                  />
+                )}
+              </View>
             );
           }}
           ListEmptyComponent={
