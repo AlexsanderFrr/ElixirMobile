@@ -84,9 +84,23 @@ export default function SearchScreen() {
         <FlatList
           data={results}
           keyExtractor={(item) => item.id?.toString() ?? Math.random().toString()}
-          renderItem={({ item }) => (
-            <ResultItem title={item.suco_nome || item.nome} />
-          )}
+          renderItem={({ item }) => {
+            const title = item.suco_nome || item.nome;
+
+            return (
+              <ResultItem
+                title={title}
+                onArrowPress={() => {
+                  setSearchQuery(title);
+                  setSearchSubmitted(true);
+                  fetchResults(title);
+                }}
+                onTitlePress={() => {
+                  console.log('Título clicado:', title);
+                }}
+              />
+            );
+          }}
           ListEmptyComponent={
             searchSubmitted && results.length === 0 ? <EmptyResults /> : null
           }
