@@ -11,18 +11,18 @@ import PreparationMethod from "../../components/Exibicao/PreparationMethod";
 const ExibicaoScreen = () => {
   const route = useRoute();
 
-  const {
-    name: suco_nome,
-    benefits: juiceBenefits,
-    image,
-    ingredients: listIngredientes,
-    preparationSteps,
-  } = route.params;
+  const { item, userToken, favoritos, setFavoritos } = route.params;
+
+  const suco_nome = item.nome || item.suco_nome;
+  const juiceBenefits = item.beneficios;
+  const listIngredientes = item.ingredientes;
+  const preparationSteps = item.modo_de_preparo;
+  const image = item.img1;
 
   return (
     <View style={styles.container}>
       <JuiceImage imageUri={image} />
-      <Header />
+      <Header item={item} userToken={userToken} favoritos={favoritos} setFavoritos={setFavoritos} />
       {/* Tornar todo o conteúdo rolável */}
       <ScrollView contentContainerStyle={styles.main}>
         <JuiceProperties name={suco_nome} />

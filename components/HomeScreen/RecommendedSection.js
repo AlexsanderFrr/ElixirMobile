@@ -76,13 +76,10 @@ export default function RecommendedSection({ userToken, favoritos, setFavoritos 
           <TouchableOpacity
             style={styles.juiceButtonItemVertical}
             onPress={() => navigation.navigate('Exibicao', {
-              name: item.suco_nome,
-              benefits: item.beneficios,
-              image: item.img1,
-              ingredients: item.ingredientes,
-              preparationSteps: item.modo_de_preparo,
-              diagnostico: item.diagnostico_nome_da_condicao,
-              categorita: item.categoria_nome,
+              item,                    // ✅ passa o objeto completo
+              userToken,               // ✅ necessário para favoritos
+              favoritos,
+              setFavoritos
             })}
           >
             <ProductCard
