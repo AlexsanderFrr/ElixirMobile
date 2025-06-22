@@ -5,18 +5,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function ResultItem({ title, onArrowPress, onTitlePress }) {
   return (
     <View style={styles.resultItem}>
-      <MaterialCommunityIcons
-        name="clock-check-outline"
-        size={22}
-        color="#B85A25"
-        style={styles.iconLeft}
-      />
-
-      {/* Título agora é clicável */}
-      <TouchableOpacity onPress={onTitlePress} style={styles.titleTouchable}>
+      {/* Área clicável para o título e ícone */}
+      <TouchableOpacity onPress={onTitlePress} style={styles.titleContainer}>
+        <MaterialCommunityIcons
+          name="clock-check-outline"
+          size={22}
+          color="#B85A25"
+        />
         <Text style={styles.resultText}>{title}</Text>
       </TouchableOpacity>
 
+      {/* Botão da seta ao final do item */}
       <TouchableOpacity onPress={onArrowPress} style={styles.iconRightContainer}>
         <MaterialCommunityIcons name="arrow-top-left" size={22} color="#B85A25" />
       </TouchableOpacity>
@@ -34,17 +33,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     elevation: 2,
+    justifyContent: 'space-between',
   },
-  iconLeft: {
-    marginLeft: 5,
-  },
-  titleTouchable: {
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
-    marginLeft: 5,
+    marginRight: 10,
+    marginLeft: 5
   },
   resultText: {
     color: '#000',
     fontWeight: 'bold',
+    marginLeft: 5,
+    flexShrink: 1,
   },
   iconRightContainer: {
     paddingHorizontal: 5,
