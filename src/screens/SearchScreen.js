@@ -23,7 +23,7 @@ export default function SearchScreen({ favoritos, setFavoritos }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchSubmitted, setSearchSubmitted] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null); // Novo estado
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const fetchResults = async (query) => {
     if (!query || query.trim() === '') {
@@ -80,7 +80,7 @@ export default function SearchScreen({ favoritos, setFavoritos }) {
         onChangeText={(text) => {
           setSearchQuery(text);
           setSearchSubmitted(false);
-          setSelectedItem(null); // limpa o card ao digitar novamente
+          setSelectedItem(null);
         }}
         onSearch={handleManualSearch}
       />
@@ -94,28 +94,31 @@ export default function SearchScreen({ favoritos, setFavoritos }) {
           renderItem={({ item }) => {
             const title = item.suco_nome || item.nome;
 
-            return (
-              <View key={item.id}>
+            if (searchSubmitted) {
+              // Quando a busca foi confirmada, mostra apenas o card do suco
+              return (
+                <View style={styles.cardContainer}>
+                <ProductCard
+                  item={item}
+                  userToken={userToken}
+                  favoritos={favoritos}
+                  setFavoritos={setFavoritos}
+                  onRemoveFavorite={() => {}}
+                />
+                </View>
+              );
+            } else {
+              // Durante a digitação, mostra os itens de resultado normais
+              return (
                 <ResultItem
                   title={title}
-                  onArrowPress={() => setSelectedItem(null)}
                   onTitlePress={() => {
                     setSearchQuery(title);
                     setSearchSubmitted(true);
-                    setSelectedItem(item);
                   }}
                 />
-                {searchSubmitted && selectedItem?.id === item.id && (
-                  <ProductCard
-                    item={item}
-                    userToken={userToken}
-                    favoritos={favoritos}
-                    setFavoritos={setFavoritos}
-                    onRemoveFavorite={() => { }}
-                  />
-                )}
-              </View>
-            );
+              );
+            }
           }}
           ListEmptyComponent={
             searchSubmitted && results.length === 0 ? <EmptyResults /> : null
@@ -135,5 +138,8 @@ const styles = StyleSheet.create({
   },
   loader: {
     marginTop: 20,
+  },
+  cardContainer: {
+    marginBottom: 20,
   },
 });
