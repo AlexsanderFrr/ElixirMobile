@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator, CheckBox, Linking } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, ActivityIndicator, Linking, Switch } from 'react-native';
 import { apiEndpoint } from "../../config/constantes";
 import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../../src/context/authContext';
@@ -177,9 +177,10 @@ const CadastroForm = ({ navigation }) => {
 
             {/* Checkbox para Termos de Serviço e Política de Privacidade */}
             <View style={styles.termsContainer}>
-                <CheckBox
+                <Switch
                     value={termsAccepted}
                     onValueChange={setTermsAccepted}
+                    tintColors={{ true: '#BB5104', false: '#767577' }}
                     style={styles.checkbox}
                 />
                 <Text style={styles.termsText}>
