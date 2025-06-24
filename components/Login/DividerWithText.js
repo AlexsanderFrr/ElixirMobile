@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 30,
     width: '90%', // Garante que o contêiner ocupe toda a largura disponível
   },
   line: {

@@ -2,11 +2,10 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 30,
-    paddingVertical: 70,
+    paddingVertical: 80,
   },
   logo_login: {
     justifyContent: "flex-start",
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
   login__form: {
     width: "100%",
     justifyContent: "center",
-    marginTop: 60,
+    marginTop: 40,
   },
   cad_form: {
     flex: 1,
@@ -56,13 +55,13 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     position: 'relative',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   login__input: {
     backgroundColor: "#FFFFFF",
     width: "100%",
     height: 50,
-    fontSize: 17,
+    fontSize: 16,
     paddingHorizontal: 15,
     paddingVertical: 13,
     borderWidth: 1.5,
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
   },
   login__button: {
     width: "100%",
-    height: 60,
+    height: 50,
     backgroundColor: "#BB5104",
     alignItems: "center",
     justifyContent: "center",
@@ -105,8 +104,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12, // Deixa apenas o preenchimento lateral
   },
   login__buttonText: {
-    fontWeight: '600',
-    fontSize: 25,
+    fontWeight: 'bold',
+    fontSize: 23,
     color: "#F5F5F5",
     fontFamily: "sans-serif",
   },
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
   },
   align_Down: {
     alignItems: "center",
-    marginTop: 60,
+    marginTop: 30,
   },
   align_Top: {
     alignItems: "center",
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   register_button: {
-    marginTop: 30,
+    marginTop: 10,
   },
   textRegisterAlign: {
     flexDirection: "row",

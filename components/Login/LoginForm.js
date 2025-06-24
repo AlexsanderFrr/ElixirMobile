@@ -24,7 +24,7 @@ const LoginForm = ({ login, isLoading }) => {
 
   return (
     <View style={css.login__form}>
-      <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 30 }}>Faça login na sua conta</Text>
+      <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 20 }}>Faça login na sua conta</Text>
       
       {/* Campo de Email */}
       <ErrorMessage message={errors.email?.message} />
