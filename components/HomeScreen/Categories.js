@@ -31,7 +31,7 @@ export default function Categories() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 30,
     paddingHorizontal: 30,
     paddingBottom: 30,
   },
@@ -54,18 +54,18 @@ const styles = StyleSheet.create({
   categoryButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 30,
+    marginTop: 15,
   },
   categoryItem: {
+    flex: 1,
     alignItems: 'center', // Alinha o ícone e o texto no centro
     flexDirection: 'column',
   },
   categoryButton: {
     backgroundColor: '#fff', // Fundo laranja para o botão
-    padding: 15,
     borderRadius: 10,
     height: 80,
-    width: 110,
+    width: 100,
     // Sombra para iOS
     shadowColor: '#000',
     shadowOffset: { width: 5, height: 5 }, // Eixo X e Y
