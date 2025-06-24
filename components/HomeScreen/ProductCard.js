@@ -1,47 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { apiEndpoint } from '../../config/constantes';
 
-export default function ProductCard({ item, userToken, favoritos, setFavoritos, onRemoveFavorite }) {
-  const [liked, setLiked] = useState(false);
+export default function ProductCard({ item, userToken, favoritos = [], setFavoritos, onRemoveFavorite }) {
   const [loading, setLoading] = useState(false);
-  const isFavorito = favoritos?.some(fav => fav.id === item.id);
-  // console.log('🔍 item recebido no ProductCard:', item);
-  //console.log('item.id:', item.id, 'item.suco_id:', item.suco_id);
-
-  useEffect(() => {
-    const checkIfLiked = async () => {
-      try {
-        console.log('Token enviado:', userToken); // Log para verificar o token
-
-        const response = await fetch(`${apiEndpoint}/favoritos/all`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-            Accept: 'application/json'
-          },
-        });
-
-        if (response.status === 403) {
-          console.error('Erro 403: Acesso negado');
-          throw new Error('Acesso negado. Verifique seu token de autenticação.');
-        }
-
-        if (!response.ok) {
-          throw new Error(`Erro do servidor: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        const favoritos = data.map((fav) => fav.suco.id);
-        setLiked(favoritos.includes(item.id));
-      } catch (error) {
-        console.error('Erro ao verificar favoritos:', error.message); // Mostra mensagem detalhada
-      }
-    };
-
-    checkIfLiked();
-  }, [item.id, userToken]);
+  const isFavorito = favoritos.some(fav => fav.id === item.id);
 
   const toggleFavorite = async () => {
     if (loading) return;
@@ -49,16 +13,22 @@ export default function ProductCard({ item, userToken, favoritos, setFavoritos, 
 
     try {
       if (isFavorito) {
+        // Remove dos favoritos
         await fetch(`${apiEndpoint}/favoritos/delete/${item.id}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
         });
-        const updated = favoritos.filter(fav => fav.id !== item.id);
-        setFavoritos(updated);
-        if (onRemoveFavorite) onRemoveFavorite(item.id);
+        
+        const updatedFavorites = favoritos.filter(fav => fav.id !== item.id);
+        setFavoritos(updatedFavorites);
+        
+        if (onRemoveFavorite) {
+          onRemoveFavorite(item.id);
+        }
       } else {
+        // Adiciona aos favoritos
         await fetch(`${apiEndpoint}/favoritos/add`, {
           method: 'POST',
           headers: {
@@ -67,6 +37,7 @@ export default function ProductCard({ item, userToken, favoritos, setFavoritos, 
           },
           body: JSON.stringify({ id: item.id }),
         });
+        
         setFavoritos([...favoritos, item]);
       }
     } catch (error) {
@@ -87,7 +58,7 @@ export default function ProductCard({ item, userToken, favoritos, setFavoritos, 
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            { item.nome || item.suco_nome}
+            {item.nome || item.suco_nome}
           </Text>
           <Text
             style={styles.juiceDiagnosticoVertical}
@@ -104,8 +75,16 @@ export default function ProductCard({ item, userToken, favoritos, setFavoritos, 
             {item.categoria_nome || 'Categoria não disponível'}
           </Text>
         </View>
-        <TouchableOpacity onPress={toggleFavorite} style={styles.iconContainer}>
-          <FontAwesome name={isFavorito ? 'heart' : 'heart-o'} size={24} color="red" />
+        <TouchableOpacity 
+          onPress={toggleFavorite} 
+          style={styles.iconContainer}
+          disabled={loading}
+        >
+          <FontAwesome 
+            name={isFavorito ? 'heart' : 'heart-o'} 
+            size={24} 
+            color={isFavorito ? '#B85A25' : '#838181'} 
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -146,15 +125,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 3,
-    flexWrap: 'wrap', // Permitir quebra de linha
+    flexWrap: 'wrap',
   },
   juiceDiagnosticoVertical: {
     fontSize: 14,
     color: '#666',
     marginBottom: 10,
-    flexWrap: 'wrap', // Permitir quebra de linha
+    flexWrap: 'wrap',
   },
-  juiceCategoriaVertical:{
+  juiceCategoriaVertical: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#333',
