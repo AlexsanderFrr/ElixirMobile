@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import {
   View,
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import HeaderBar from '../../components/Pesquisar/HeaderBar';
 import SearchBar from '../../components/Pesquisar/SearchBar';
 import ResultItem from '../../components/Pesquisar/ResultItem';
@@ -16,8 +18,9 @@ import { AuthContext } from '../context/authContext';
 
 let debounceTimer;
 
-export default function SearchScreen({ favoritos, setFavoritos }) {
+export default function SearchScreen({ favoritos = [], setFavoritos }) {
   const { userToken } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -44,6 +47,18 @@ export default function SearchScreen({ favoritos, setFavoritos }) {
       setLoading(false);
     }
   };
+
+  // Função para verificar se um item está nos favoritos
+  const isFavorite = useCallback((itemId) => {
+  return (favoritos || []).some(fav => fav.id === itemId);
+}, [favoritos]);
+
+  // Atualiza os favoritos quando a tela recebe foco
+  useFocusEffect(
+    useCallback(() => {
+      // Você pode adicionar aqui uma chamada para atualizar os favoritos se necessário
+    }, [])
+  );
 
   useEffect(() => {
     clearTimeout(debounceTimer);
@@ -95,20 +110,29 @@ export default function SearchScreen({ favoritos, setFavoritos }) {
             const title = item.suco_nome || item.nome;
 
             if (searchSubmitted) {
-              // Quando a busca foi confirmada, mostra apenas o card do suco
               return (
-                <View style={styles.cardContainer}>
-                <ProductCard
-                  item={item}
-                  userToken={userToken}
-                  favoritos={favoritos}
-                  setFavoritos={setFavoritos}
-                  onRemoveFavorite={() => {}}
-                />
-                </View>
+                <TouchableOpacity
+                  style={styles.cardContainer}
+                  onPress={() => navigation.navigate('Exibicao', {
+                    item,
+                    userToken,
+                    favoritos,
+                    setFavoritos
+                  })}
+                >
+                  <ProductCard
+                    item={item}
+                    userToken={userToken}
+                    favoritos={favoritos}
+                    setFavoritos={setFavoritos}
+                    isFavorite={isFavorite(item.id)}
+                    onToggleFavorite={() => {
+                      // Esta função será tratada pelo ProductCard internamente
+                    }}
+                  />
+                </TouchableOpacity>
               );
             } else {
-              // Durante a digitação, mostra os itens de resultado normais
               return (
                 <ResultItem
                   title={title}

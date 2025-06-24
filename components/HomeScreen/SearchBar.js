@@ -3,13 +3,16 @@ import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function SearchBar() {
+export default function SearchBar({ favoritos, setFavoritos }) {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       style={styles.searchContainer}
-      onPress={() => navigation.navigate('SearchScreen')} // Navega para a tela de pesquisa
+      onPress={() => navigation.navigate('SearchScreen', {
+        favoritos: favoritos,
+        setFavoritos: setFavoritos
+      })} // Navega para a tela de pesquisa
     >
       <Ionicons name="search" size={24} color="#B85A25" style={styles.icon} />
       <TextInput
