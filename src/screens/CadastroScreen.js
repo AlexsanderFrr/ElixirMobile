@@ -7,7 +7,7 @@ import CadastroForm from '../../components/Cadastro/CadastroForm';
 import LoginRedirect from '../../components/Cadastro/LoginRedirect';
 
 const CadastroScreen = ({ navigation }) => (
-    <KeyboardAvoidingView style={[css.container, css.whitebg]}>
+    <KeyboardAvoidingView style={[css.containerCadastro, css.whitebg]}>
         <LogoCadastro />
         <CadastroForm navigation={navigation} />
         <SocialSignUp />

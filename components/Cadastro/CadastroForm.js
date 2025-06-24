@@ -216,7 +216,7 @@ const CadastroForm = ({ navigation }) => {
 const styles = StyleSheet.create({
     inputContainer: {
         position: 'relative',
-        marginBottom: 30,
+        marginBottom: 20,
     },
     icon: {
         position: 'absolute',
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     termsContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 10,
     },
     checkbox: {
         marginRight: 10,

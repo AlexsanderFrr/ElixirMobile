@@ -1,7 +1,13 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
+  containerLogin: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 30,
+    paddingVertical: 80,
+  },
+  containerCadastro: {
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 30,
@@ -35,7 +41,7 @@ const styles = StyleSheet.create({
   img_logocad: {
     width: 256,
     height: 41,
-    marginBottom: 40,
+    marginBottom: 20,
   },
   labelError: {
     alignSelf: 'flex-start',
@@ -49,7 +55,6 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   cad_form: {
-    flex: 1,
     width: "100%",
     justifyContent: "center",
   },
@@ -112,8 +117,8 @@ const styles = StyleSheet.create({
   cad__input: {
     backgroundColor: "#FFFFFF",
     width: "100%",
-    height: 50,
-    fontSize: 17,
+    height: 46,
+    fontSize: 16,
     paddingHorizontal: 15,
     paddingVertical: 13,
     paddingLeft: 48,
@@ -123,8 +128,8 @@ const styles = StyleSheet.create({
   },
   cad__button: {
     width: "100%",
-    height: 60,
-    padding: 12,
+    height: 50,
+    paddingHorizontal: 12,
     backgroundColor: "#BB5104",
     alignItems: "center",
     justifyContent: "center",

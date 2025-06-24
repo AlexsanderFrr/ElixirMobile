@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
   }, [response]);
 
   return (
-    <KeyboardAvoidingView style={[css.container, css.whitebg]}>
+    <KeyboardAvoidingView style={[css.containerLogin, css.whitebg]}>
       <LogoLogin />
       <LoginForm login={login} isLoading={isLoading} />
       <DividerWithText />
