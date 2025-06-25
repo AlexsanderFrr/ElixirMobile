@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F4DEAA',
     paddingHorizontal: 30,
-    paddingVertical: 30,
+    paddingVertical: 60,
   },
   loader: {
     marginTop: 20,

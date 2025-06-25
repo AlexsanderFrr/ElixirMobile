@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 35
   },
   imageBG: {
     width: "100%",

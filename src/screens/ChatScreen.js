@@ -81,7 +81,8 @@ const ChatBotScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 30,
+    paddingTop: 60,
     backgroundColor: '#F4DEAA',
   },
   chatContainer: {
