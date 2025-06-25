@@ -9,13 +9,16 @@ import {
     Image,
     Alert,
     ActivityIndicator,
-    StyleSheet
+    StyleSheet,
+    Dimensions
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/authContext';
 import { apiEndpoint } from '../../config/constantes';
 import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, FontAwesome, Feather } from '@expo/vector-icons';
+
+const { width } = Dimensions.get('window');
 
 const EditProfileScreen = () => {
     const { userInfo, userToken, setUserInfo } = useContext(AuthContext);
@@ -161,99 +164,117 @@ const EditProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                {/* Header com botão de voltar e título */}
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="arrow-back" size={24} color="#F24E1E" />
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={styles.backButton}
+                    >
+                        <Ionicons name="arrow-back" size={28} color="#F24E1E" />
                     </TouchableOpacity>
                     <Text style={styles.title}>Editar Perfil</Text>
-                    <View style={{ width: 24 }} />
+                    <View style={{ width: 28 }} /> {/* Espaçamento para alinhamento */}
                 </View>
 
-                <View style={styles.formContainer}>
-                    {/* Seção de Foto de Perfil */}
-                    <TouchableOpacity
-                        style={styles.imagePicker}
-                        onPress={pickImage}
-                    >
-                        {image ? (
-                            <Image
-                                source={{ uri: image }}
-                                style={styles.profileImage}
-                            />
-                        ) : userInfo?.imagem ? (
-                            <Image
-                                source={{ uri: userInfo.imagem }}
-                                style={styles.profileImage}
-                            />
-                        ) : (
-                            <View style={styles.profileImagePlaceholder}>
-                                <Ionicons name="person" size={40} color="#F24E1E" />
+                {/* Formulário */}
+                <View style={styles.formCard}>
+                    {/* Seção de Foto */}
+                    <View style={styles.avatarSection}>
+                        <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
+                            {image ? (
+                                <Image source={{ uri: image }} style={styles.avatar} />
+                            ) : userInfo?.imagem ? (
+                                <Image source={{ uri: userInfo.imagem }} style={styles.avatar} />
+                            ) : (
+                                <View style={styles.avatarPlaceholder}>
+                                    <Ionicons name="person" size={50} color="#F24E1E" />
+                                </View>
+                            )}
+                            <View style={styles.cameraIcon}>
+                                <MaterialIcons name="photo-camera" size={20} color="white" />
                             </View>
-                        )}
-                        <Text style={styles.imagePickerText}>Alterar foto</Text>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                        <Text style={styles.changePhotoText}>Alterar foto</Text>
+                    </View>
 
-                    {/* Campos do formulário */}
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Nome</Text>
-                        <TextInput
-                            style={[styles.input, errors.nome && styles.inputError]}
-                            value={formData.nome}
-                            onChangeText={(text) => handleChange('nome', text)}
-                            placeholder="Digite seu nome"
-                        />
+                    {/* Campos do Formulário */}
+                    <View style={styles.formGroup}>
+                        <View style={styles.inputContainer}>
+                            <FontAwesome name="user" size={18} color="#F24E1E" style={styles.inputIcon} />
+                            <TextInput
+                                style={[styles.input, errors.nome && styles.inputError]}
+                                value={formData.nome}
+                                onChangeText={(text) => handleChange('nome', text)}
+                                placeholder="Nome completo"
+                                placeholderTextColor="#999"
+                            />
+                        </View>
                         {errors.nome && <Text style={styles.errorText}>{errors.nome}</Text>}
                     </View>
 
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Email</Text>
-                        <TextInput
-                            style={[styles.input, errors.email && styles.inputError]}
-                            value={formData.email}
-                            onChangeText={(text) => handleChange('email', text)}
-                            placeholder="Digite seu email"
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                        />
+                    <View style={styles.formGroup}>
+                        <View style={styles.inputContainer}>
+                            <MaterialIcons name="email" size={18} color="#F24E1E" style={styles.inputIcon} />
+                            <TextInput
+                                style={[styles.input, errors.email && styles.inputError]}
+                                value={formData.email}
+                                onChangeText={(text) => handleChange('email', text)}
+                                placeholder="E-mail"
+                                placeholderTextColor="#999"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                            />
+                        </View>
                         {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
                     </View>
 
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Nova Senha (opcional)</Text>
-                        <TextInput
-                            style={[styles.input, errors.senha && styles.inputError]}
-                            value={formData.senha}
-                            onChangeText={(text) => handleChange('senha', text)}
-                            placeholder="Digite uma nova senha"
-                            secureTextEntry
-                        />
+                    <View style={styles.formGroup}>
+                        <View style={styles.inputContainer}>
+                            <Feather name="lock" size={18} color="#F24E1E" style={styles.inputIcon} />
+                            <TextInput
+                                style={[styles.input, errors.senha && styles.inputError]}
+                                value={formData.senha}
+                                onChangeText={(text) => handleChange('senha', text)}
+                                placeholder="Nova senha (opcional)"
+                                placeholderTextColor="#999"
+                                secureTextEntry
+                            />
+                        </View>
                         {errors.senha && <Text style={styles.errorText}>{errors.senha}</Text>}
                     </View>
 
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.label}>Confirmar Nova Senha</Text>
-                        <TextInput
-                            style={[styles.input, errors.confirmarSenha && styles.inputError]}
-                            value={formData.confirmarSenha}
-                            onChangeText={(text) => handleChange('confirmarSenha', text)}
-                            placeholder="Confirme a nova senha"
-                            secureTextEntry
-                        />
+                    <View style={styles.formGroup}>
+                        <View style={styles.inputContainer}>
+                            <Feather name="lock" size={18} color="#F24E1E" style={styles.inputIcon} />
+                            <TextInput
+                                style={[styles.input, errors.confirmarSenha && styles.inputError]}
+                                value={formData.confirmarSenha}
+                                onChangeText={(text) => handleChange('confirmarSenha', text)}
+                                placeholder="Confirmar nova senha"
+                                placeholderTextColor="#999"
+                                secureTextEntry
+                            />
+                        </View>
                         {errors.confirmarSenha && <Text style={styles.errorText}>{errors.confirmarSenha}</Text>}
                     </View>
 
                     {/* Botão de Salvar */}
                     <TouchableOpacity
-                        style={styles.saveButton}
+                        style={[styles.saveButton, isLoading && styles.saveButtonDisabled]}
                         onPress={handleSubmit}
                         disabled={isLoading}
+                        activeOpacity={0.8}
                     >
                         {isLoading ? (
-                            <ActivityIndicator color="#fff" />
+                            <ActivityIndicator color="#fff" size="small" />
                         ) : (
-                            <Text style={styles.saveButtonText}>Salvar Alterações</Text>
+                            <Text style={styles.saveButtonText}>
+                                <MaterialIcons name="save" size={20} color="white" /> SALVAR ALTERAÇÕES
+                            </Text>
                         )}
                     </TouchableOpacity>
                 </View>
@@ -265,82 +286,131 @@ const EditProfileScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f8f8f8',
     },
     scrollContainer: {
-        padding: 20,
+        paddingBottom: 30,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 30,
+        paddingHorizontal: 25,
+        paddingTop: 20,
+        paddingBottom: 15,
+        backgroundColor: 'white',
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    backButton: {
+        padding: 5,
     },
     title: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
         color: '#333',
+        textAlign: 'center',
+        flex: 1,
     },
-    formContainer: {
-        marginBottom: 30,
+    formCard: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        marginHorizontal: 20,
+        marginTop: 20,
+        padding: 25,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 6,
+        elevation: 3,
     },
-    imagePicker: {
+    avatarSection: {
         alignItems: 'center',
         marginBottom: 30,
     },
-    profileImage: {
+    avatarContainer: {
+        position: 'relative',
+        marginBottom: 10,
+    },
+    avatar: {
         width: 120,
         height: 120,
         borderRadius: 60,
-        marginBottom: 10,
+        borderWidth: 3,
+        borderColor: '#F24E1E',
     },
-    profileImagePlaceholder: {
+    avatarPlaceholder: {
         width: 120,
         height: 120,
         borderRadius: 60,
         backgroundColor: '#f0f0f0',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
+        borderWidth: 3,
+        borderColor: '#F24E1E',
     },
-    imagePickerText: {
+    cameraIcon: {
+        position: 'absolute',
+        right: 5,
+        bottom: 5,
+        backgroundColor: '#F24E1E',
+        borderRadius: 15,
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    changePhotoText: {
         color: '#F24E1E',
         fontSize: 16,
+        fontWeight: '500',
     },
-    inputGroup: {
+    formGroup: {
         marginBottom: 20,
     },
-    label: {
-        fontSize: 16,
-        marginBottom: 8,
-        color: '#333',
-    },
-    input: {
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         borderWidth: 1,
         borderColor: '#ddd',
-        borderRadius: 8,
-        padding: 12,
+        borderRadius: 10,
+        paddingHorizontal: 15,
+    },
+    inputIcon: {
+        marginRight: 10,
+    },
+    input: {
+        flex: 1,
+        height: 50,
         fontSize: 16,
+        color: '#333',
     },
     inputError: {
         borderColor: 'red',
     },
     errorText: {
         color: 'red',
-        fontSize: 14,
+        fontSize: 13,
         marginTop: 5,
+        marginLeft: 10,
     },
     saveButton: {
         backgroundColor: '#F24E1E',
-        padding: 15,
-        borderRadius: 8,
+        paddingVertical: 15,
+        borderRadius: 10,
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop: 20,
+        flexDirection: 'row',
+    },
+    saveButtonDisabled: {
+        backgroundColor: '#F24E1Eaa',
     },
     saveButtonText: {
-        color: '#fff',
-        fontSize: 18,
+        color: 'white',
+        fontSize: 16,
         fontWeight: 'bold',
+        marginLeft: 5,
     },
 });
 

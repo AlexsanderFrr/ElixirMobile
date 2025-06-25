@@ -7,7 +7,6 @@ const HeaderBar = ({ onBack }) => (
         <TouchableOpacity onPress={onBack}>
             <Ionicons name="arrow-back" size={40} color="#fff" />
         </TouchableOpacity>
-        <Ionicons name="settings-sharp" size={40} color="#fff" />
     </View>
 );
 
