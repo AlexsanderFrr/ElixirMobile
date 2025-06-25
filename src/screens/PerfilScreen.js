@@ -102,7 +102,7 @@ const PerfilScreen = () => {
             <UserInfo userInfo={userInfo} />
             <View style={[styles.separator, { marginTop: 10, marginBottom: 10, width: "100%" }]} />
             <OptionList
-              onNavigateDiagnosticos={() => { }}
+              onNavigateEditProfile={() => navigation.navigate("EditProfile")}
               onNavigateFavoritos={() => navigation.navigate("Favoritos")}
               onLogout={sair}
             />

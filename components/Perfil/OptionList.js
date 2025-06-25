@@ -5,13 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import ProfileOption from "./ProfileOption";
 import styles from "./perfilStyles";
 
-const OptionList = ({ onNavigateDiagnosticos, onNavigateFavoritos, onLogout }) => (
+const OptionList = ({ onNavigateEditProfile, onNavigateFavoritos, onLogout }) => (
     <View style={styles.groupOption}>
         <View style={styles.optionContent}>
             <ProfileOption
                 icon={require("../../assets/iconEdit.png")}
                 label="Editar Perfil"
-                onPress={onNavigateDiagnosticos}
+                onPress={onNavigateEditProfile}
             />
             <Ionicons name="arrow-forward" size={40} color="#F24E1E" />
         </View>
@@ -20,7 +20,6 @@ const OptionList = ({ onNavigateDiagnosticos, onNavigateFavoritos, onLogout }) =
             <ProfileOption
                 icon={require("../../assets/iconDiag.png")}
                 label="Meus Diagnósticos"
-                onPress={onNavigateDiagnosticos}
             />
             <Ionicons name="arrow-forward" size={40} color="#F24E1E" />
         </View>
