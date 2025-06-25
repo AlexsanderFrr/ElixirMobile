@@ -33,7 +33,6 @@ export default function IngredientList({ ingredients }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    maxHeight: 250, // Restringe a altura do contêiner
     overflow: "hidden", // Evita que o conteúdo extrapole
   },
   title: {

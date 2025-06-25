@@ -7,7 +7,7 @@ export default function JuiceImage({ imageUri }) {
 
 const styles = StyleSheet.create({
   imageHeader: {
-    height: 300,
+    height: 260,
     width: "100%",
   },
 });

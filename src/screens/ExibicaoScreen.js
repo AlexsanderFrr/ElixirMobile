@@ -37,11 +37,10 @@ const ExibicaoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 35,
+    marginTop: 35,
     backgroundColor: "#F4DEAA",
   },
   main: {
-    height: '70%',
     paddingVertical: 25,
     paddingHorizontal: 30,
   },
