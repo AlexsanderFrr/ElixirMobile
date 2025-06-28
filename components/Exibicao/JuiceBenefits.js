@@ -4,12 +4,14 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 export default function JuiceBenefits({ benefits }) {
   return (
     <View style={styles.container}>
-      {/* Título fixo */}
-      <Text style={styles.titleBenefits}>Benefícios:</Text>
-
-      {/* Conteúdo rolável */}
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.benefitsInfo}>{benefits}</Text>
+      <Text style={styles.titleBenefits}>Benefícios</Text>
+      <ScrollView 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.benefitsContainer}>
+          <Text style={styles.benefitsInfo}>{benefits}</Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -18,21 +20,34 @@ export default function JuiceBenefits({ benefits }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
+    marginHorizontal: 15,
   },
   titleBenefits: {
     fontSize: 24,
-    fontWeight: '600',
-    textTransform: "uppercase",
+    fontWeight: '700',
+    color: '#BB5114',
     marginBottom: 15,
+    fontFamily: 'sans-serif-condensed',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   scrollContent: {
-    backgroundColor: '#ffffff',
+    paddingBottom: 20,
+  },
+  benefitsContainer: {
+    backgroundColor: '#FFF9F0',
     borderRadius: 15,
-    padding: 15,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   benefitsInfo: {
-    color: "#DC9B00",
-    fontSize: 20,
-    fontWeight: '600',
+    color: "#5A3800",
+    fontSize: 18,
+    fontWeight: '500',
+    lineHeight: 24,
   },
 });

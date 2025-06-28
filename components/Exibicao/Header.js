@@ -10,7 +10,6 @@ export default function Header({ item, userToken, favoritos, setFavoritos }) {
   const [loading, setLoading] = React.useState(false);
   const [isFavorito, setIsFavorito] = React.useState(false);
 
-  // Atualiza estado do ícone de favorito quando favoritos mudam
   React.useEffect(() => {
     const favorito = favoritos?.some(fav => fav.id === item.id);
     setIsFavorito(favorito);
@@ -53,17 +52,25 @@ export default function Header({ item, userToken, favoritos, setFavoritos }) {
 
   return (
     <View style={styles.header}>
-      {/* Botão de voltar */}
       <View style={styles.iconButton}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={40} color="#BB5114" />
+        <TouchableOpacity 
+          onPress={() => navigation.goBack()}
+          style={styles.button}
+        >
+          <Ionicons name="arrow-back" size={28} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
 
-      {/* Ícone de coração */}
       <View style={[styles.iconButton, styles.centerIcon]}>
-        <TouchableOpacity onPress={toggleFavorite}>
-          <FontAwesome name={isFavorito ? "heart" : "heart-o"} size={40} color="red" />
+        <TouchableOpacity 
+          onPress={toggleFavorite}
+          style={styles.button}
+        >
+          <FontAwesome 
+            name={isFavorito ? "heart" : "heart-o"} 
+            size={28} 
+            color={isFavorito ? "#FF3A44" : "#FFFFFF"} 
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -75,16 +82,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     position: "absolute",
-    paddingTop: 30,
-    paddingHorizontal: 30,
+    paddingTop: 50,
+    paddingHorizontal: 20,
     width: "100%",
+    zIndex: 1,
   },
   iconButton: {
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 30,
-    borderWidth: 0.5,
-    borderColor: '#BB5114',
+    backgroundColor: "rgba(187, 81, 20, 0.8)",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  button: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   centerIcon: {
     justifyContent: "center",
