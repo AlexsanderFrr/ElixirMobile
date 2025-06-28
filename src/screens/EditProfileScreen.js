@@ -109,54 +109,86 @@ const EditProfileScreen = () => {
             // Adiciona campos do formulário
             formDataToSend.append('nome', formData.nome);
             formDataToSend.append('email', formData.email);
-            if (formData.senha) {
+
+            // Só envia a senha se foi alterada
+            if (formData.senha && formData.senha.trim() !== '') {
                 formDataToSend.append('senha', formData.senha);
             }
 
             // Adiciona imagem se foi selecionada
             if (image) {
                 const fileType = image.split('.').pop();
+                const fileName = image.split('/').pop();
+
                 formDataToSend.append('imagem', {
                     uri: image,
-                    type: `image/${fileType}`,
-                    name: `profile_${userInfo.id}.${fileType}`,
+                    type: `image/${fileType === 'jpg' ? 'jpeg' : fileType}`,
+                    name: fileName || `profile_${userInfo.id}.${fileType}`,
                 });
             }
+
+            // Debug: Mostra o que está sendo enviado
+            console.log('Enviando dados:', {
+                nome: formData.nome,
+                email: formData.email,
+                temSenha: !!formData.senha,
+                temImagem: !!image
+            });
 
             const response = await fetch(`${apiEndpoint}/usuario/me`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${userToken}`,
-                    'Content-Type': 'multipart/form-data',
                 },
                 body: formDataToSend,
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
-                // Atualiza o contexto com as novas informações
-                const updatedUserInfo = await fetch(`${apiEndpoint}/usuario/me`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                    },
-                });
-
-                const newUserInfo = await updatedUserInfo.json();
-                if (newUserInfo.imagem) {
-                    newUserInfo.imagem = `${apiEndpoint}/${newUserInfo.imagem}`;
-                }
-
-                setUserInfo(newUserInfo);
-                Alert.alert('Sucesso', 'Perfil atualizado com sucesso!');
-                navigation.goBack();
-            } else {
-                Alert.alert('Erro', data.message || 'Erro ao atualizar perfil');
+            // Verifica se a resposta foi bem sucedida
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Erro ao atualizar perfil');
             }
+
+            // Processa a resposta da API
+            const updatedData = await response.json();
+
+            // Atualiza o contexto com as novas informações
+            const updatedUser = {
+                ...userInfo,
+                nome: updatedData.nome || userInfo.nome,
+                email: updatedData.email || userInfo.email,
+                // Mantém a imagem existente se não foi atualizada
+                imagem: updatedData.imagem
+                    ? `${apiEndpoint}/${updatedData.imagem}`
+                    : userInfo.imagem
+            };
+
+            setUserInfo(updatedUser);
+
+            // Força uma nova requisição para garantir os dados mais recentes
+            const refreshResponse = await fetch(`${apiEndpoint}/usuario/me`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${userToken}`,
+                    'Cache-Control': 'no-cache'
+                },
+            });
+
+            if (refreshResponse.ok) {
+                const refreshedData = await refreshResponse.json();
+                setUserInfo({
+                    ...refreshedData,
+                    imagem: refreshedData.imagem
+                        ? `${apiEndpoint}/${refreshedData.imagem}`
+                        : null
+                });
+            }
+
+            Alert.alert('Sucesso', 'Perfil atualizado com sucesso!');
+            navigation.goBack();
         } catch (error) {
-            console.error('Erro ao atualizar perfil:', error);
-            Alert.alert('Erro', 'Ocorreu um erro ao atualizar o perfil');
+            console.error('Erro detalhado:', error);
+            Alert.alert('Erro', error.message || 'Ocorreu um erro ao atualizar o perfil');
         } finally {
             setIsLoading(false);
         }
