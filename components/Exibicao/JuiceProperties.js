@@ -1,19 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export default function JuiceProperties({ name }) {
+export default function JuiceProperties({ name, category }) {
   return (
     <View style={styles.container}>
       <Text style={styles.nameJuice}>{name}</Text>
       <View style={styles.propertyJuice}>
         <View style={styles.propertyTag}>
-          <Text style={styles.textProperty}>Imunidade</Text>
-        </View>
-        <View style={styles.propertyTag}>
-          <Text style={styles.textProperty}>Detox</Text>
-        </View>
-        <View style={styles.propertyTag}>
-          <Text style={styles.textProperty}>Frutas & Verduras</Text>
+          <Text style={styles.textProperty}>{category}</Text>
         </View>
       </View>
     </View>
@@ -23,11 +17,10 @@ export default function JuiceProperties({ name }) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 15,
     paddingBottom: 10,
     backgroundColor: '#FFFFFF',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 20,
     marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -39,7 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     color: '#BB5114',
-    marginBottom: 15,
+    marginBottom: 10,
     textAlign: 'center',
     fontFamily: 'sans-serif-condensed',
   },

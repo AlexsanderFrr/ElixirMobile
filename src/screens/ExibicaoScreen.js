@@ -14,6 +14,7 @@ const ExibicaoScreen = () => {
   const { item, userToken, favoritos, setFavoritos } = route.params;
 
   const suco_nome = item.nome || item.suco_nome;
+  const categoria_nome = item.categoria_nome;
   const juiceBenefits = item.beneficios;
   const listIngredientes = item.ingredientes;
   const preparationSteps = item.modo_de_preparo;
@@ -25,7 +26,7 @@ const ExibicaoScreen = () => {
       <Header item={item} userToken={userToken} favoritos={favoritos} setFavoritos={setFavoritos} />
       {/* Tornar todo o conteúdo rolável */}
       <ScrollView contentContainerStyle={styles.main}>
-        <JuiceProperties name={suco_nome} />
+        <JuiceProperties name={suco_nome} category={categoria_nome} />
         <IngredientList ingredients={listIngredientes} />
         <JuiceBenefits benefits={juiceBenefits} />
         <PreparationMethod preparationSteps={preparationSteps} />
