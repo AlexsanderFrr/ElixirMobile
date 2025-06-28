@@ -50,16 +50,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  active: {
-    backgroundColor: "#34FF89",
-    position: "absolute",
-    bottom: 18,
-    left: 10,
-    padding: 4,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-  },
   add: {
     backgroundColor: "#BB5104",
     position: "absolute",

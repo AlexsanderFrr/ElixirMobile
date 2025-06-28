@@ -27,7 +27,6 @@ const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
             <View style={styles.dm}>
                 <MaterialIcons name="chat" size={18} color={"#F4DEAA"} />
             </View>
-            <View style={styles.active}></View>
             <TouchableOpacity onPress={onPickImage}>
                 <View style={styles.add}>
                     <Ionicons name="add" size={38} color={"#F4DEAA"} />
