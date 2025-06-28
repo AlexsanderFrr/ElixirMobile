@@ -1,29 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Make sure to install expo vector icons
 
-const Header = () => (
+const Header = ({ onBackPress }) => (
   <View style={styles.header}>
+    <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
+      <Ionicons name="arrow-back" size={40} color="#000" />
+    </TouchableOpacity>
     <Text style={styles.headerTitle}>ChatBot Assistente</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
   header: {
+    marginTop: 35,
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    backgroundColor: '#ffffff',
+    borderBottomColor: '#666',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  },
+  backButton: {
+    marginRight: 15,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 28,
+    fontWeight: 'bold',
     color: '#333',
   },
 });

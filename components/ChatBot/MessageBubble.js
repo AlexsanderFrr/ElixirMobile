@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
   },
   userBubble: {
-    backgroundColor: '#4a8cff',
+    backgroundColor: '#BB5104',
     alignSelf: 'flex-end',
     borderTopRightRadius: 4,
   },

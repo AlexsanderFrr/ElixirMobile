@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { SafeAreaView, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/ChatBot/Header';
 import ChatList from '../../components/ChatBot/ChatList';
 import ChatInput from '../../components/ChatBot/ChatInput';
 
 const ChatBotScreen = () => {
+  const navigation = useNavigation();
   const [input, setInput] = useState('');
   const [chatLog, setChatLog] = useState([]);
 
@@ -55,7 +57,7 @@ const ChatBotScreen = () => {
         style={styles.container}
         keyboardVerticalOffset={90}
       >
-        <Header />
+        <Header onBackPress={() => navigation.goBack()} />
         <ChatList chatLog={chatLog} />
         <ChatInput input={input} onChangeText={handleInputChange} onSend={handleSendMessage} />
       </KeyboardAvoidingView>
@@ -66,7 +68,7 @@ const ChatBotScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f5f7fb',
+    backgroundColor: '#F4DEAA',
   },
   container: {
     flex: 1,
