@@ -1,27 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
-import {
-    SafeAreaView,
-    ScrollView,
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    Image,
-    Alert,
-    ActivityIndicator,
-    Dimensions
-} from 'react-native';
+import { SafeAreaView, ScrollView, Alert, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/authContext';
 import { apiEndpoint } from '../../config/constantes';
-import * as ImagePicker from 'expo-image-picker';
 import { Ionicons, MaterialIcons, FontAwesome, Feather } from '@expo/vector-icons';
-import styles from '../../components/EditProfile/styles'; // Importando os estilos
-
-const { width } = Dimensions.get('window');
+import * as ImagePicker from 'expo-image-picker';
+import styles from '../../components/EditProfile/styles';
+import ProfileHeader from '../../components/EditProfile/ProfileHeader';
+import AvatarUpload from '../../components/EditProfile/AvatarUpload';
+import FormInput from '../../components/EditProfile/FormInput';
+import SaveButton from '../../components/EditProfile/SaveButton';
 
 const EditProfileScreen = () => {
-    const { userInfo, userToken, setUserInfo } = useContext(AuthContext);
+        const { userInfo, userToken, setUserInfo } = useContext(AuthContext);
     const navigation = useNavigation();
 
     const [formData, setFormData] = useState({
@@ -186,115 +177,64 @@ const EditProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView
-                contentContainerStyle={styles.scrollContainer}
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.header}>
-                    <TouchableOpacity
-                        onPress={() => navigation.goBack()}
-                        style={styles.backButton}
-                    >
-                        <Ionicons name="arrow-back" size={28} color="#F24E1E" />
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Editar Perfil</Text>
-                    <View style={{ width: 28 }} />
-                </View>
-
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+                <ProfileHeader 
+                    title="Editar Perfil" 
+                    onBack={() => navigation.goBack()} 
+                />
+                
                 <View style={styles.formCard}>
-                    <View style={styles.avatarSection}>
-                        <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
-                            {image ? (
-                                <Image source={{ uri: image }} style={styles.avatar} />
-                            ) : userInfo?.imagem ? (
-                                <Image source={{ uri: userInfo.imagem }} style={styles.avatar} />
-                            ) : (
-                                <View style={styles.avatarPlaceholder}>
-                                    <Ionicons name="person" size={50} color="#F24E1E" />
-                                </View>
-                            )}
-                            <View style={styles.cameraIcon}>
-                                <MaterialIcons name="photo-camera" size={20} color="white" />
-                            </View>
-                        </TouchableOpacity>
-                        <Text style={styles.changePhotoText}>Alterar foto</Text>
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <View style={styles.inputContainer}>
-                            <FontAwesome name="user" size={18} color="#F24E1E" style={styles.inputIcon} />
-                            <TextInput
-                                style={[styles.input, errors.nome && styles.inputError]}
-                                value={formData.nome}
-                                onChangeText={(text) => handleChange('nome', text)}
-                                placeholder="Nome completo"
-                                placeholderTextColor="#999"
-                            />
-                        </View>
-                        {errors.nome && <Text style={styles.errorText}>{errors.nome}</Text>}
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <View style={styles.inputContainer}>
-                            <MaterialIcons name="email" size={18} color="#F24E1E" style={styles.inputIcon} />
-                            <TextInput
-                                style={[styles.input, errors.email && styles.inputError]}
-                                value={formData.email}
-                                onChangeText={(text) => handleChange('email', text)}
-                                placeholder="E-mail"
-                                placeholderTextColor="#999"
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                            />
-                        </View>
-                        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <View style={styles.inputContainer}>
-                            <Feather name="lock" size={18} color="#F24E1E" style={styles.inputIcon} />
-                            <TextInput
-                                style={[styles.input, errors.senha && styles.inputError]}
-                                value={formData.senha}
-                                onChangeText={(text) => handleChange('senha', text)}
-                                placeholder="Nova senha (opcional)"
-                                placeholderTextColor="#999"
-                                secureTextEntry
-                            />
-                        </View>
-                        {errors.senha && <Text style={styles.errorText}>{errors.senha}</Text>}
-                    </View>
-
-                    <View style={styles.formGroup}>
-                        <View style={styles.inputContainer}>
-                            <Feather name="lock" size={18} color="#F24E1E" style={styles.inputIcon} />
-                            <TextInput
-                                style={[styles.input, errors.confirmarSenha && styles.inputError]}
-                                value={formData.confirmarSenha}
-                                onChangeText={(text) => handleChange('confirmarSenha', text)}
-                                placeholder="Confirmar nova senha"
-                                placeholderTextColor="#999"
-                                secureTextEntry
-                            />
-                        </View>
-                        {errors.confirmarSenha && <Text style={styles.errorText}>{errors.confirmarSenha}</Text>}
-                    </View>
-
-                    <TouchableOpacity
-                        style={[styles.saveButton, isLoading && styles.saveButtonDisabled]}
-                        onPress={handleSubmit}
-                        disabled={isLoading}
-                        activeOpacity={0.8}
-                    >
-                        {isLoading ? (
-                            <ActivityIndicator color="#fff" size="small" />
-                        ) : (
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <MaterialIcons name="save" size={20} color="white" />
-                                <Text style={styles.saveButtonText}>SALVAR ALTERAÇÕES</Text>
-                            </View>
-                        )}
-                    </TouchableOpacity>
+                    <AvatarUpload 
+                        image={image} 
+                        defaultImage={userInfo?.imagem} 
+                        onPickImage={pickImage} 
+                    />
+                    
+                    <FormInput
+                        icon="user"
+                        iconLib={FontAwesome}
+                        placeholder="Nome completo"
+                        value={formData.nome}
+                        onChangeText={(text) => handleChange('nome', text)}
+                        error={errors.nome}
+                    />
+                    
+                    <FormInput
+                        icon="email"
+                        iconLib={MaterialIcons}
+                        placeholder="E-mail"
+                        value={formData.email}
+                        onChangeText={(text) => handleChange('email', text)}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        error={errors.email}
+                    />
+                    
+                    <FormInput
+                        icon="lock"
+                        iconLib={Feather}
+                        placeholder="Nova senha (opcional)"
+                        value={formData.senha}
+                        onChangeText={(text) => handleChange('senha', text)}
+                        secureTextEntry
+                        error={errors.senha}
+                    />
+                    
+                    <FormInput
+                        icon="lock"
+                        iconLib={Feather}
+                        placeholder="Confirmar nova senha"
+                        value={formData.confirmarSenha}
+                        onChangeText={(text) => handleChange('confirmarSenha', text)}
+                        secureTextEntry
+                        error={errors.confirmarSenha}
+                    />
+                    
+                    <SaveButton 
+                        loading={isLoading} 
+                        onPress={handleSubmit} 
+                        text="SALVAR ALTERAÇÕES" 
+                    />
                 </View>
             </ScrollView>
         </SafeAreaView>
