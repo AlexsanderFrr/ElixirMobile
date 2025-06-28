@@ -51,7 +51,6 @@ const EditProfileScreen = () => {
             [name]: value
         });
 
-        // Clear error when user types
         if (errors[name]) {
             setErrors({
                 ...errors,
@@ -106,16 +105,13 @@ const EditProfileScreen = () => {
         try {
             const formDataToSend = new FormData();
 
-            // Adiciona campos do formulário
             formDataToSend.append('nome', formData.nome);
             formDataToSend.append('email', formData.email);
 
-            // Só envia a senha se foi alterada
             if (formData.senha && formData.senha.trim() !== '') {
                 formDataToSend.append('senha', formData.senha);
             }
 
-            // Adiciona imagem se foi selecionada
             if (image) {
                 const fileType = image.split('.').pop();
                 const fileName = image.split('/').pop();
@@ -127,7 +123,6 @@ const EditProfileScreen = () => {
                 });
             }
 
-            // Debug: Mostra o que está sendo enviado
             console.log('Enviando dados:', {
                 nome: formData.nome,
                 email: formData.email,
@@ -143,21 +138,17 @@ const EditProfileScreen = () => {
                 body: formDataToSend,
             });
 
-            // Verifica se a resposta foi bem sucedida
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
                 throw new Error(errorData.message || 'Erro ao atualizar perfil');
             }
 
-            // Processa a resposta da API
             const updatedData = await response.json();
 
-            // Atualiza o contexto com as novas informações
             const updatedUser = {
                 ...userInfo,
                 nome: updatedData.nome || userInfo.nome,
                 email: updatedData.email || userInfo.email,
-                // Mantém a imagem existente se não foi atualizada
                 imagem: updatedData.imagem
                     ? `${apiEndpoint}/${updatedData.imagem}`
                     : userInfo.imagem
@@ -165,7 +156,6 @@ const EditProfileScreen = () => {
 
             setUserInfo(updatedUser);
 
-            // Força uma nova requisição para garantir os dados mais recentes
             const refreshResponse = await fetch(`${apiEndpoint}/usuario/me`, {
                 method: 'GET',
                 headers: {
@@ -200,7 +190,6 @@ const EditProfileScreen = () => {
                 contentContainerStyle={styles.scrollContainer}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Header */}
                 <View style={styles.header}>
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}
@@ -209,12 +198,10 @@ const EditProfileScreen = () => {
                         <Ionicons name="arrow-back" size={28} color="#F24E1E" />
                     </TouchableOpacity>
                     <Text style={styles.title}>Editar Perfil</Text>
-                    <View style={{ width: 28 }} /> {/* Espaçamento para alinhamento */}
+                    <View style={{ width: 28 }} />
                 </View>
 
-                {/* Formulário */}
                 <View style={styles.formCard}>
-                    {/* Seção de Foto */}
                     <View style={styles.avatarSection}>
                         <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
                             {image ? (
@@ -233,7 +220,6 @@ const EditProfileScreen = () => {
                         <Text style={styles.changePhotoText}>Alterar foto</Text>
                     </View>
 
-                    {/* Campos do Formulário */}
                     <View style={styles.formGroup}>
                         <View style={styles.inputContainer}>
                             <FontAwesome name="user" size={18} color="#F24E1E" style={styles.inputIcon} />
@@ -294,7 +280,6 @@ const EditProfileScreen = () => {
                         {errors.confirmarSenha && <Text style={styles.errorText}>{errors.confirmarSenha}</Text>}
                     </View>
 
-                    {/* Botão de Salvar */}
                     <TouchableOpacity
                         style={[styles.saveButton, isLoading && styles.saveButtonDisabled]}
                         onPress={handleSubmit}
@@ -443,7 +428,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
-        marginLeft: 10, // Aumentei a margem para melhor espaçamento
+        marginLeft: 10,
     },
 });
 
