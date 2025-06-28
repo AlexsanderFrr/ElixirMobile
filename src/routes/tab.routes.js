@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 
-import ShopScreen from '../screens/ShopScreen';
 import HomeScreen from "../screens/HomeScreen";
 import PerfilScreen from "../screens/PerfilScreen";
 import ChatScreen from '../screens/ChatScreen';
@@ -45,19 +44,6 @@ export default function TabRoutes() {
                             return <Ionicons name="heart" color={"#F5F5F5"} size={size} />;
                         }
                         return <Ionicons name="heart-outline" color={color} size={size} />;
-                    }
-                }}
-            />
-
-            <Tab.Screen
-                name="Shop"
-                component={ShopScreen}
-                options={{
-                    tabBarIcon: ({ color, size, focused }) => {
-                        if (focused) {
-                            return <Ionicons name="add-circle-outline" color={"#F5F5F5"} size={size} />;
-                        }
-                        return <Ionicons name="add-circle" color={color} size={size} />;
                     }
                 }}
             />
