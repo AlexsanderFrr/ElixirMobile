@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigation } from '@react-navigation/native';
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import styles from "./perfilStyles"; // exporte os styles separadamente, se quiser
 
 const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
     const [fotoPerfil, setFotoPerfil] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         // Sempre que `image` (selecionada localmente) ou `userInfo.imagem` mudar, atualize
@@ -25,7 +27,9 @@ const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
                 <Image source={fotoPerfil} style={styles.image} />
             </View>
             <View style={styles.dm}>
-                <MaterialIcons name="chat" size={18} color={"#F4DEAA"} />
+                <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+                    <MaterialIcons name="chat" size={18} color={"#F4DEAA"} />
+                </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={onPickImage}>
                 <View style={styles.add}>
