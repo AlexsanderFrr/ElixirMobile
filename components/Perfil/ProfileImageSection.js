@@ -33,7 +33,7 @@ const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
             </View>
             <TouchableOpacity onPress={onPickImage}>
                 <View style={styles.add}>
-                    <Ionicons name="add" size={38} color={"#F4DEAA"} />
+                    <Ionicons name="add" size={32} color={"#F4DEAA"} />
                 </View>
             </TouchableOpacity>
         </View>
