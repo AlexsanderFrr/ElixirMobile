@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import styles from "./perfilStyles"; // exporte os styles separadamente, se quiser
+import styles from "./perfilStyles";
 
 const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
-    const [fotoPerfil, setFotoPerfil] = useState(null);
     const navigation = useNavigation();
 
-    useEffect(() => {
-        // Sempre que `image` (selecionada localmente) ou `userInfo.imagem` mudar, atualize
+    // Remove o estado local e usa diretamente as props
+    const getImageSource = () => {
         if (image) {
-            setFotoPerfil({ uri: image });
-        } else if (userInfo?.imagem || userInfo?.picture) {
-            const uri = `${userInfo.imagem || userInfo.picture}?t=${new Date().getTime()}`;
-            setFotoPerfil({ uri });
-        } else {
-            setFotoPerfil(require("../../assets/emptyProfile.jpg"));
+            return { uri: image };
         }
-    }, [image, userInfo]);
+        if (userInfo?.imagem) {
+            // Adiciona timestamp para evitar cache
+            return { uri: `${userInfo.imagem}?t=${new Date().getTime()}` };
+        }
+        if (userInfo?.picture) {
+            return { uri: `${userInfo.picture}?t=${new Date().getTime()}` };
+        }
+        return require("../../assets/emptyProfile.jpg");
+    };
 
     return (
         <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-                <Image source={fotoPerfil} style={styles.image} />
+                <Image 
+                    source={getImageSource()} 
+                    style={styles.image} 
+                    key={userInfo?.imagem || 'default'} // Força remontagem quando a imagem muda
+                />
             </View>
             <View style={styles.dm}>
                 <TouchableOpacity onPress={() => navigation.navigate('Chat')}>

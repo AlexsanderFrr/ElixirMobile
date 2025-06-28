@@ -93,18 +93,18 @@ const PerfilScreen = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setModalVisible(false);
-        setImage(null);
-        alert("Foto atualizada!");
-
         // Atualiza o contexto com os novos dados
         const updatedUser = {
           ...userInfo,
           imagem: data.imagem
-            ? `${apiEndpoint}/${data.imagem}`
+            ? `${apiEndpoint}/${data.imagem}?t=${new Date().getTime()}` // Adiciona timestamp
             : null
         };
         setUserInfo(updatedUser);
+
+        setModalVisible(false);
+        setImage(null);
+        alert("Foto atualizada com sucesso!");
       } else {
         console.error("Erro:", data);
         alert(data.message || "Erro ao atualizar.");
