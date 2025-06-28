@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, View, ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { AuthContext } from "../context/authContext";
 import { apiEndpoint } from "../../config/constantes";
 import * as ImagePicker from "expo-image-picker";
@@ -15,16 +15,47 @@ import styles from "../../components/Perfil/perfilStyles";
 const PerfilScreen = () => {
   const { sair, setUserInfo, userToken, userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [fotoPerfil, setFotoPerfil] = useState(userInfo?.imagem || null);
 
   useEffect(() => {
-    if (userInfo?.imagem) {
-      setFotoPerfil(userInfo.imagem);
+    const fetchUpdatedProfile = async () => {
+      if (!userToken) return;
+
+      try {
+        const response = await fetch(`${apiEndpoint}/usuario/me`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Cache-Control': 'no-cache'
+          },
+        });
+
+        if (response.ok) {
+          const updatedUser = await response.json();
+          // Verifica se a imagem já contém a URL base para evitar duplicação
+          const imagemUrl = updatedUser.imagem
+            ? updatedUser.imagem.startsWith('http')
+              ? updatedUser.imagem
+              : `${apiEndpoint}/${updatedUser.imagem}`
+            : null;
+
+          setUserInfo({
+            ...updatedUser,
+            imagem: imagemUrl
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao atualizar perfil:", error);
+      }
+    };
+
+    if (isFocused || !userInfo) {
+      fetchUpdatedProfile();
     }
-  }, [userInfo]);
+  }, [isFocused, userToken]);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -63,20 +94,17 @@ const PerfilScreen = () => {
       const data = await response.json();
       if (response.ok) {
         setModalVisible(false);
-        setImage(null); // limpa o estado para voltar a usar userInfo.imagem
+        setImage(null);
         alert("Foto atualizada!");
 
-        // Recarrega o userInfo com a nova imagem
-        const updatedUserInfo = await fetch(`${apiEndpoint}/usuario/me`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-        const newUserInfo = await updatedUserInfo.json();
-        const novaImagem = `${apiEndpoint}/${newUserInfo.imagem}`;
-        setUserInfo({ ...newUserInfo, imagem: novaImagem });
-        setFotoPerfil(novaImagem); // <-- força o update da imagem na UI// <-- Atualiza o contexto
+        // Atualiza o contexto com os novos dados
+        const updatedUser = {
+          ...userInfo,
+          imagem: data.imagem
+            ? `${apiEndpoint}/${data.imagem}`
+            : null
+        };
+        setUserInfo(updatedUser);
       } else {
         console.error("Erro:", data);
         alert(data.message || "Erro ao atualizar.");
@@ -97,7 +125,11 @@ const PerfilScreen = () => {
       >
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderBar onBack={() => navigation.goBack()} />
-          <ProfileImageSection image={fotoPerfil} userInfo={userInfo} onPickImage={pickImage} />
+          <ProfileImageSection
+            image={userInfo?.imagem}
+            userInfo={userInfo}
+            onPickImage={pickImage}
+          />
           <View style={styles.infoContainer}>
             <UserInfo userInfo={userInfo} />
             <View style={[styles.separator, { marginTop: 10, marginBottom: 10, width: "100%" }]} />

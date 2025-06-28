@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, Alert, View, ActivityIndicator } from 'react-
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/authContext';
 import { apiEndpoint } from '../../config/constantes';
-import { Ionicons, MaterialIcons, FontAwesome, Feather } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome, Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import styles from '../../components/EditProfile/styles';
 import ProfileHeader from '../../components/EditProfile/ProfileHeader';
@@ -12,7 +12,7 @@ import FormInput from '../../components/EditProfile/FormInput';
 import SaveButton from '../../components/EditProfile/SaveButton';
 
 const EditProfileScreen = () => {
-        const { userInfo, userToken, setUserInfo } = useContext(AuthContext);
+    const { userInfo, userToken, setUserInfo } = useContext(AuthContext);
     const navigation = useNavigation();
 
     const [formData, setFormData] = useState({
@@ -95,7 +95,6 @@ const EditProfileScreen = () => {
 
         try {
             const formDataToSend = new FormData();
-
             formDataToSend.append('nome', formData.nome);
             formDataToSend.append('email', formData.email);
 
@@ -114,13 +113,6 @@ const EditProfileScreen = () => {
                 });
             }
 
-            console.log('Enviando dados:', {
-                nome: formData.nome,
-                email: formData.email,
-                temSenha: !!formData.senha,
-                temImagem: !!image
-            });
-
             const response = await fetch(`${apiEndpoint}/usuario/me`, {
                 method: 'PUT',
                 headers: {
@@ -136,6 +128,7 @@ const EditProfileScreen = () => {
 
             const updatedData = await response.json();
 
+            // Atualiza o contexto com os novos dados
             const updatedUser = {
                 ...userInfo,
                 nome: updatedData.nome || userInfo.nome,
@@ -147,6 +140,7 @@ const EditProfileScreen = () => {
 
             setUserInfo(updatedUser);
 
+            // Força uma atualização dos dados do servidor
             const refreshResponse = await fetch(`${apiEndpoint}/usuario/me`, {
                 method: 'GET',
                 headers: {
@@ -157,16 +151,24 @@ const EditProfileScreen = () => {
 
             if (refreshResponse.ok) {
                 const refreshedData = await refreshResponse.json();
-                setUserInfo({
+                const finalUserInfo = {
                     ...refreshedData,
                     imagem: refreshedData.imagem
                         ? `${apiEndpoint}/${refreshedData.imagem}`
                         : null
-                });
+                };
+                setUserInfo(finalUserInfo);
             }
 
-            Alert.alert('Sucesso', 'Perfil atualizado com sucesso!');
-            navigation.goBack();
+            Alert.alert('Sucesso', 'Perfil atualizado com sucesso!', [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        // Navega de volta passando os dados atualizados
+                        navigation.navigate('Perfil', { refreshed: true });
+                    }
+                }
+            ]);
         } catch (error) {
             console.error('Erro detalhado:', error);
             Alert.alert('Erro', error.message || 'Ocorreu um erro ao atualizar o perfil');
@@ -178,18 +180,18 @@ const EditProfileScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-                <ProfileHeader 
-                    title="Editar Perfil" 
-                    onBack={() => navigation.goBack()} 
+                <ProfileHeader
+                    title="Editar Perfil"
+                    onBack={() => navigation.goBack()}
                 />
-                
+
                 <View style={styles.formCard}>
-                    <AvatarUpload 
-                        image={image} 
-                        defaultImage={userInfo?.imagem} 
-                        onPickImage={pickImage} 
+                    <AvatarUpload
+                        image={image}
+                        defaultImage={userInfo?.imagem}
+                        onPickImage={pickImage}
                     />
-                    
+
                     <FormInput
                         icon="user"
                         iconLib={FontAwesome}
@@ -198,7 +200,7 @@ const EditProfileScreen = () => {
                         onChangeText={(text) => handleChange('nome', text)}
                         error={errors.nome}
                     />
-                    
+
                     <FormInput
                         icon="email"
                         iconLib={MaterialIcons}
@@ -209,7 +211,7 @@ const EditProfileScreen = () => {
                         autoCapitalize="none"
                         error={errors.email}
                     />
-                    
+
                     <FormInput
                         icon="lock"
                         iconLib={Feather}
@@ -219,7 +221,7 @@ const EditProfileScreen = () => {
                         secureTextEntry
                         error={errors.senha}
                     />
-                    
+
                     <FormInput
                         icon="lock"
                         iconLib={Feather}
@@ -229,11 +231,11 @@ const EditProfileScreen = () => {
                         secureTextEntry
                         error={errors.confirmarSenha}
                     />
-                    
-                    <SaveButton 
-                        loading={isLoading} 
-                        onPress={handleSubmit} 
-                        text="SALVAR ALTERAÇÕES" 
+
+                    <SaveButton
+                        loading={isLoading}
+                        onPress={handleSubmit}
+                        text="SALVAR ALTERAÇÕES"
                     />
                 </View>
             </ScrollView>
