@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 export default function Categories() {
-  const categories = ['Detox', 'Medicinal', 'Vitamina'];
+  const categories = ['Suco', 'Sheik', 'Smoothie'];
 
   return (
     <View style={styles.container}>
