@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Categories() {
   const navigation = useNavigation();
-  const categories = ['Suco', 'Sheik', 'Smoothie'];
+  const categories = ['Suco', 'Sheik'];
 
   const handleCategoryPress = (category) => {
     navigation.navigate('CategoryScreen', { categoryName: category });
@@ -20,9 +20,6 @@ export default function Categories() {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Categorias</Text>
-        <TouchableOpacity style={styles.viewAllButton} onPress={handleViewAllPress}>
-          <Text style={styles.viewAll}>Ver todos</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.categoryButtonsContainer}>

@@ -65,14 +65,14 @@ export default function ProductCard({ item, userToken, favoritos = [], setFavori
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {item.diagnostico_nome_da_condicao || 'Diagnóstico não disponível'}
+            {item.diagnostico_nome_da_condicao}
           </Text>
           <Text
             style={styles.juiceCategoriaVertical}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {item.categoria_nome || 'Categoria não disponível'}
+            {item.categoria_nome}
           </Text>
         </View>
         <TouchableOpacity 

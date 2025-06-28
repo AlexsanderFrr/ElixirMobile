@@ -46,13 +46,10 @@ export default function RecommendedSection({ userToken, favoritos, setFavoritos 
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Recomendado Para Você</Text>
-        <TouchableOpacity style={styles.filterIcon}>
-          <FontAwesome name="filter" size={24} color="#BB5104" />
-        </TouchableOpacity>
       </View>
 
       <View style={styles.filterContainer}>
-        {['Todos', 'Sucos', 'Vitamina'].map((category) => (
+        {['Todos'].map((category) => (
           <TouchableOpacity key={category} onPress={() => filterJuices(category)}>
             <View style={[
               styles.filterButttom,
@@ -115,7 +112,6 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     marginVertical: 20,
   },
   filterButttom: {
