@@ -6,8 +6,8 @@ export default function IngredientList({ ingredients }) {
   const formattedIngredients = Array.isArray(ingredients)
     ? ingredients
     : typeof ingredients === "string"
-    ? ingredients.split(",").map((item) => item.trim())
-    : [];
+      ? ingredients.split(",").map((item) => item.trim())
+      : [];
 
   // Verifica se há ingredientes disponíveis
   if (!formattedIngredients || formattedIngredients.length === 0) {
@@ -17,15 +17,11 @@ export default function IngredientList({ ingredients }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Ingredientes:</Text>
-      <FlatList
-        data={formattedIngredients}
-        keyExtractor={(item, index) => index.toString()} // Evitar conflitos de key
-        renderItem={({ item }) => (
-          <Text style={styles.ingredientItem}>{item}</Text>
-        )}
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-      />
+      <View style={styles.list}>
+        {formattedIngredients.map((item, index) => (
+          <Text key={index} style={styles.ingredientItem}>{item}</Text>
+        ))}
+      </View>
     </View>
   );
 }

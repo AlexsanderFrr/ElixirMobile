@@ -6,8 +6,8 @@ export default function PreparationMethod({ preparationSteps }) {
   const formattedSteps = Array.isArray(preparationSteps)
     ? preparationSteps
     : typeof preparationSteps === "string"
-    ? preparationSteps.split(",").map((step) => step.trim())
-    : [];
+      ? preparationSteps.split(",").map((step) => step.trim())
+      : [];
 
   // Verifica se há passos de preparo disponíveis
   if (!formattedSteps || formattedSteps.length === 0) {
@@ -17,15 +17,11 @@ export default function PreparationMethod({ preparationSteps }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Modo de Preparo:</Text>
-      <FlatList
-        data={formattedSteps}
-        keyExtractor={(item, index) => index.toString()} // Evitar conflitos de key
-        renderItem={({ item }) => (
-          <Text style={styles.stepItem}>{item}</Text>
-        )}
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-      />
+      <View style={styles.list}>
+        {formattedSteps.map((item, index) => (
+          <Text key={index} style={styles.stepItem}>{item}</Text>
+        ))}
+      </View>
     </View>
   );
 }
