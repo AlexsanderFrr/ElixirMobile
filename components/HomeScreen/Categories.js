@@ -2,31 +2,62 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Categories() {
+  const navigation = useNavigation();
   const categories = ['Suco', 'Sheik', 'Smoothie'];
+
+  const handleCategoryPress = (category) => {
+    navigation.navigate('CategoryScreen', { categoryName: category });
+  };
+
+  const handleViewAllPress = () => {
+    navigation.navigate('AllCategoriesScreen');
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Categorias</Text>
-        <TouchableOpacity style={styles.viewAllButton} onPress={() => {/* Função para abrir as categorias */ }}>
-          <Text style={styles.viewAll}>Ver Tudo</Text>
+        <TouchableOpacity style={styles.viewAllButton} onPress={handleViewAllPress}>
+          <Text style={styles.viewAll}>Ver todos</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.categoryButtonsContainer}>
         {categories.map((category) => (
           <View key={category} style={styles.categoryItem}>
-            <TouchableOpacity style={styles.categoryButton} onPress={() => {/* Função para filtrar por categoria */ }}>
+            <TouchableOpacity 
+              style={styles.categoryButton} 
+              onPress={() => handleCategoryPress(category)}
+            >
+              <FontAwesome 
+                name={getIconForCategory(category)} 
+                size={30} 
+                color="#B85A25" 
+                style={{ alignSelf: 'center', marginTop: 25 }}
+              />
             </TouchableOpacity>
             <Text style={styles.categoryButtonText}>{category}</Text>
           </View>
         ))}
       </View>
-
     </View>
   );
+}
+
+function getIconForCategory(category) {
+  switch(category) {
+    case 'Suco':
+      return 'glass';
+    case 'Sheik':
+      return 'shopping-basket';
+    case 'Smoothie':
+      return 'blender';
+    default:
+      return 'lemon-o';
+  }
 }
 
 const styles = StyleSheet.create({

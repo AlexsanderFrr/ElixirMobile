@@ -52,7 +52,7 @@ export default function RecommendedSection({ userToken, favoritos, setFavoritos 
       </View>
 
       <View style={styles.filterContainer}>
-        {['Todos', 'Detox', 'Medicinal'].map((category) => (
+        {['Todos', 'Sucos', 'Vitamina'].map((category) => (
           <TouchableOpacity key={category} onPress={() => filterJuices(category)}>
             <View style={[
               styles.filterButttom,
