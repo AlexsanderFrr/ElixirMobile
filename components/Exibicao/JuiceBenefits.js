@@ -20,7 +20,6 @@ export default function JuiceBenefits({ benefits }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
-    marginHorizontal: 15,
   },
   titleBenefits: {
     fontSize: 24,

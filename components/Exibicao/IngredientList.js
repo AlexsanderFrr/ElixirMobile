@@ -34,7 +34,6 @@ export default function IngredientList({ ingredients }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    marginHorizontal: 15,
   },
   title: {
     fontSize: 24,
