@@ -57,7 +57,7 @@ export default function Header({ item, userToken, favoritos, setFavoritos }) {
           onPress={() => navigation.goBack()}
           style={styles.button}
         >
-          <Ionicons name="arrow-back" size={28} color="#FFFFFF" />
+          <Ionicons name="arrow-back" size={30} color="#000" />
         </TouchableOpacity>
       </View>
 
@@ -68,8 +68,8 @@ export default function Header({ item, userToken, favoritos, setFavoritos }) {
         >
           <FontAwesome 
             name={isFavorito ? "heart" : "heart-o"} 
-            size={28} 
-            color={isFavorito ? "#FF3A44" : "#FFFFFF"} 
+            size={30} 
+            color={isFavorito ? "#FF3A44" : "#FF3A44"} 
           />
         </TouchableOpacity>
       </View>
@@ -82,15 +82,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     position: "absolute",
-    paddingTop: 50,
-    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingHorizontal: 30,
     width: "100%",
     zIndex: 1,
   },
   iconButton: {
-    backgroundColor: "rgba(187, 81, 20, 0.8)",
-    width: 50,
-    height: 50,
+    backgroundColor: "rgb(255, 255, 255)",
+    width: 55,
+    height: 55,
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",

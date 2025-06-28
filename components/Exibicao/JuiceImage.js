@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   imageHeader: {
-    height: 300,
+    height: 260,
     width: "100%",
   },
   overlay: {
