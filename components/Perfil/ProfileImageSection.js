@@ -26,10 +26,10 @@ const ProfileImageSection = ({ image, userInfo, onPickImage }) => {
         <View style={{ alignSelf: "center" }}>
             <Text style={styles.textMain}>Meu Perfil</Text>
             <View style={styles.profileImage}>
-                <Image 
-                    source={getImageSource()} 
-                    style={styles.image} 
-                    key={userInfo?.imagem || 'default'} // Força remontagem quando a imagem muda
+                <Image
+                    source={getImageSource()}
+                    style={styles.image}
+                    key={`${userInfo?.imagem || 'default'}`}
                 />
             </View>
             <View style={styles.dm}>

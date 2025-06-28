@@ -93,14 +93,15 @@ const PerfilScreen = () => {
 
       const data = await response.json();
       if (response.ok) {
-        // Atualiza o contexto com os novos dados
-        const updatedUser = {
-          ...userInfo,
-          imagem: data.imagem
-            ? `${apiEndpoint}/${data.imagem}?t=${new Date().getTime()}` // Adiciona timestamp
-            : null
-        };
-        setUserInfo(updatedUser);
+        const imagemComTimestamp = data.imagem
+          ? `${apiEndpoint}/${data.imagem}?t=${new Date().getTime()}`
+          : null;
+
+        // Atualiza o userInfo com a nova imagem
+        setUserInfo((prev) => ({
+          ...prev,
+          imagem: imagemComTimestamp
+        }));
 
         setModalVisible(false);
         setImage(null);
