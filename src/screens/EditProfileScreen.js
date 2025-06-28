@@ -272,9 +272,10 @@ const EditProfileScreen = () => {
                         {isLoading ? (
                             <ActivityIndicator color="#fff" size="small" />
                         ) : (
-                            <Text style={styles.saveButtonText}>
-                                <MaterialIcons name="save" size={20} color="white" /> SALVAR ALTERAÇÕES
-                            </Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <MaterialIcons name="save" size={20} color="white" />
+                                <Text style={styles.saveButtonText}>SALVAR ALTERAÇÕES</Text>
+                            </View>
                         )}
                     </TouchableOpacity>
                 </View>
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
-        marginLeft: 5,
+        marginLeft: 10, // Aumentei a margem para melhor espaçamento
     },
 });
 
